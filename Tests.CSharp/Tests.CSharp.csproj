@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.19" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -24,6 +25,7 @@
       <ProjectReference Include="..\Homework1\Hw1\Hw1.csproj" />
       <ProjectReference Include="..\Homework2\Hw2\Hw2.ilproj" />
       <ProjectReference Include="..\Homework3\Hw3.Mutex\Hw3.Mutex.csproj" />
+      <ProjectReference Include="..\Homework6\Hw6\Hw6.fsproj" />
       <ProjectReference Include="..\Tests.RunLogic\Tests.RunLogic.csproj" />
     </ItemGroup>
 
