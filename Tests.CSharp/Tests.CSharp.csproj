@@ -10,6 +10,7 @@
     <ItemGroup>
         <PackageReference Include="HtmlAgilityPack" Version="1.11.48" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.19" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.8" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -23,6 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Homework10\Hw10\Hw10.csproj" />
       <ProjectReference Include="..\Homework1\Hw1\Hw1.csproj" />
       <ProjectReference Include="..\Homework2\Hw2\Hw2.ilproj" />
       <ProjectReference Include="..\Homework3\Hw3.Mutex\Hw3.Mutex.csproj" />
