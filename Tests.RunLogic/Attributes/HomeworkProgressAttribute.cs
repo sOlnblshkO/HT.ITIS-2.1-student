@@ -9,9 +9,10 @@ public class HomeworkProgressAttribute : Attribute
 
     public HomeworkProgressAttribute(int number)
     {
-        if (number is < 0 or > 12)
+        if (!Enum.IsDefined((Homeworks)number))
         {
-            throw new ArgumentOutOfRangeException(nameof(number), "Number must be 0 <= number < 12");
+            var enumElementsCount = Enum.GetNames(typeof(Homeworks)).Length - 1;
+            throw new ArgumentOutOfRangeException(nameof(number), $"Number must be 0 <= number < {enumElementsCount}");
         }
 
         Number = number;
