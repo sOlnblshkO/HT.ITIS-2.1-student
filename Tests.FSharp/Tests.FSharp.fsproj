@@ -2,7 +2,6 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-
         <IsPackable>false</IsPackable>
         <GenerateProgramFile>false</GenerateProgramFile>
     </PropertyGroup>
@@ -10,6 +9,8 @@
     <ItemGroup>
         <Compile Include="Homework4\CalculatorTests.fs" />
         <Compile Include="Homework4\ParserTests.fs" />
+        <Compile Include="Homework5\CalculatorTests.fs" />
+        <Compile Include="Homework5\ParserTests.fs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -27,6 +28,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Homework4\Hw4\Hw4.fsproj" />
+      <ProjectReference Include="..\Homework5\Hw5\Hw5.fsproj" />
       <ProjectReference Include="..\Tests.RunLogic\Tests.RunLogic.csproj" />
     </ItemGroup>
 
