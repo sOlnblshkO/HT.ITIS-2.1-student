@@ -22,6 +22,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Homework1\Hw1\Hw1.csproj" />
+      <ProjectReference Include="..\Homework2\Hw2\Hw2.ilproj" />
       <ProjectReference Include="..\Tests.RunLogic\Tests.RunLogic.csproj" />
     </ItemGroup>
 
