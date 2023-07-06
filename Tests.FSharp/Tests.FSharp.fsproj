@@ -2,10 +2,15 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+
         <IsPackable>false</IsPackable>
+        <GenerateProgramFile>false</GenerateProgramFile>
     </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Homework4\CalculatorTests.fs" />
+        <Compile Include="Homework4\ParserTests.fs" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
@@ -21,9 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Homework1\Hw1\Hw1.csproj" />
-      <ProjectReference Include="..\Homework2\Hw2\Hw2.ilproj" />
-      <ProjectReference Include="..\Homework3\Hw3.Mutex\Hw3.Mutex.csproj" />
+      <ProjectReference Include="..\Homework4\Hw4\Hw4.fsproj" />
       <ProjectReference Include="..\Tests.RunLogic\Tests.RunLogic.csproj" />
     </ItemGroup>
 
