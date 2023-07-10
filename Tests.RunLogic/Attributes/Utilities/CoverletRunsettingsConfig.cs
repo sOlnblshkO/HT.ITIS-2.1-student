@@ -32,9 +32,9 @@ public static class CoverletRunsettingsConfig
         var studentExcludesFullPath = Path.Combine(rootPath, studentExcludesPath);
         var studentCustomExcludesContent = File.Exists(studentExcludesFullPath) 
             ? File.ReadAllText(studentExcludesFullPath) : string.Empty;
-        
+
         // Build the updated ExcludeByFile content based on the homework number
-        var updatedExcludeByFileContentStr = GenetateUpdatedExcludesContent(studentCustomExcludesContent, homeworkNumber);
+        var updatedExcludeByFileContentStr = GenerateUpdatedExcludesContent(studentCustomExcludesContent, homeworkNumber);
         if (excludeByFileContent == updatedExcludeByFileContentStr) return;
         
         // Construct the updated coverlet.runsettings file content
@@ -54,9 +54,11 @@ public static class CoverletRunsettingsConfig
         return updatedFileContent;
     }
     
-    private static string GenetateUpdatedExcludesContent(string userCustomExcludes, int homeworkNumber)
+    private static string GenerateUpdatedExcludesContent(string userCustomExcludes, int homeworkNumber)
     {
         var updatedExcludeByFileContent = new StringBuilder("**/Tests.RunLogic/**,**/*.cshtml,**/Hw*/Program.cs,**/Hw*/Program.fs");
+        if (!string.IsNullOrWhiteSpace(userCustomExcludes))
+            updatedExcludeByFileContent.Append(',');
         updatedExcludeByFileContent.Append(userCustomExcludes);
         
         var beginWith = (Homeworks)homeworkNumber == Homeworks.Init 
