@@ -1,7 +1,7 @@
 # Домашняя работа для третьего учебного семестра (2 год обучения, 1 семестр)
 
-![.NET](https://github.com/<Вставьте свой ник github>/dotnet-homeworks-2/actions/workflows/dotnet.yml/badge.svg)
-[![codecov](https://codecov.io/gh/max-arshinov/dotnet-homeworks-2/branch/master/graph/badge.svg?token={token})](https://codecov.io/gh/max-arshinov/dotnet-homeworks-2)
+![.NET](https://github.com/backdorJ/HT-ITIS.2.1-student/actions/workflows/dotnet.yml/badge.svg)
+[![codecov](https://codecov.io/gh/backdorJ/HT-ITIS.2.1-student/graph/badge.svg?token=QOCT1JKZU6)](https://codecov.io/gh/backdorJ/HT-ITIS.2.1-student)
 
 ## Как устроены Actions
 1. ***build***: *Проверка: собирается ли проект.*
@@ -21,5 +21,3 @@
 - Если ваша ide говорит о проблемах с зависимостями во второй домашке, просто сбилдите проект - ошибки должны исчезнуть. Это из-за IL. Узнаете что это на соответствующей паре.
 - [дополнительные инструкции по работе с репозиторием](https://docs.google.com/document/d/1DPAfO-v2acR-CmLviX3qCnTBwUYPyipARdPjUjTZKdo/edit?usp=sharing)
 - Для чего все эти атрибуты? - Чтобы тесты с домашками, которые вы ещё не выполнили, не влияли на прохождение github workflow, т.е. чтобы тесты следующих домашек не валились, пока вы до них не дойдёте.
-
-- 
