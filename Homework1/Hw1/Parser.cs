@@ -10,7 +10,7 @@ public static class Parser
     )
     {
         if (!(IsArgLengthSupported(args)))
-            throw new ArgumentException("Too many arguments");
+            throw new ArgumentException("Incorrect number of arguments");
         if (!Double.TryParse(args[0], out val1))
             throw new ArgumentException("First argument is not a real number");
         operation = ParseOperation(args[1]);
