@@ -7,7 +7,12 @@ public static class Parser
         out CalculatorOperation operation, 
         out double val2)
     {
-        AppropriationValuesWithValidateCountArguments(args, out val1, out operation, out val2);
+        if (!IsArgLengthSupported(args))
+            throw new ArgumentException("There must be three arguments!");
+        
+        val1 = ParseStringToDouble(args[0]);
+        operation = ParseOperation(args[1]);
+        val2 = ParseStringToDouble(args[2]);
     }
 
     private static bool IsArgLengthSupported(string[] args) => args.Length == 3;
@@ -20,7 +25,7 @@ public static class Parser
             "-" => CalculatorOperation.Minus,
             "/" => CalculatorOperation.Divide,
             "*" => CalculatorOperation.Multiply,
-            _ => throw new InvalidOperationException()
+            _ => throw new InvalidOperationException("No such operation exists")
         };
     }
     
@@ -28,18 +33,6 @@ public static class Parser
     {
         if (double.TryParse(arg, out var number))
             return number;
-        throw new ArgumentException();
-    }
-    
-    private static void AppropriationValuesWithValidateCountArguments(
-        string[] args,
-        out double val1,
-        out CalculatorOperation operation,
-        out double val2)
-    {
-        if (!IsArgLengthSupported(args)) throw new ArgumentException();
-        val1 = ParseStringToDouble(args[0]);
-        operation = ParseOperation(args[1]);
-        val2 = ParseStringToDouble(args[2]);
-    }
+        throw new ArgumentException("Incorrect numeric entry");
+    }   
 }
