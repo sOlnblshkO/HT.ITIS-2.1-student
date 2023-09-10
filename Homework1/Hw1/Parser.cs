@@ -37,9 +37,5 @@ public static class Parser
          default:
              return CalculatorOperation.Undefined;
         }
-        {
-            
-        }
-        throw new NotImplementedException();
     }
 }
