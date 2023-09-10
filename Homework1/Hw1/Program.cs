@@ -2,8 +2,8 @@
 
 try
 {
-    Parser.ParseCalcArguments(args, out var firstNum, out var operation, out var secondNum);
-    Console.WriteLine(Calculator.Calculate(firstNum, operation, secondNum));
+    Parser.ParseCalcArguments(args, out var firstValue, out var operation, out var secondValue);
+    Console.WriteLine(Calculator.Calculate(firstValue, operation, secondValue));
 }
 catch (Exception ex)
 {
