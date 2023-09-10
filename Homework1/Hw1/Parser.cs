@@ -7,13 +7,47 @@ public static class Parser
         out CalculatorOperation operation, 
         out double val2)
     {
-        throw new NotImplementedException();
+        if (!int.TryParse(args[0], out _) || !int.TryParse(args[2], out _))
+            throw new ArgumentException("Wrong args");
+        IsArgLengthSupported(args);
+
+        val1 = double.Parse(args[0]);
+        val2 = double.Parse(args[2]);
+        operation = ParseOperation(args[1]);
     }
 
-    private static bool IsArgLengthSupported(string[] args) => args.Length == 3;
+    private static bool IsArgLengthSupported(string[] args)
+    {
+        if (args.Length == 3)
+            return true;
+        throw new ArgumentException("Wrong args length");
+    }
 
     private static CalculatorOperation ParseOperation(string arg)
     {
-        throw new NotImplementedException();
+        switch (arg)
+        {
+            case "+":
+                {
+                    return CalculatorOperation.Plus;
+                }
+            case "-":
+                {
+                    return CalculatorOperation.Minus;
+                }
+            case "*":
+                {
+                    return CalculatorOperation.Multiply;
+                }
+            case "/":
+                {
+                    return CalculatorOperation.Divide;
+                }
+            default:
+                {
+                    throw new InvalidOperationException("Wrong operation");
+                }
+
+        }
     }
 }
