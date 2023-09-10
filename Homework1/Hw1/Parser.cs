@@ -14,6 +14,6 @@ public static class Parser
 
     private static CalculatorOperation ParseOperation(string arg)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException(); 
     }
 }
