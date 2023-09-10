@@ -14,6 +14,22 @@ public static class Parser
 
     private static CalculatorOperation ParseOperation(string arg)
     {
+        switch (arg)
+        {
+         case "+":
+             return CalculatorOperation.Plus;
+         case "-":
+             return CalculatorOperation.Minus;
+         case "*":
+             return CalculatorOperation.Multiply;
+         case "/":
+             return CalculatorOperation.Divide;
+         default:
+             return CalculatorOperation.Undefined;
+        }
+        {
+            
+        }
         throw new NotImplementedException();
     }
 }
