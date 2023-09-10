@@ -5,10 +5,12 @@ on:
     branches:
       - main
       - dev
+      - hw1
   pull_request:
     branches:
       - main
       - dev
+      - hw1
 
 jobs:
   build:
