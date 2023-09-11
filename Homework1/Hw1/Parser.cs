@@ -7,26 +7,19 @@ public static class Parser
         out CalculatorOperation operation, 
         out double val2)
     {
-        if (!IsArgLengthSupported(args))
-        {
-            throw new ArgumentException();
-        }
+        if (!IsArgLengthSupported(args)) 
+            throw new ArgumentException("array length should be 3");
 
-        if (ParseOperation(args[1]) == CalculatorOperation.Undefined)
-        {
+        if (ParseOperation(args[1]) == CalculatorOperation.Undefined)  
             throw new InvalidOperationException();
-        }
-
-        try
+        
+        
+        if (Double.TryParse(args[0], out val1) && Double.TryParse(args[2], out val2))
         {
-            val1 = int.Parse(args[0]);
             operation = ParseOperation(args[1]);
-            val2 = int.Parse(args[2]);
         }
-        catch (FormatException)
-        {
-            throw new ArgumentException();
-        }
+        else
+            throw new ArgumentException("one of the numbers isn't actually a number");
     }
 
     private static bool IsArgLengthSupported(string[] args) => args.Length == 3;
