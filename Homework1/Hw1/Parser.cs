@@ -8,7 +8,7 @@ public static class Parser
         out double val2)
     {
         if (!IsArgLengthSupported(args))
-            throw new ArgumentException();
+            throw new ArgumentException("Incorrect input");
 
         val1 = FromStringToDouble(args[0]);
         operation = ParseOperation(args[1]);
@@ -25,7 +25,7 @@ public static class Parser
             "-" => CalculatorOperation.Minus,
             "/" => CalculatorOperation.Divide,
             "*" => CalculatorOperation.Multiply,
-            _ => throw new InvalidOperationException()
+            _ => throw new InvalidOperationException("Incorrect input")
         };
     }
 
@@ -34,6 +34,6 @@ public static class Parser
         if (double.TryParse(arg, out var value))
             return value;
         else
-            throw new ArgumentException();
+            throw new ArgumentException("Value is not correct");
     }
 }
