@@ -26,6 +26,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Homework10\Hw10\Hw10.csproj" />
       <ProjectReference Include="..\Homework11\Hw11\Hw11.csproj" />
+      <ProjectReference Include="..\Homework12\Hw12\Hw12.csproj" />
       <ProjectReference Include="..\Homework13\Hw.13\Hw13.csproj" />
       <ProjectReference Include="..\Homework1\Hw1\Hw1.csproj" />
       <ProjectReference Include="..\Homework2\Hw2\Hw2.ilproj" />

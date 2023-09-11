@@ -2,7 +2,7 @@ using Xunit;
 
 namespace Tests.RunLogic.Attributes;
 
-public class HomeworkTheoryAttribute: TheoryAttribute
+public class HomeworkTheoryAttribute : TheoryAttribute
 {
     private readonly Homeworks _number;
 
