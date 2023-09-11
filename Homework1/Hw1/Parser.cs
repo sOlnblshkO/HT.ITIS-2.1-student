@@ -1,4 +1,6 @@
-﻿namespace Hw1;
+﻿using System.Runtime.InteropServices.ComTypes;
+
+namespace Hw1;
 
 public static class Parser
 {
@@ -7,13 +9,31 @@ public static class Parser
         out CalculatorOperation operation, 
         out double val2)
     {
-        throw new NotImplementedException();
+        if (!IsArgLengthSupported(args))
+            throw new ArgumentException($"Wrong number of arguments \nExpected: 3  Found: {args.Length}");
+        
+        val1 = ParseNumber(args[0]);
+        val2 = ParseNumber(args[2]);
+        operation = ParseOperation(args[1]);
     }
 
-    private static bool IsArgLengthSupported(string[] args) => args.Length == 3;
-
-    private static CalculatorOperation ParseOperation(string arg)
+    private static double ParseNumber(string number)
     {
-        throw new NotImplementedException();
+        if (double.TryParse(number, out var result))
+            return result;
+        throw new ArgumentException($"Incorrect number: {number}");
     }
+
+    private static bool IsArgLengthSupported(string[] args) => 
+        args.Length == 3;
+
+    private static CalculatorOperation ParseOperation(string arg) =>
+        arg switch
+        {
+            "+" => CalculatorOperation.Plus,
+            "-" => CalculatorOperation.Minus,
+            "*" => CalculatorOperation.Multiply,
+            "/" => CalculatorOperation.Divide,
+            _ => throw new InvalidOperationException($"Incorrect operation: {arg}")
+        };
 }
