@@ -33,7 +33,7 @@ public static class Parser
             "-" => CalculatorOperation.Minus,
             "*" => CalculatorOperation.Multiply,
             "/" => CalculatorOperation.Divide,
-            _ => throw new InvalidOperationException("Unavailable operation")
+            _ => throw new InvalidOperationException($"Unavailable operation: {arg}")
         };
     }
 }
