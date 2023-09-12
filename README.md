@@ -3,6 +3,7 @@
 ![.NET](https://github.com/schwrmt/HT-ITIS.2.1-student/actions/workflows/dotnet.yml/badge.svg)
 [![codecov](https://codecov.io/gh/schwrmt/HT-ITIS.2.1-student/branch/hw1/graph/badge.svg?token=QKUVYUG8OD)](https://codecov.io/gh/schwrmt/HT-ITIS.2.1-student)
 
+
 ## Как устроены Actions
 1. ***build***: *Проверка: собирается ли проект.*
 2. ***test*** и ***test-report***: *Все тесты должны проходить*
