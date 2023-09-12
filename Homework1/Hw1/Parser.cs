@@ -7,8 +7,10 @@ public static class Parser
         out CalculatorOperation operation, 
         out double val2)
     {
-        if (!IsArgLengthSupported(args) || !double.TryParse(args[0], out val1) || !double.TryParse(args[2], out val2))
-            throw new ArgumentException();
+        if (!IsArgLengthSupported(args))
+            throw new ArgumentException("Некорректное количество аргументов");
+        if (!double.TryParse(args[0], out val1) || !double.TryParse(args[2], out val2))
+            throw new ArgumentException("Некорректные значения");
         operation = ParseOperation(args[1]);
     }
 
@@ -22,7 +24,7 @@ public static class Parser
             "-" => CalculatorOperation.Minus,
             "*" => CalculatorOperation.Multiply,
             "/" => CalculatorOperation.Divide,
-            _ => throw new InvalidOperationException()
+            _ => throw new InvalidOperationException("Некорректная операция")
         };
     }
 }
