@@ -18,18 +18,18 @@ public static class Parser
         //Проверка валидности количества аргументов
         if (!IsArgLengthSupported(args))
         {
-            throw new ArgumentException();
+            throw new ArgumentException("Invalid argument count");
         }
 
         if (!double.TryParse(args[0], out val1))
         {
             //Первый аргумент не валидный
-            throw new ArgumentException();
+            throw new ArgumentException("First argument invalid");
         }
         if (!double.TryParse(args[2], out val2))
         {
             //Второй аргумент не валидный
-            throw new ArgumentException();
+            throw new ArgumentException("Second argument invalid");
         }
         operation = ParseOperation(args[1]);
     }
@@ -50,7 +50,7 @@ public static class Parser
             "-" => CalculatorOperation.Minus,
             "*" => CalculatorOperation.Multiply,
             "/" => CalculatorOperation.Divide,
-            _ => throw new InvalidOperationException()
+            _ => throw new InvalidOperationException($"Invalid operation: {arg}")
         };
     }
 }
