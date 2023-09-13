@@ -56,4 +56,14 @@ public class ParserTests
         //assert
         Assert.Throws<ArgumentException>(() => Parser.ParseCalcArguments(args, out _, out _, out _));
     }
+
+    [Homework(Homeworks.HomeWork1)]
+    public void TestParserNullInput()
+    {
+        // arrange
+        string[]? args = null;
+        
+        //assert
+        Assert.Throws<ArgumentNullException>(() => Parser.ParseCalcArguments(args, out _, out _, out _));
+    }
 }
