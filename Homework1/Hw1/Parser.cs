@@ -15,12 +15,10 @@ public static class Parser
     }
     private static double ParseArgument(string arg)
     {
-
         if (Double.TryParse(arg, out var number))
         {
             return number;
         }
-
         throw new ArgumentException("Incorrect input number");
     }
 
