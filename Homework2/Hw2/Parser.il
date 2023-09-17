@@ -73,22 +73,27 @@
     .method private static valuetype Hw2.CalculatorOperation ParseOperation(string) cil managed
     {
         .maxstack 2
+
         ldarg.0
         ldstr "+"
         call bool [System.Runtime]System.String::op_Equality(string, string)
         brtrue.s Plus
+
         ldarg.0
         ldstr "-"
         call bool [System.Runtime]System.String::op_Equality(string, string)
         brtrue.s Minus
+
         ldarg.0
         ldstr "*"
         call bool [System.Runtime]System.String::op_Equality(string, string)
         brtrue.s Multiply
+
         ldarg.0
         ldstr "/"
         call bool [System.Runtime]System.String::op_Equality(string, string)
         brtrue.s Divide
+
         br.s Other
 
         Plus:
