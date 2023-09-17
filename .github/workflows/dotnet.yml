@@ -6,11 +6,13 @@ on:
       - main
       - dev
       - hw1
+      - hw2
   pull_request:
     branches:
       - main
       - dev
       - hw1
+      - hw2
 
 jobs:
   build:
