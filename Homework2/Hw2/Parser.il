@@ -1,7 +1,7 @@
 ﻿.class public abstract sealed auto ansi beforefieldinit
   Hw2.Parser extends System.Object
 {
-    .method public static void ParseCalcArguments(
+    .method public static void ParseCalcArguments (
       string[] args,
       [out] float64& val1,
       [out] valuetype Hw2.CalculatorOperation& operation,

@@ -2,7 +2,7 @@
   Hw2.Calculator extends System.Object
 {
     .method public hidebysig static float64
-    Calculate(
+    Calculate (
       float64 value1,
       valuetype Hw2.CalculatorOperation operation,
       float64 value2
