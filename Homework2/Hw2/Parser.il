@@ -2,10 +2,10 @@
   Hw2.Parser extends System.Object
 {
     .method public static void ParseCalcArguments(
-        string[] args,
-        [out] float64 val1,
-        [out] valuetype Hw2.CalculatorOperation operation,
-        [out] float64 val2
+      string[] args,
+      [out] float64& val1,
+      [out] valuetype Hw2.CalculatorOperation& operation,
+      [out] float64& val2
     )
     {
         .maxstack 3
