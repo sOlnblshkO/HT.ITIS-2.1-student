@@ -114,10 +114,10 @@
         ldc.i4.2
         br.s result
         
-        exception: ldstr "No such operation exists"
-        newobj instance void [System.Runtime]System.InvalidOperationException::.ctor(string)
-        throw
-    
+        exception:
+        ldc.i4.4
+        br.s result
+        
         result:
         ret 
     }
