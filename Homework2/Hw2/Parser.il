@@ -8,37 +8,43 @@
             [0] bool
         )
     
-        ldarg.0
-        call bool Hw2.Parser::IsArgLengthSupported(string[])
-        ldc.i4.0
-        ceq
-        stloc.0
-        ldloc.0
-        brfalse.s IL_0019
+         ldarg.0
+         call bool Hw2.Parser::IsArgLengthSupported(string[])
+         ldc.i4.0
+         ceq
+         stloc.0
+         ldloc.0
+         brtrue.s exception
     
-       ldstr "There must be three arguments!"
-         newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
-         throw
-    
-        IL_0019: ldarg.1
+         ldarg.1
          ldarg.0
          ldc.i4.0
+         
          ldelem.ref
          call float64 Hw2.Parser::ParseStringToDouble(string)
          stind.r8
+         
          ldarg.2
          ldarg.0
          ldc.i4.1
+         
          ldelem.ref
          call valuetype Hw2.CalculatorOperation Hw2.Parser::ParseOperation(string)
          stind.i4
+         
          ldarg.3
          ldarg.0
          ldc.i4.2
+         
          ldelem.ref
-        call float64 Hw2.Parser::ParseStringToDouble(string)
-        stind.r8
+         call float64 Hw2.Parser::ParseStringToDouble(string)
+         stind.r8
          ret
+         
+         exception:
+         ldstr "There must be three arguments!"
+         newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
+         throw
     }
     
     .method private static bool IsArgLengthSupported(string[] args) cil managed
@@ -81,65 +87,52 @@
     
     .method private static valuetype Hw2.CalculatorOperation ParseOperation(string arg) cil managed
     {
-        .locals init (
-            [0] valuetype Hw2.CalculatorOperation,
-            [1] valuetype Hw2.CalculatorOperation
-        )
+        .maxstack 2
     
-        ldc.i4.1
-        brtrue.s IL_0005
-    
-        IL_0005: ldarg.0
+        ldarg.0
         ldstr "+"
         call bool [System.Runtime]System.String::op_Equality(string, string)
-        brtrue.s IL_003b
+        brtrue.s plus
     
         ldarg.0
         ldstr "-"
         call bool [System.Runtime]System.String::op_Equality(string, string)
-        brtrue.s IL_003f
+        brtrue.s minus
     
         ldarg.0
         ldstr "/"
         call bool [System.Runtime]System.String::op_Equality(string, string)
-        brtrue.s IL_0043
+        brtrue.s divide
     
         ldarg.0
         ldstr "*"
         call bool [System.Runtime]System.String::op_Equality(string, string)
-        brtrue.s IL_0047
+        brtrue.s multiply
+  
+        br.s exception
     
-        br.s IL_004b
+        plus:
+        ldc.i4.0
+        br.s result
     
-        IL_003b: ldc.i4.0
-        stloc.0
-        br.s IL_0056
+        minus:
+        ldc.i4.1
+        br.s result
+        
+        divide:
+        ldc.i4.3
+        br.s result
     
-        IL_003f: ldc.i4.1
-        stloc.0
-        br.s IL_0056
-    
-        IL_0043: ldc.i4.3
-        stloc.0
-        br.s IL_0056
-    
-        IL_0047: ldc.i4.2
-        stloc.0
-        br.s IL_0056
-    
-        IL_004b: ldstr "No such operation exists"
+        multiply: 
+        ldc.i4.2
+        br.s result
+        
+        exception: ldstr "No such operation exists"
         newobj instance void [System.Runtime]System.InvalidOperationException::.ctor(string)
         throw
     
-        IL_0056: ldc.i4.1
-        brtrue.s IL_005a
-    
-        IL_005a: ldloc.0
-        stloc.1
-        br.s IL_005e
-    
-        IL_005e: ldloc.1
-        ret
+        result:
+        ret 
     }
 }
 
