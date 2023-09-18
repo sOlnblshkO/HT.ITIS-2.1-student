@@ -12,30 +12,36 @@ public class CalculatorTests
     [InlineData(15, 5, CalculatorOperation.Divide, 3)]
     public void TestAllOperations(int value1, int value2, CalculatorOperation operation, int expectedValue)
     {
-        throw new NotImplementedException();
+        Assert.Equal(Calculator.Calculate(value1, operation, value2), expectedValue);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestInvalidOperation()
     {
-        throw new NotImplementedException();
+        Assert.Throws<ArgumentOutOfRangeException>(() => Calculator.Calculate(0, CalculatorOperation.Undefined, 10));
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingNonZeroByZero()
     {
-        throw new NotImplementedException();
+        var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 10);
+        
+        Assert.Equal(0, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingZeroByNonZero()
     {
-        throw new NotImplementedException();
+        var actual = Calculator.Calculate(10, CalculatorOperation.Divide, 0);
+        
+        Assert.Equal(double.PositiveInfinity, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingZeroByZero()
     {
-        throw new NotImplementedException();
+        var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 0);
+        
+        Assert.Equal(double.NaN, actual);
     }
 }
