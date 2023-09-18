@@ -10,14 +10,9 @@
 	{
 		.maxstack 2
 		.locals init (
-			[0] float64,
-			[1] float64
+			[0] float64
 		)
-
-		ldc.i4.1
-		brtrue.s IL_0001
-
-		IL_0001: ldarg.1
+		ldarg.1
 		switch (IL_001, IL_002, IL_003, IL_004)
 
 		br.s IL_0002
@@ -49,17 +44,9 @@
 		IL_0002: newobj instance void [System.Runtime]System.ArgumentOutOfRangeException::.ctor()
 		throw
 
-		IL_0003: ldc.i4.1
-		brtrue.s IL_0004
-
-		IL_0004: ldloc.0
-		stloc.1
-		br.s IL_0005
-
-		IL_0005: ldloc.1
+		IL_0003: ldloc.0
 		ret
 	}
-
 }
 
 

@@ -1,54 +1,56 @@
 ﻿.class public abstract sealed auto ansi beforefieldinit
   Hw2.Parser
 {
-    .method public hidebysig static 
-		void ParseCalcArguments (
-			string[] args,
-			[out] float64& val1,
-			[out] valuetype Hw2.CalculatorOperation& operation,
-			[out] float64& val2
-		) cil managed 
-	{
-		.maxstack 4
-		.locals init (
-			[0] bool
-		)
-
-		ldarg.0
-		ldc.i4.0
-		ldelem.ref
-		ldarg.0
-		ldc.i4.2
-		ldelem.ref
-		ldarg.1
-		ldarg.3
-		call bool Hw2.Parser::IsArgTypeSupported(string, string, float64&, float64&)
-		brfalse.s IL_001
-
-		ldarg.0
-		call bool Hw2.Parser::IsArgLengthSupported(string[])
-		ldc.i4.0
-		ceq
-		br.s IL_002
-
-		IL_001: ldc.i4.1
-
-		IL_002: stloc.0
-		ldloc.0
-		brfalse.s IL_003
-
-		ldstr "Inappropriate array format"
-		newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
-		throw
-
-		IL_003: ldarg.2
-		ldarg.0
-		ldc.i4.1
-		ldelem.ref
-		call valuetype Hw2.CalculatorOperation Hw2.Parser::ParseOperation(string)
-		stind.i4
-		ret
-	}
+    .method public hidebysig static void
+    ParseCalcArguments(
+      string[] args,
+      [out] float64& val1,
+      [out] valuetype Hw2.CalculatorOperation& operation,
+      [out] float64& val2
+    ) cil managed
+    {
+    .maxstack 4
+    .locals init (
+      [0] bool V_0
+    )
+        ldarg.0      
+        ldc.i4.0
+        ldelem.ref
+        ldarg.0      
+        ldc.i4.2
+        ldelem.ref
+        ldarg.1      
+        ldarg.3      
+        call         
+        bool Hw2.Parser::IsArgTypeSupported(string, string, float64&, float64&)
+        brfalse.s IL_001
+        ldarg.0      
+        call         
+        bool Hw2.Parser::IsArgLengthSupported(string[])
+        ldc.i4.0
+        ceq
+        br.s IL_002
+        IL_001: ldc.i4.1
+        IL_002: stloc.0      
+        
+        ldloc.0      
+        brfalse.s IL_003
+        
+        ldstr "Inappropriate array format"
+        newobj       
+        instance void [System.Runtime]System.ArgumentException::.ctor(string)
+        throw
+               
+        IL_003: ldarg.2     
+        ldarg.0      
+        ldc.i4.1
+        ldelem.ref
+        call         
+        valuetype Hw2.CalculatorOperation Hw2.Parser::ParseOperation(string)
+        stind.i4
+           
+        ret
+    }
 	
 	.method public hidebysig static 
 		bool IsArgTypeSupported (
