@@ -38,12 +38,12 @@
         br.s Result
     
         IsNotDoubleSecondCheck:
-        ldstr "Second number is not currect"
+        ldstr "Second number is not correct"
         newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
         throw
         
         IsNotDoubleFirstCheck:
-        ldstr "First number is not currect"
+        ldstr "First number is not correct"
         newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
         throw
         
@@ -53,7 +53,7 @@
         throw
         
         ArgsIsNotCorrect:
-        ldstr "Inccorect number of args"
+        ldstr "Invalid number of args"
         newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
         throw
         
@@ -96,7 +96,7 @@
         call bool [System.Runtime]System.String::op_Equality(string, string)
         brtrue.s multiply
   
-        br.s exception
+        br.s undefined 
     
         plus:
         ldc.i4.0
@@ -114,7 +114,7 @@
         ldc.i4.2
         br.s result
         
-        exception:
+        undefined:
         ldc.i4.4
         br.s result
         
