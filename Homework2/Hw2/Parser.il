@@ -3,9 +3,9 @@
 {
     .method public static void ParseCalcArguments(
         string[] args, 
-        [out] float64 val1, 
-        [out] valuetype Hw2.CalculatorOperation op, 
-        [out] float64 val2) cil managed
+        [out] float64& val1, 
+        [out] valuetype Hw2.CalculatorOperation& op, 
+        [out] float64& val2) cil managed
     {
         .maxstack 3
         
@@ -59,8 +59,8 @@
         .locals init (
             float64 result
         )
-        ldloc.0
         ldarg.0
+        ldloca.s 0
         call bool float64::TryParse(string, float64&)
         brfalse ThrowArgumentException
         
@@ -80,22 +80,26 @@
         // plus
         ldarg.0
         ldstr "+"
-        beq Plus
+        call bool string::Equals(string, string)
+        brtrue.s Plus
         
         // minus
         ldarg.0
         ldstr "-"
-        beq Minus
+        call bool string::Equals(string, string)
+        brtrue.s Minus
         
         // multiply
         ldarg.0
         ldstr "*"
-        beq Multiply
+        call bool string::Equals(string, string)
+        brtrue.s Multiply
         
         // divide
         ldarg.0
         ldstr "/"
-        beq Divide
+        call bool string::Equals(string, string)
+        brtrue.s Divide
         
         br.s Undefined
         
@@ -112,8 +116,8 @@
             ldc.i4.3
             ret
         Undefined:
-            ldc.i4.4
-            ret
+            newobj instance void [System.Runtime]System.InvalidOperationException::.ctor()
+            throw
     }
 }
 
