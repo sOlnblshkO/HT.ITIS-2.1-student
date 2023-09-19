@@ -15,6 +15,7 @@ public class CalculatorTests
         Assert.Equal(Calculator.Calculate(value1, operation, value2), expectedValue);
     }
 
+    
     [Homework(Homeworks.HomeWork2)]
     public void TestInvalidOperation()
     {
