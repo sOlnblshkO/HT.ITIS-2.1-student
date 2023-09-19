@@ -7,8 +7,7 @@ public static class Parser
         out CalculatorOperation operation,
         out double val2)
     {
-        if (!IsArgTypeSupported(args[0], args[2], out val1, out val2) ||
-            !IsArgLengthSupported(args))
+        if (!IsArgLengthSupported(args) || !IsArgTypeSupported(args[0], args[2], out val1, out val2))
         {
             throw new ArgumentException("Inappropriate array format");
         }
