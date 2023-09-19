@@ -12,30 +12,63 @@ public class CalculatorTests
     [InlineData(15, 5, CalculatorOperation.Divide, 3)]
     public void TestAllOperations(int value1, int value2, CalculatorOperation operation, int expectedValue)
     {
-        throw new NotImplementedException();
+        //act
+        var actual = Calculator.Calculate(value1, operation, value2);
+
+        //assert
+        Assert.Equal(expectedValue, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestInvalidOperation()
     {
-        throw new NotImplementedException();
+        //arrange
+        var value1 = 0;
+        var value2 = 10;
+
+        //assert
+        Assert.Throws<ArgumentOutOfRangeException>(() => Calculator.Calculate(value1, CalculatorOperation.Undefined, value2));
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingNonZeroByZero()
     {
-        throw new NotImplementedException();
+        //arrange
+        var value1 = 0;
+        var value2 = 10;
+
+        //act
+        var actual = Calculator.Calculate(value1, CalculatorOperation.Divide, value2);
+
+        //assert
+        Assert.Equal(0, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingZeroByNonZero()
     {
-        throw new NotImplementedException();
+        //arrange
+        var value1 = 10;
+        var value2 = 0;
+
+        //act
+        var actual = Calculator.Calculate(value1, CalculatorOperation.Divide, value2);
+
+        //assert
+        Assert.Equal(double.PositiveInfinity, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingZeroByZero()
     {
-        throw new NotImplementedException();
+        //arrange
+        var value1 = 0;
+        var value2 = 0;
+
+        //act
+        var actual = Calculator.Calculate(value1, CalculatorOperation.Divide, value2);
+
+        //assert
+        Assert.Equal(double.NaN, actual);
     }
 }

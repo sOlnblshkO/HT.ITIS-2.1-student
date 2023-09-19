@@ -6,7 +6,7 @@
 	float64 value2) cil managed
 	{
 		ldarg.1
-		switch(case_Plus,case_Minus,case_Multiply,case_Divide)
+		switch(case_Plus,case_Minus,case_Multiply,case_Divide,case_Undefined)
 
 		case_Plus:
 			ldarg.0
@@ -32,9 +32,9 @@
 			div
 			ret
 
-		default_case:
+		case_Undefined:
 			ldstr "Invalid operation"
-			newobj instance void [mscorlib]System.ArgumentException::.ctor(string)
+			newobj instance void [mscorlib]System.ArgumentOutOfRangeException::.ctor(string)
 			throw
 	}
 
