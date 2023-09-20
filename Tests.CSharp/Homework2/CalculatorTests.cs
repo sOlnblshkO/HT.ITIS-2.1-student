@@ -23,11 +23,11 @@ public class CalculatorTests
     public void TestInvalidOperation()
     {
         //Assert
-        Assert.Throws<ArgumentOutOfRangeException>(() => Calculator.Calculate(5, CalculatorOperation.Undefined, 80));
+        Assert.Throws<InvalidOperationException>(() => Calculator.Calculate(5, CalculatorOperation.Undefined, 80));
     }
 
     [Homework(Homeworks.HomeWork2)]
-    public void TestDividingNonZeroByZero()
+    public void TestDividingZeroByNonZero()
     {
         //act
         var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 7);
@@ -37,7 +37,7 @@ public class CalculatorTests
     }
 
     [Homework(Homeworks.HomeWork2)]
-    public void TestDividingZeroByNonZero()
+    public void TestDividingNonZeroByZero()
     {
         //act
         var actual = Calculator.Calculate(7, CalculatorOperation.Divide, 0);

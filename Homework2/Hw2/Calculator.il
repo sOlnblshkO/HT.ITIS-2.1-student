@@ -41,7 +41,7 @@
 		stloc.0
 		br.s IL_0003
 
-		IL_0002: newobj instance void [System.Runtime]System.ArgumentOutOfRangeException::.ctor()
+		IL_0002: newobj instance void [System.Runtime]System.InvalidOperationException::.ctor()
 		throw
 
 		IL_0003: ldloc.0
