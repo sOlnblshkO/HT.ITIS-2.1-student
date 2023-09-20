@@ -23,7 +23,7 @@
             ret
         Undefined:
             ldstr "Wrong operation"
-            newobj instance void [System.Runtime]System.ArgumentOutOfRangeException::.ctor(string)
+            newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
             throw
     }
 }
