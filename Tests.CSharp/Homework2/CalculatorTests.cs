@@ -18,30 +18,30 @@ public class CalculatorTests
     [Homework(Homeworks.HomeWork2)]
     public void TestInvalidOperation()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Calculator.Calculate(0, CalculatorOperation.Undefined, 10));
+        Assert.Throws<InvalidOperationException>(() => Calculator.Calculate(2022, CalculatorOperation.Undefined, 2023));
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingNonZeroByZero()
     {
-        var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 10);
+        var result = Calculator.Calculate(2023, CalculatorOperation.Divide, 0);
         
-        Assert.Equal(0, actual);
+        Assert.Equal(double.PositiveInfinity, result);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingZeroByNonZero()
     {
-        var actual = Calculator.Calculate(10, CalculatorOperation.Divide, 0);
+        var result = Calculator.Calculate(0, CalculatorOperation.Divide, 2023);
         
-        Assert.Equal(double.PositiveInfinity, actual);
+        Assert.Equal(0, result);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingZeroByZero()
     {
-        var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 0);
+        var result = Calculator.Calculate(0, CalculatorOperation.Divide, 0);
         
-        Assert.Equal(double.NaN, actual);
+        Assert.Equal(double.NaN, result);
     }
 }
