@@ -31,7 +31,7 @@ public class CalculatorTests
     }
 
     [Homework(Homeworks.HomeWork2)]
-    public void TestDividingNonZeroByZero()
+    public void TestDividingZeroByNonZero()
     {
         //arrange
         var value1 = 0;
@@ -44,8 +44,8 @@ public class CalculatorTests
         Assert.Equal(0, actual);
     }
 
-    [Homework(Homeworks.HomeWork2)]
-    public void TestDividingZeroByNonZero()
+    [Homework(Homeworks.HomeWork2)] 
+    public void TestDividingNonZeroByZero()
     {
         //arrange
         var value1 = 10;
