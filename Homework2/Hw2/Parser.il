@@ -57,8 +57,7 @@
     {
         ldarg.0
         call bool Hw2.Parser::IsArgLengthSupported(string[])
-        ldc.i4.0
-        beq.s ArgumentException
+        brfalse ArgumentException
         
         ldarg.0
         ldc.i4.1
@@ -73,10 +72,7 @@
         ldelem.ref 
         ldarg.1 
         call bool [System.Runtime]System.Double::TryParse(string, float64&) 
-        brtrue.s SecondTryParse
-        ldstr "first number isn't actually a number"
-        newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
-        throw
+        brfalse ArgumentException
         
         SecondTryParse:
         ldarg.0
@@ -84,10 +80,7 @@
         ldelem.ref
         ldarg.3
         call bool [System.Runtime]System.Double::TryParse(string, float64&)
-        brtrue.s CalculationOperationDefining
-        ldstr "second number isn't actually a number"
-        newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
-        throw
+        brfalse ArgumentException
         
         CalculationOperationDefining:
         ldarg.2
@@ -104,7 +97,7 @@
         throw
         
         ArgumentException:
-        ldstr "array length should be 3"
+        ldstr "Either array length is not 3 or one of the numbers isn't actually a number"
         newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
         throw
     }    
