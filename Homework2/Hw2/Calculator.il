@@ -28,7 +28,7 @@
          br.s result
     
         exception:
-        newobj instance void [System.Runtime]System.ArgumentOutOfRangeException::.ctor()
+        newobj instance void [System.Runtime]System.InvalidOperationException::.ctor()
         throw
     
         result:
