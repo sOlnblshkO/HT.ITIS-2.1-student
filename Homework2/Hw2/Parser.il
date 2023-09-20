@@ -41,10 +41,12 @@
         ret
 
         IncorrectInput:
+        ldstr "Incorrect input!"
         newobj instance void [mscorlib]System.ArgumentException::.ctor()
         throw
 
         IncorrectOperation:
+        ldstr "Incorrect operation!"
         newobj instance void [mscorlib]System.InvalidOperationException::.ctor()
         throw
      }

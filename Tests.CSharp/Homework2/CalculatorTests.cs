@@ -20,8 +20,7 @@ public class CalculatorTests
     [Homework(Homeworks.HomeWork2)]
     public void TestInvalidOperation()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Calculator.Calculate(13, CalculatorOperation.Undefined, 24));
-    }
+        Assert.Throws<InvalidOperationException>(() => Calculator.Calculate(13, CalculatorOperation.Undefined, 24));    }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingNonZeroByZero()
