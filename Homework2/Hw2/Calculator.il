@@ -13,7 +13,7 @@
             multiply,
             divide
         )
-        newobj instance void [mscorlib]System.ArgumentOutOfRangeException::.ctor()
+        newobj instance void [mscorlib]System.InvalidOperationException::.ctor()
         throw
         
         plus:
