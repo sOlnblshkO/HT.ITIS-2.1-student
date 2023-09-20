@@ -26,17 +26,17 @@ public class CalculatorTests
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingNonZeroByZero()
     {
-        var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 10);
+        var actual = Calculator.Calculate(10, CalculatorOperation.Divide, 0);
 
-        Assert.Equal(0, actual);
+        Assert.Equal(double.PositiveInfinity, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingZeroByNonZero()
     {
-        var actual = Calculator.Calculate(10, CalculatorOperation.Divide, 0);
+        var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 10);
 
-        Assert.Equal(double.PositiveInfinity, actual);
+        Assert.Equal(0, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
