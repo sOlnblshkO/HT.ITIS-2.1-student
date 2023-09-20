@@ -27,7 +27,7 @@ public class CalculatorTests
         var value2 = 10;
 
         //assert
-        Assert.Throws<ArgumentOutOfRangeException>(() => Calculator.Calculate(value1, CalculatorOperation.Undefined, value2));
+        Assert.Throws<InvalidOperationException>(() => Calculator.Calculate(value1, CalculatorOperation.Undefined, value2));
     }
 
     [Homework(Homeworks.HomeWork2)]

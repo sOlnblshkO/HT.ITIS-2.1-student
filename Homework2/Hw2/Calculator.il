@@ -34,7 +34,7 @@
 
 		case_Undefined:
 			ldstr "Invalid operation"
-			newobj instance void [mscorlib]System.ArgumentOutOfRangeException::.ctor(string)
+			newobj instance void [mscorlib]System.InvalidOperationException::.ctor(string)
 			throw
 	}
 
