@@ -34,7 +34,7 @@ public class CalculatorTests
         // act
 
         // assert
-        Assert.Throws<ArgumentOutOfRangeException>(
+        Assert.Throws<InvalidOperationException>(
             () => Calculator.Calculate(0, CalculatorOperation.Undefined, 10)
         );
     }
