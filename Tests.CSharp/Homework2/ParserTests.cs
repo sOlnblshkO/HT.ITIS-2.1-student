@@ -14,6 +14,7 @@ public class ParserTests
     {
         // arrange
         var args = new[] { "10", operation, "20" };
+        
 
         //act
         Parser.ParseCalcArguments(args, out var val1, out var operationResult, out var val2);
