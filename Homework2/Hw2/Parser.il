@@ -1,144 +1,100 @@
 ﻿.class public abstract sealed auto ansi beforefieldinit
   Hw2.Parser
-{
+{   
     .method public static void ParseCalcArguments(string[] args,
-    [out] float64& val1, [out] valuetype Hw2.CalculatorOperation& operation, [out] float64& val2) cil managed
-    {
-        .locals init (
-            [0] bool
-        )
+     [out] float64& val1,
+     [out] valuetype Hw2.CalculatorOperation& operation,
+     [out] float64& val2)
+     {
+        .maxstack 3
 
         ldarg.0
-        call bool Hw2.Parser::IsArgLengthSupported(string[])
+        call bool Hw2.Parser::IsArgLengthSupported(string[] args)
+        brfalse.s IncorrectInput
+
+        ldarg.0
         ldc.i4.0
-        ceq
-        stloc.0
-        ldloc.0
-        brfalse.s IL_0019
+        ldelem string
+        ldarg.1
+        call bool [mscorlib]System.Double::TryParse(string, [out] float64&)
+        brfalse.s IncorrectInput
 
-       ldstr "There must be three arguments!"
-         newobj instance void [System.Runtime]System.ArgumentException::.ctor(string)
-         throw
+        ldarg.0
+        ldc.i4.2
+        ldelem string
+        ldarg.3
+        call bool [mscorlib]System.Double::TryParse(string, [out] float64&)
+        brfalse.s IncorrectInput
 
-        IL_0019: ldarg.1
-         ldarg.0
-         ldc.i4.0
-         ldelem.ref
-         call float64 Hw2.Parser::ParseStringToDouble(string)
-         stind.r8
-         ldarg.2
-         ldarg.0
-         ldc.i4.1
-         ldelem.ref
-         call valuetype Hw2.CalculatorOperation Hw2.Parser::ParseOperation(string)
-         stind.i4
-         ldarg.3
-         ldarg.0
-         ldc.i4.2
-         ldelem.ref
-        call float64 Hw2.Parser::ParseStringToDouble(string)
-        stind.r8
-         ret
-    }
 
-    .method private static bool IsArgLengthSupported(string[] args) cil managed
+        ldarg.2
+        ldarg.0
+        ldc.i4.1
+        ldelem string
+        call valuetype Hw2.CalculatorOperation Hw2.Parser::ParseOperation(string)
+        stind.i4
+        ldarg.2
+        ldind.i4
+        ldc.i4.4
+        beq.s IncorrectOperation
+
+        ret
+
+        IncorrectInput:
+        newobj instance void [mscorlib]System.ArgumentException::.ctor()
+        throw
+
+        IncorrectOperation:
+        newobj instance void [mscorlib]System.InvalidOperationException::.ctor()
+        throw
+     }
+    .method private static bool IsArgLengthSupported(string[]) cil managed
     {
+        .maxstack 2
         ldarg.0
         ldlen
-        conv.i4
         ldc.i4.3
         ceq
         ret
     }
-
-    .method private static float64 ParseStringToDouble(string arg) cil managed
+    .method private static valuetype Hw2.CalculatorOperation ParseOperation(string arg)
     {
-        .locals init
-        (
-            [0]float64 number,
-            [1]bool,
-            [2]float64
-        )
+        .maxstack 2
 
         ldarg.0
-        ldloca.s 0
-        call bool [System.Runtime]System.Double::TryParse(string,float64&)
-        stloc.1
-        ldloc.1
-        brfalse.s IL__011
-
-        ldloc.0
-        stloc.2
-        br.s IL__001
-
-        IL__011: ldstr "Incorrect numeric entry"
-        newobj instance void[System.Runtime]System.ArgumentException::.ctor(string)
-        throw
-
-        IL__001: ldloc.2
-        ret
-    }
-
-    .method private static valuetype Hw2.CalculatorOperation ParseOperation(string arg) cil managed
-    {
-        .locals init (
-            [0] valuetype Hw2.CalculatorOperation,
-            [1] valuetype Hw2.CalculatorOperation
-        )
-
-        ldc.i4.1
-        brtrue.s IL_0005
-
-        IL_0005: ldarg.0
         ldstr "+"
-        call bool [System.Runtime]System.String::op_Equality(string, string)
-        brtrue.s IL_003b
+        call bool [mscorlib]System.String::Equals(string, string)
+        brtrue.s Plus
 
         ldarg.0
         ldstr "-"
-        call bool [System.Runtime]System.String::op_Equality(string, string)
-        brtrue.s IL_003f
-
-        ldarg.0
-        ldstr "/"
-        call bool [System.Runtime]System.String::op_Equality(string, string)
-        brtrue.s IL_0043
+        call bool [mscorlib]System.String::Equals(string, string)
+        brtrue.s Minus
 
         ldarg.0
         ldstr "*"
-        call bool [System.Runtime]System.String::op_Equality(string, string)
-        brtrue.s IL_0047
+        call bool [mscorlib]System.String::Equals(string, string)
+        brtrue.s Multiply
 
-        br.s IL_004b
+        ldarg.0
+        ldstr "/"
+        call bool [mscorlib]System.String::Equals(string, string)
+        brtrue.s Devide
 
-        IL_003b: ldc.i4.0
-        stloc.0
-        br.s IL_0056
+        ldc.i4.4
+        ret
 
-        IL_003f: ldc.i4.1
-        stloc.0
-        br.s IL_0056
-
-        IL_0043: ldc.i4.3
-        stloc.0
-        br.s IL_0056
-
-        IL_0047: ldc.i4.2
-        stloc.0
-        br.s IL_0056
-
-        IL_004b: ldstr "No such operation exists"
-        newobj instance void [System.Runtime]System.InvalidOperationException::.ctor(string)
-        throw
-
-        IL_0056: ldc.i4.1
-        brtrue.s IL_005a
-
-        IL_005a: ldloc.0
-        stloc.1
-        br.s IL_005e
-
-        IL_005e: ldloc.1
+        Plus:
+        ldc.i4.0
+        ret
+        Minus:
+        ldc.i4.1
+        ret
+        Multiply:
+        ldc.i4.2
+        ret
+        Devide:
+        ldc.i4.3
         ret
     }
 }

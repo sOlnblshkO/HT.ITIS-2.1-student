@@ -1,6 +1,5 @@
-﻿
-.class public abstract sealed auto ansi beforefieldinit
-  Hw2.Calculator extends System.Object
+﻿.class public abstract sealed auto ansi beforefieldinit
+  Hw2.Calculator 
 {
     .method public static float64
     Calculate(
@@ -9,7 +8,6 @@
       float64 value2
     ) cil managed
     {
-        .maxstack 4
         ldarg.0
         ldarg.2
         ldarg.1
