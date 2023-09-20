@@ -2,37 +2,16 @@
 
 public static class Parser
 {
-    public static void ParseCalcArguments(string[] args, 
-        out double val1, 
-        out CalculatorOperation operation, 
+    public static void ParseCalcArguments(string[] args,
+        out double val1,
+        out CalculatorOperation operation,
         out double val2)
     {
-        if (IsArgLengthSupported(args))
+        if (IsArgLengthSupported(args) && double.TryParse(args[0], out val1) && double.TryParse(args[2], out val2) )
         {
-            if (double.TryParse(args[0], out val1))
-            {
-                Convert.ToDouble(args[0]);
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
-
+            Convert.ToDouble(args[0]);
             operation = ParseOperation(args[1]);
-
-            if (double.TryParse(args[2], out val2))
-            {
-                Convert.ToDouble(args[2]);
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
-
-            if (!(double.TryParse(args[0], out val1) && double.TryParse(args[2], out val1)))
-            {
-                throw new ArgumentException();
-            }
+            Convert.ToDouble(args[2]);
         }
         else
         {
@@ -47,9 +26,9 @@ public static class Parser
         return arg switch
         {
             "+" => CalculatorOperation.Plus,
-            "-" =>  CalculatorOperation.Minus,
-            "*" =>  CalculatorOperation.Multiply,
-            "/" =>  CalculatorOperation.Divide,
+            "-" => CalculatorOperation.Minus,
+            "*" => CalculatorOperation.Multiply,
+            "/" => CalculatorOperation.Divide,
             _ => throw new InvalidOperationException()
         };
     }
