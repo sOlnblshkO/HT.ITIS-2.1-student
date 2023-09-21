@@ -22,9 +22,9 @@ public class ParserTests
     }
 
     [HomeworkTheory(Homeworks.HomeWork2)]
-    [InlineData("c", "+", "4")]
-    [InlineData("4", "+", "c")]
-    [InlineData("b", "+", "c")]
+    [InlineData("f", "+", "3")]
+    [InlineData("3", "+", "f")]
+    [InlineData("a", "+", "f")]
     public void TestParserWrongValues(string val1, string operation, string val2)
     {
         var args = new[] { val1, operation, val2 };
