@@ -12,7 +12,9 @@ public class CalculatorTests
     [InlineData(15, 5, CalculatorOperation.Divide, 3)]
     public void TestAllOperations(int value1, int value2, CalculatorOperation operation, int expectedValue)
     {
-        Assert.Equal(Calculator.Calculate(value1, operation, value2), expectedValue);
+        var actual = Calculator.Calculate(value1, operation, value2);
+        
+        Assert.Equal(expectedValue, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
