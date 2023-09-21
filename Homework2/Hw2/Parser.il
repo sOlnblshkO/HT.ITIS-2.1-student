@@ -9,7 +9,6 @@
       [out] float64& val2
     ) cil managed
       {
-    
         ldarg.0
         call void Hw2.Parser::IsArgLengthSupported(string[])
         ldarg.0
@@ -39,8 +38,7 @@
    .method private static void ArgsTryParse(string[] args)
     {
         .locals init (float64 outValue)
-           
-            
+     
         ldarg.0
         ldc.i4.0
         ldelem.ref
