@@ -8,6 +8,11 @@
         
         ldarg operation
         switch (Plus, Minus, Multiply, Divide, Undefined)
+                
+        Undefined:
+        ldstr "Undefined operation"
+        newobj instance void [System.Runtime]System.ArgumentOutOfRangeException::.ctor(string)
+        throw
         
         Plus: 
         add
@@ -24,11 +29,6 @@
         Divide:
         div
         ret
-        
-        Undefined:
-        ldstr "Undefined operation"
-        newobj instance void [System.Runtime]System.ArgumentOutOfRangeException::.ctor(string)
-        throw
     }
 }
 
