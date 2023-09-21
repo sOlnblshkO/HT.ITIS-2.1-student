@@ -12,13 +12,17 @@ public class CalculatorTests
     [InlineData(15, 5, CalculatorOperation.Divide, 3)]
     public void TestAllOperations(int value1, int value2, CalculatorOperation operation, int expectedValue)
     {
-        Assert.Equal(Calculator.Calculate(value1, operation, value2), expectedValue);
+        var result = Calculator.Calculate(value1, operation, value2);
+        
+        Assert.Equal(expectedValue, result);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestInvalidOperation()
     {
-        Assert.Throws<InvalidOperationException>(() => Calculator.Calculate(2022, CalculatorOperation.Undefined, 2023));
+        Action CalculatorAction = () => Calculator.Calculate(2022, CalculatorOperation.Undefined, 2023);
+        
+        Assert.Throws<InvalidOperationException>(CalculatorAction);
     }
 
     [Homework(Homeworks.HomeWork2)]
