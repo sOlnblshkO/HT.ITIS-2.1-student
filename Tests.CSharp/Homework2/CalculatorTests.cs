@@ -27,16 +27,6 @@ public class CalculatorTests
     }
 
     [Homework(Homeworks.HomeWork2)]
-    public void TestDividingZeroByNonZero()
-    {
-        //act
-        var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 10);
-
-        //assert
-        Assert.Equal(0, actual);
-    }
-
-    [Homework(Homeworks.HomeWork2)]
     public void TestDividingNonZeroByZero()
     {
         //act
@@ -44,6 +34,16 @@ public class CalculatorTests
 
         //assert
         Assert.Equal(double.PositiveInfinity, actual);
+    }
+
+    [Homework(Homeworks.HomeWork2)]
+    public void TestDividingZeroByNonZero()
+    {
+        //act
+        var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 10);
+
+        //assert
+        Assert.Equal(0, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
