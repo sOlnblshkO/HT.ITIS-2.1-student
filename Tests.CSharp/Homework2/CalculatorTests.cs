@@ -12,30 +12,40 @@ public class CalculatorTests
     [InlineData(15, 5, CalculatorOperation.Divide, 3)]
     public void TestAllOperations(int value1, int value2, CalculatorOperation operation, int expectedValue)
     {
-        throw new NotImplementedException();
+        var result = Calculator.Calculate(value1, operation, value2);
+        
+        Assert.Equal(expectedValue, result);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestInvalidOperation()
     {
-        throw new NotImplementedException();
+        Action CalculatorAction = () => Calculator.Calculate(2022, CalculatorOperation.Undefined, 2023);
+        
+        Assert.Throws<InvalidOperationException>(CalculatorAction);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingNonZeroByZero()
     {
-        throw new NotImplementedException();
+        var result = Calculator.Calculate(2023, CalculatorOperation.Divide, 0);
+        
+        Assert.Equal(double.PositiveInfinity, result);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingZeroByNonZero()
     {
-        throw new NotImplementedException();
+        var result = Calculator.Calculate(0, CalculatorOperation.Divide, 2023);
+        
+        Assert.Equal(0, result);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingZeroByZero()
     {
-        throw new NotImplementedException();
+        var result = Calculator.Calculate(0, CalculatorOperation.Divide, 0);
+        
+        Assert.Equal(double.NaN, result);
     }
 }

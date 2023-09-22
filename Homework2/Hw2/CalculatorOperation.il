@@ -1,6 +1,6 @@
 ﻿.class public sealed auto ansi
   Hw2.CalculatorOperation
-    extends System.Enum
+    extends [System.Runtime]System.Enum
 {
   .field public specialname rtspecialname int8 value__
   .field public static literal valuetype Hw2.CalculatorOperation Plus = int8(0)
