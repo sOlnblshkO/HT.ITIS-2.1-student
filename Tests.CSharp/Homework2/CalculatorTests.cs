@@ -1,5 +1,6 @@
 using Hw2;
 using Tests.RunLogic.Attributes;
+using Calculator = Hw2.Calculator;
 
 namespace Tests.CSharp.Homework2;
 
@@ -12,30 +13,47 @@ public class CalculatorTests
     [InlineData(15, 5, CalculatorOperation.Divide, 3)]
     public void TestAllOperations(int value1, int value2, CalculatorOperation operation, int expectedValue)
     {
-        throw new NotImplementedException();
+        //act
+        var actual = Calculator.Calculate(value1, operation, value2);
+
+        //assert
+        Assert.Equal(expectedValue, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestInvalidOperation()
     {
-        throw new NotImplementedException();
+        //assert
+        Assert.Throws<InvalidOperationException>(() => Calculator.Calculate(0, CalculatorOperation.Undefined, 10));
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingNonZeroByZero()
     {
-        throw new NotImplementedException();
+        //act
+        var actual = Calculator.Calculate(10, CalculatorOperation.Divide, 0);
+
+        //assert
+        Assert.Equal(double.PositiveInfinity, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingZeroByNonZero()
     {
-        throw new NotImplementedException();
+        //act
+        var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 10);
+
+        //assert
+        Assert.Equal(0, actual);
     }
 
     [Homework(Homeworks.HomeWork2)]
     public void TestDividingZeroByZero()
     {
-        throw new NotImplementedException();
+        //act
+        var actual = Calculator.Calculate(0, CalculatorOperation.Divide, 0);
+
+        //assert
+        Assert.Equal(double.NaN, actual);
     }
 }
