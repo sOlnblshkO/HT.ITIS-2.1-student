@@ -20,46 +20,46 @@
           [0] float64 a,
           [1] float64 b
         )
-        IL_0005: ldarg.1  
-        IL_0006: switch       (Plus, Minus, Multiply, Divide)
-        IL_001b: br.s         Exception
+        ldarg.1  
+        switch       (Plus, Minus, Multiply, Divide)
+        br.s         Exception
         
         Plus:
-        IL_001d: ldarg.0      
-        IL_001e: ldarg.2      
-        IL_001f: add
-        IL_0020: stloc.0      
-        IL_0021: br.s         End
+        ldarg.0      
+        ldarg.2      
+        add
+        stloc.0      
+        br.s         End
         
         Minus:
-        IL_0023: ldarg.0      
-        IL_0024: ldarg.2      
-        IL_0025: sub
-        IL_0026: stloc.0      
-        IL_0027: br.s         End
+        ldarg.0      
+        ldarg.2      
+        sub
+        stloc.0      
+        br.s         End
         
         Multiply:
-        IL_0029: ldarg.0     
-        IL_002a: ldarg.2      
-        IL_002b: mul
-        IL_002c: stloc.0      
-        IL_002d: br.s         End
+        ldarg.0     
+        ldarg.2      
+        mul
+        stloc.0      
+        br.s         End
         
         Divide:
-        IL_002f: ldarg.0      
-        IL_0030: ldarg.2      
-        IL_0031: div
-        IL_0032: stloc.0     
-        IL_0033: br.s         End
+        ldarg.0      
+        ldarg.2      
+        div
+        stloc.0     
+        br.s         End
         
         Exception:
-        IL_0035: newobj       instance void [System.Runtime]System.InvalidOperationException::.ctor()
-        IL_003a: throw
+        newobj       instance void [System.Runtime]System.InvalidOperationException::.ctor()
+        throw
         
         End:
-        IL_003f: ldloc.0     
-        IL_0040: stloc.1      
-        IL_0043: ldloc.1      
-        IL_0044: ret
+        ldloc.0     
+        stloc.1      
+        ldloc.1      
+        ret
     }
 } 
