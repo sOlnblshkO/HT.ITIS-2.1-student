@@ -140,7 +140,7 @@ public class ConcurrencyTests
         return new ProcessStartInfo
         {
             FileName = "dotnet",
-            Arguments = "run --project ../../../../Hw3.Mutex/Hw3.Mutex.csproj",
+            Arguments = "run --project ../../../../Homework3/Hw3.Mutex/Hw3.Mutex.csproj",
             UseShellExecute = false,
             RedirectStandardOutput = true,
             CreateNoWindow = true
