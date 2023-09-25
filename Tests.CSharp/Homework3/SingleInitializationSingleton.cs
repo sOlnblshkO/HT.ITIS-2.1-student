@@ -4,7 +4,8 @@ public class SingleInitializationSingleton
 {
     public const int DefaultDelay = 3_000;
     private static readonly object Locker = new();
-    private static SingleInitializationSingleton _instance;
+    private static volatile Lazy<SingleInitializationSingleton> _instance = new(() =>
+        new SingleInitializationSingleton());
     private static volatile bool _isInitialized = false;
 
     private SingleInitializationSingleton(int delay = DefaultDelay)
@@ -16,53 +17,40 @@ public class SingleInitializationSingleton
 
     public int Delay { get; }
 
-    public static SingleInitializationSingleton Instance
-    {
-        
-        get
-        {
-            if (_isInitialized)
-            {
-                Thread.Sleep(_instance.Delay);
-                return _instance;
-            }
-            _instance = new SingleInitializationSingleton();
-            _isInitialized = true;
-            Thread.Sleep(_instance.Delay);
-            return _instance;
-        }
-    }
+    public static SingleInitializationSingleton Instance => _instance.Value;
 
     internal static void Reset()
     {
-        _instance = null;
-        _isInitialized = false;
+        if (_isInitialized)
+        {
+            lock (Locker)
+            {
+                if (_isInitialized)
+                {
+                    _instance = new Lazy<SingleInitializationSingleton>();
+                    _isInitialized = false;
+                }
+            }
+        }
     }
 
     public static void Initialize(int delay)
     {
-        try
+        if (!_isInitialized)
         {
-            if (!_isInitialized)
+            lock (Locker)
             {
-                lock (Locker)
+                if (!_isInitialized)
                 {
-                    if (!_isInitialized)
-                    {
-                        _instance = new SingleInitializationSingleton(delay);
-                        _isInitialized = true;
-                    }
+                    _instance = new Lazy<SingleInitializationSingleton>(() =>
+                        new SingleInitializationSingleton(delay));
+                    _isInitialized = true;
                 }
             }
-            else
-            {
-                throw new InvalidOperationException("Already was initialized");
-            }
         }
-        catch (Exception e)
+        else
         {
-            Console.WriteLine(e);
-            throw;
+            throw new InvalidOperationException("Already was initialized");
         }
     }
 }
