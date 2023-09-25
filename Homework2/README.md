@@ -22,7 +22,7 @@ JIT
  10. [Choosing the right defaults for tiered compilation](https://github.com/dotnet/runtime/issues/12515) 
 
 ### Вопросы к семинару
-1. В чем различие между .NET Framework, .NET Core, .NET 5, .NET 6 и .NET Standard?
+1. В чем различие между .NET Framework, .NET Core, .NET 5, .NET 6, .NET7 и .NET Standard?
 2. Какие виды приложений можно разрабатывать на C#, начиная с .NET 5?
 3. С каким языком работает JIT?
 4. Зачем .NET-разработчику уметь читать CIL?
