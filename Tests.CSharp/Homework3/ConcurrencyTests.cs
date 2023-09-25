@@ -86,13 +86,13 @@ public class ConcurrencyTests
     public void Semaphore()
     {
         var delay = 3_000;
-        var semaphore = new SemaphoreSlim(2, 2);
+        var semaphore = new Semaphore(2, 2);
         var testFunction = () =>
         {
             _toh.WriteLine(
                 $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} waits the semaphore"
             );
-            if (semaphore.Wait(delay + 100))
+            if (semaphore.WaitOne(delay + 100))
             {
                 _toh.WriteLine(
                     $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} starts"
