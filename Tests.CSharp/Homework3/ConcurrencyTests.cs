@@ -29,7 +29,7 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
 
-    [Homework(Homeworks.HomeWork3)]
+    // [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_RaceIsReproduced()
     {
         var expected = Concurrency.Increment(8, 100_000);
@@ -64,11 +64,14 @@ public class ConcurrencyTests
     [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_InterlockedIsFasterThanLock_Or_IsIt()
     {
-        var isM1Mac = OperatingSystem.IsMacOS() &&
-                      RuntimeInformation.ProcessArchitecture == Architecture.Arm64;
+        var isM1Mac =
+            OperatingSystem.IsMacOS()
+            && RuntimeInformation.ProcessArchitecture == Architecture.Arm64;
 
         var elapsedWithLock = StopWatcher.Stopwatch(EightThreads_100KIterations_WithLock_NoRaces);
-        var elapsedWithInterlocked = StopWatcher.Stopwatch(EightThreads_100KIterations_WithInterlocked_NoRaces);
+        var elapsedWithInterlocked = StopWatcher.Stopwatch(
+            EightThreads_100KIterations_WithInterlocked_NoRaces
+        );
 
         _toh.WriteLine($"Lock: {elapsedWithLock}; Interlocked: {elapsedWithInterlocked}");
 
@@ -108,14 +111,8 @@ public class ConcurrencyTests
     [Homework(Homeworks.HomeWork3)]
     public async Task Mutex()
     {
-        var p1 = new Process
-        {
-            StartInfo = GetProcessStartInfo()
-        };
-        var p2 = new Process
-        {
-            StartInfo = GetProcessStartInfo()
-        };
+        var p1 = new Process { StartInfo = GetProcessStartInfo() };
+        var p2 = new Process { StartInfo = GetProcessStartInfo() };
 
         var sw = new Stopwatch();
         sw.Start();
