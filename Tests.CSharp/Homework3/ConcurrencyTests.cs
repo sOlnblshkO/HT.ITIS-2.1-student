@@ -82,9 +82,49 @@ public class ConcurrencyTests
             Assert.True(elapsedWithLock > elapsedWithInterlocked);
     }
 
+    [Homework(Homeworks.HomeWork3)]
     public void Semaphore()
     {
-        // TODO: homework+
+        var delay = 3_000;
+        var semaphore = new SemaphoreSlim(2, 2);
+        var testFunction = () =>
+        {
+            _toh.WriteLine(
+                $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} waits the semaphore"
+            );
+            if (semaphore.Wait(delay + 100))
+            {
+                _toh.WriteLine(
+                    $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} starts"
+                );
+                Thread.Sleep(delay);
+                semaphore.Release();
+            }
+            else
+                _toh.WriteLine(
+                    $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} waiting timeout"
+                );
+            _toh.WriteLine(
+                $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} ends"
+            );
+        };
+
+        var processes = new[]
+        {
+            new Task(testFunction),
+            new Task(testFunction),
+            new Task(testFunction)
+        };
+
+        var sw = new Stopwatch();
+        sw.Start();
+
+        foreach (var process in processes)
+            process.Start();
+        Task.WaitAll(processes);
+
+        Assert.True(sw.ElapsedMilliseconds >= delay * 2);
+        Assert.False(sw.ElapsedMilliseconds >= delay * 3);
     }
 
     [Homework(Homeworks.HomeWork3)]
@@ -96,9 +136,9 @@ public class ConcurrencyTests
 
     public void NamedSemaphore_InterprocessCommunication()
     {
-        // TODO: homework+
-        // https://learn.microsoft.com/en-us/dotnet/standard/threading/semaphore-and-semaphoreslim#named-semaphores
-        // see mutex as example
+        // My platform does not support Named Semaphores, so
+        // I cannot do this task. See:
+        // https://github.com/dotnet/runtime/issues/4370#issuecomment-692977704
     }
 
     [Homework(Homeworks.HomeWork3)]
