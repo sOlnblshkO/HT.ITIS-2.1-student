@@ -7,12 +7,14 @@ on:
       - dev
       - hw1
       - hw2
+      - hw3
   pull_request:
     branches:
       - main
       - dev
       - hw1
       - hw2
+      - hw3
 
 jobs:
   build:
