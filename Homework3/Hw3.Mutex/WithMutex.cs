@@ -1,6 +1,8 @@
 using System.IO.MemoryMappedFiles;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hw3.Mutex;
+[ExcludeFromCodeCoverage]
 
 public class WithMutex: IDisposable
 {
