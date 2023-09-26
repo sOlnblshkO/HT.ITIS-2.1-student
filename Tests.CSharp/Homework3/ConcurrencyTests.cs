@@ -29,7 +29,7 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
 
-    [Fact(Skip = "недочет со стороны гитхаба потому что у меня этот тест проходится")]
+    [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_RaceIsReproduced()
     {
         var expected = Concurrency.Increment(8, 100_000);
