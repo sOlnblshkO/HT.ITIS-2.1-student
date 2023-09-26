@@ -6,7 +6,9 @@ public class SingleInitializationSingleton
     private static readonly object Locker = new();
 
     private static volatile bool _isInitialized = false;
-    private static SingleInitializationSingleton? _instance;
+
+    private static Lazy<SingleInitializationSingleton> _instance =
+        new (() => new SingleInitializationSingleton());
 
     private SingleInitializationSingleton(int delay = DefaultDelay)
     {
@@ -17,30 +19,13 @@ public class SingleInitializationSingleton
 
     public int Delay { get; }
 
-    public static SingleInitializationSingleton Instance
-    {
-        get
-        {
-            if (_instance==null)
-            {
-                lock (Locker)
-                {
-                    if (_instance == null)
-                    {
-                        _instance = new SingleInitializationSingleton();
-                        _isInitialized = true;
-                    }
-                }
-            }
-            return _instance;
-        }
-    }
+    public static SingleInitializationSingleton Instance => _instance.Value;
 
     internal static void Reset()
     {
         lock (Locker)
         {
-            _instance = null;
+            _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
             _isInitialized = false;
         }
     }
@@ -49,10 +34,11 @@ public class SingleInitializationSingleton
     {   
         lock (Locker)
         {
-            if (_instance != null)
+            if (_isInitialized)
                 throw new InvalidOperationException("The instance has already been initialized");
 
-            _instance = new SingleInitializationSingleton(delay);
+            _instance = new Lazy<SingleInitializationSingleton>(() =>
+                new SingleInitializationSingleton(delay));
             _isInitialized = true;
         }
     }
