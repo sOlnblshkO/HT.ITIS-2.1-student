@@ -29,7 +29,8 @@ public class SingleInitializationSingleton
     public static void Initialize(int delay)
     {
         if (_isInitialized) 
-            throw new InvalidOperationException();
+            throw new InvalidOperationException("Object already initialized once");
+        
         _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(delay));
         _isInitialized = true;
     }
