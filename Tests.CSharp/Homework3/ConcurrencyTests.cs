@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Hw3.Mutex;
 using Tests.RunLogic.Attributes;
@@ -106,6 +107,7 @@ public class ConcurrencyTests
     }
 
     [Homework(Homeworks.HomeWork3)]
+    [ExcludeFromCodeCoverage]
     public async Task Mutex()
     {
         var p1 = new Process
