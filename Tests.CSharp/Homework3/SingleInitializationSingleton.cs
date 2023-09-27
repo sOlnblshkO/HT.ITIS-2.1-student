@@ -25,6 +25,9 @@ public class SingleInitializationSingleton
             throw new InvalidOperationException("First you need to initialize");
         lock (Locker)
         {
+            if (!_isInitialized)
+                throw new InvalidOperationException("First you need to initialize");
+            
             _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(DefaultDelay), true);
             _isInitialized = false;
         }
