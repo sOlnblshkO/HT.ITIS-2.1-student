@@ -105,8 +105,7 @@ public class ConcurrencyTests
         var expected = Concurrency.IncrementWithConcurrentDictionary(8, 100_000);
         Assert.Equal(expected, Concurrency.Index);
     }
-
-    [Homework(Homeworks.HomeWork3)]
+    
     [ExcludeFromCodeCoverage]
     public async Task Mutex()
     {
