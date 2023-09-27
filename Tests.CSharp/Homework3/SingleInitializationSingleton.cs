@@ -22,11 +22,11 @@ public class SingleInitializationSingleton
     internal static void Reset()
     {
         if (!_isInitialized)
-            throw new InvalidOperationException("First you need to initialize");
+            return;
         lock (Locker)
         {
             if (!_isInitialized)
-                throw new InvalidOperationException("First you need to initialize");
+                return;
             
             _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(DefaultDelay), true);
             _isInitialized = false;
