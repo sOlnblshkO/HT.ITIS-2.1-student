@@ -23,15 +23,23 @@ public class SingleInitializationSingleton
 
     internal static void Reset()
     {
-        lock (Locker)
+        if (_isInitialized)
         {
-            _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
-            _isInitialized = false;
+            lock (Locker)
+            {
+                if (_isInitialized)
+                {
+                    _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
+                    _isInitialized = false;
+                }
+            }
         }
     }
 
     public static void Initialize(int delay)
     {   
+        if (_isInitialized)
+            throw new InvalidOperationException("The instance has already been initialized");
         lock (Locker)
         {
             if (_isInitialized)
