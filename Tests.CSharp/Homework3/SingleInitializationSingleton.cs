@@ -36,8 +36,13 @@ public class SingleInitializationSingleton
         
         lock (Locker)
         {
+            if(_isInitialized)
+                throw new InvalidOperationException("Cannot be initialized multiple times");
+                
             _instance = new(() => new SingleInitializationSingleton(delay), true);
             _isInitialized = true;   
+            
+            
         }
     }
 }
