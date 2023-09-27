@@ -21,6 +21,8 @@ public class SingleInitializationSingleton
 
     internal static void Reset()
     {
+        if (!_isInitialized)
+            throw new InvalidOperationException("First you need to initialize");
         lock (Locker)
         {
             _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(DefaultDelay), true);
