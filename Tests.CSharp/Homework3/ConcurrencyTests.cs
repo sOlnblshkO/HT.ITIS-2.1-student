@@ -30,7 +30,7 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
 
-    [Fact(Skip = "Гонка не воспроизводиться")]
+    [Fact(Skip = "Гонка не воспроизводится")]
     public void EightThreads_100KIterations_RaceIsReproduced()
     {
         var expected = Concurrency.Increment(8, 100_000);
@@ -62,7 +62,7 @@ public class ConcurrencyTests
         _toh.WriteLine($"Expected: {expected}; Actual: {Concurrency.Index}");
     }
 
-    [Fact(Skip = "Гонка не воспроизводяться")]
+    [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_InterlockedIsFasterThanLock_Or_IsIt()
     {
         var isM1Mac = OperatingSystem.IsMacOS() &&
@@ -106,7 +106,7 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
     
-    [Fact(Skip = "Мутекс не воспроизводиться")]
+    [Homework(Homeworks.HomeWork3)]
     public async Task Mutex()
     {
         var p1 = new Process
