@@ -1,3 +1,4 @@
+using Hw3;
 using Tests.RunLogic.Attributes;
 
 namespace Tests.CSharp.Homework3;
