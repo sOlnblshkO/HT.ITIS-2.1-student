@@ -28,7 +28,7 @@ public class SingleInitializationSingleton
     {
         if (_isInitialized) throw new InvalidOperationException();
         _lazy = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(delay));
-        _isInitialized = !_isInitialized;
+        _isInitialized = true;
     }
     
 }

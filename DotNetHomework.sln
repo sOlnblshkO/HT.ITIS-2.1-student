@@ -65,7 +65,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hw13", "Homework13\Hw.13\Hw
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Homework13", "Homework13", "{245E29C9-CF93-47FF-8788-34FBB6404AEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hw3", "Homework3\Hw3\Hw3.csproj", "{BD1F4735-51F3-46CA-990A-B6ACED3DE62F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hw3.Singleton", "Homework3\Hw3.Singleton\Hw3.Singleton.csproj", "{BD1F4735-51F3-46CA-990A-B6ACED3DE62F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
