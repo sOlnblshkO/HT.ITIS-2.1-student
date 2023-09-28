@@ -5,7 +5,7 @@ namespace Tests.CSharp.Homework3;
 public class SingleInitializationSingleton
 {
     public const int DefaultDelay = 3_000;
-
+    
     private static volatile bool _isInitialized = false;
     private static Lazy<SingleInitializationSingleton> _instance = new();
     
@@ -22,7 +22,10 @@ public class SingleInitializationSingleton
 
     internal static void Reset()
     {
-        _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
+        _instance = new Lazy<SingleInitializationSingleton>(
+            () => new SingleInitializationSingleton(),
+            LazyThreadSafetyMode.ExecutionAndPublication
+            );
         _isInitialized = false;
     }
 
@@ -30,8 +33,11 @@ public class SingleInitializationSingleton
     {
         if (_isInitialized) 
             throw new InvalidOperationException("Object already initialized once");
-        
-        _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(delay));
+
+        _instance = new Lazy<SingleInitializationSingleton>(
+            () => new SingleInitializationSingleton(delay), 
+            LazyThreadSafetyMode.ExecutionAndPublication
+            );
         _isInitialized = true;
     }
 }
