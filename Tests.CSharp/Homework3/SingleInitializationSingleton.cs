@@ -22,26 +22,34 @@ public class SingleInitializationSingleton
 
     internal static void Reset()
     {
-        lock (Locker)
+        if (_isInitialized)
         {
-            _isInitialized = false;
-            _instance = new Lazy<SingleInitializationSingleton>(
-                () => new SingleInitializationSingleton()
-            );
+            lock (Locker)
+            {
+                _instance = new Lazy<SingleInitializationSingleton>(
+                    () => new SingleInitializationSingleton()
+                );
+                _isInitialized = false;
+            }
         }
     }
 
     public static void Initialize(int delay)
     {
-        lock (Locker)
+        if (!_isInitialized)
         {
-            if (!_isInitialized)
-                _instance = new Lazy<SingleInitializationSingleton>(
-                    () => new SingleInitializationSingleton(delay)
-                );
-            else
-                throw new InvalidOperationException();
-            _isInitialized = true;
+            lock (Locker)
+            {
+                if (!_isInitialized)
+                    _instance = new Lazy<SingleInitializationSingleton>(
+                        () => new SingleInitializationSingleton(delay)
+                    );
+                else
+                    throw new InvalidOperationException();
+                _isInitialized = true;
+            }
         }
+        else
+            throw new InvalidOperationException();
     }
 }
