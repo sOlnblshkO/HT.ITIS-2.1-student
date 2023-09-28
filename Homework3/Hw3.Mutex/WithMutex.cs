@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO.MemoryMappedFiles;
 
 namespace Hw3.Mutex;
 
+[ExcludeFromCodeCoverage]
 public class WithMutex: IDisposable
 {
     private static readonly string MutexName = "Global\\MyMutex__!";
