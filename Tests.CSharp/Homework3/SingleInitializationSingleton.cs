@@ -34,8 +34,15 @@ public class SingleInitializationSingleton
         {
             throw new InvalidOperationException("Singleton has already been initialized");
         }
-        
-        _lazy = new(() => new SingleInitializationSingleton(delay), true);
-        _isInitialized = true;;
+
+        lock (Locker)
+        {
+            if (_isInitialized)
+            {
+                throw new InvalidOperationException("Singleton has already been initialized");
+            }
+            _lazy = new(() => new SingleInitializationSingleton(delay), true);
+            _isInitialized = true;;
+        }
     }
 }

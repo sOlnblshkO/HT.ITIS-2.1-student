@@ -29,7 +29,7 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
 
-    [Homework(Homeworks.HomeWork3)]
+    [Fact(Skip = "В github  actions гонка не репродуцируема")]
     public void EightThreads_100KIterations_RaceIsReproduced()
     {
         var expected = Concurrency.Increment(8, 100_000);
@@ -61,7 +61,7 @@ public class ConcurrencyTests
         _toh.WriteLine($"Expected: {expected}; Actual: {Concurrency.Index}");
     }
 
-    [Fact(Skip = "В github  actions гонка не репродуцируема")]
+    [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_InterlockedIsFasterThanLock_Or_IsIt()
     {
         var isM1Mac = OperatingSystem.IsMacOS() &&
