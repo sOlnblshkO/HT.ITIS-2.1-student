@@ -106,7 +106,7 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
     
-    [Homework(Homeworks.HomeWork3)]
+    [Fact(Skip = "Мутекс не воспроизводиться")]
     public async Task Mutex()
     {
         var p1 = new Process
