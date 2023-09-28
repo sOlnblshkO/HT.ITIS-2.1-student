@@ -26,8 +26,7 @@ public class SingleInitializationSingleton
         lock (Locker)
         {
             _instance = new Lazy<SingleInitializationSingleton>(
-                () => new SingleInitializationSingleton(),
-                LazyThreadSafetyMode.ExecutionAndPublication
+                () => new SingleInitializationSingleton()
             );
             _isInitialized = false;    
         }
@@ -44,8 +43,7 @@ public class SingleInitializationSingleton
                 throw new InvalidOperationException("Object already initialized once");
             
             _instance = new Lazy<SingleInitializationSingleton>(
-                () => new SingleInitializationSingleton(delay), 
-                LazyThreadSafetyMode.ExecutionAndPublication
+                () => new SingleInitializationSingleton(delay)
             );
             _isInitialized = true;
         }
