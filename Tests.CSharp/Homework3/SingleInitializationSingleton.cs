@@ -30,15 +30,13 @@ public class SingleInitializationSingleton
         {
             throw new InvalidOperationException("Instance is already initialized");
         }
-        
+
         lock (Locker)
         {
             if (_isInitialized)
                 throw new InvalidOperationException("Instance is already initialized");
-            {
-                _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(delay));
-                _isInitialized = true;
-            }
+            _instance = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(delay));
+            _isInitialized = true;
         }
     }
 }
