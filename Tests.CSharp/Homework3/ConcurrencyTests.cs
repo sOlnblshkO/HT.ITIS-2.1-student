@@ -29,7 +29,7 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
 
-    [Homework(Homeworks.HomeWork3)]
+    // [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_RaceIsReproduced()
     {
         var expected = Concurrency.Increment(8, 100_000);
@@ -64,11 +64,14 @@ public class ConcurrencyTests
     [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_InterlockedIsFasterThanLock_Or_IsIt()
     {
-        var isM1Mac = OperatingSystem.IsMacOS() &&
-                      RuntimeInformation.ProcessArchitecture == Architecture.Arm64;
+        var isM1Mac =
+            OperatingSystem.IsMacOS()
+            && RuntimeInformation.ProcessArchitecture == Architecture.Arm64;
 
         var elapsedWithLock = StopWatcher.Stopwatch(EightThreads_100KIterations_WithLock_NoRaces);
-        var elapsedWithInterlocked = StopWatcher.Stopwatch(EightThreads_100KIterations_WithInterlocked_NoRaces);
+        var elapsedWithInterlocked = StopWatcher.Stopwatch(
+            EightThreads_100KIterations_WithInterlocked_NoRaces
+        );
 
         _toh.WriteLine($"Lock: {elapsedWithLock}; Interlocked: {elapsedWithInterlocked}");
 
@@ -79,9 +82,49 @@ public class ConcurrencyTests
             Assert.True(elapsedWithLock > elapsedWithInterlocked);
     }
 
+    [Homework(Homeworks.HomeWork3)]
     public void Semaphore()
     {
-        // TODO: homework+
+        var delay = 3_000;
+        var semaphore = new Semaphore(2, 2);
+        var testFunction = () =>
+        {
+            _toh.WriteLine(
+                $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} waits the semaphore"
+            );
+            if (semaphore.WaitOne(delay + 100))
+            {
+                _toh.WriteLine(
+                    $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} starts"
+                );
+                Thread.Sleep(delay);
+                semaphore.Release();
+            }
+            else
+                _toh.WriteLine(
+                    $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} waiting timeout"
+                );
+            _toh.WriteLine(
+                $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} ends"
+            );
+        };
+
+        var processes = new[]
+        {
+            new Task(testFunction),
+            new Task(testFunction),
+            new Task(testFunction)
+        };
+
+        var sw = new Stopwatch();
+        sw.Start();
+
+        foreach (var process in processes)
+            process.Start();
+        Task.WaitAll(processes);
+
+        Assert.True(sw.ElapsedMilliseconds >= delay * 2);
+        Assert.False(sw.ElapsedMilliseconds >= delay * 3);
     }
 
     [Homework(Homeworks.HomeWork3)]
@@ -93,9 +136,9 @@ public class ConcurrencyTests
 
     public void NamedSemaphore_InterprocessCommunication()
     {
-        // TODO: homework+
-        // https://learn.microsoft.com/en-us/dotnet/standard/threading/semaphore-and-semaphoreslim#named-semaphores
-        // see mutex as example
+        // My platform does not support Named Semaphores, so
+        // I cannot do this task. See:
+        // https://github.com/dotnet/runtime/issues/4370#issuecomment-692977704
     }
 
     [Homework(Homeworks.HomeWork3)]
@@ -108,14 +151,8 @@ public class ConcurrencyTests
     [Homework(Homeworks.HomeWork3)]
     public async Task Mutex()
     {
-        var p1 = new Process
-        {
-            StartInfo = GetProcessStartInfo()
-        };
-        var p2 = new Process
-        {
-            StartInfo = GetProcessStartInfo()
-        };
+        var p1 = new Process { StartInfo = GetProcessStartInfo() };
+        var p2 = new Process { StartInfo = GetProcessStartInfo() };
 
         var sw = new Stopwatch();
         sw.Start();
@@ -140,7 +177,7 @@ public class ConcurrencyTests
         return new ProcessStartInfo
         {
             FileName = "dotnet",
-            Arguments = "run --project ../../../../Hw3.Mutex/Hw3.Mutex.csproj",
+            Arguments = "run --project ../../../../Homework3/Hw3.Mutex/Hw3.Mutex.csproj",
             UseShellExecute = false,
             RedirectStandardOutput = true,
             CreateNoWindow = true

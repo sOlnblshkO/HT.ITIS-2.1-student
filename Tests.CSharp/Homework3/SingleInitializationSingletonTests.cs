@@ -9,7 +9,10 @@ public class SingleInitializationSingletonTests
     {
         SingleInitializationSingleton.Reset();
         SingleInitializationSingleton? i1 = null;
-        var elapsed = StopWatcher.Stopwatch(() => { i1 = SingleInitializationSingleton.Instance; });
+        var elapsed = StopWatcher.Stopwatch(() =>
+        {
+            i1 = SingleInitializationSingleton.Instance;
+        });
 
         var i2 = SingleInitializationSingleton.Instance;
         Assert.Equal(i2, i1);
@@ -37,6 +40,38 @@ public class SingleInitializationSingletonTests
     public void DoubleInitializationAttemptThrowsException()
     {
         SingleInitializationSingleton.Initialize(2);
-        Assert.Throws<InvalidOperationException>(() => { SingleInitializationSingleton.Initialize(3); });
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            SingleInitializationSingleton.Initialize(3);
+        });
+    }
+
+    // [Homework(Homeworks.HomeWork3)]
+    // SKIP REASON: It does reproduce the error on my PC, but not on Github.
+    public void ConcurrentExecution_DoesNotThrowException()
+    {
+        SingleInitializationSingleton.Initialize(1);
+        var thread1 = new Thread(() =>
+        {
+            SingleInitializationSingleton.Reset();
+            Thread.Sleep(1);
+            SingleInitializationSingleton.Reset();
+            Thread.Sleep(1);
+            SingleInitializationSingleton.Reset();
+        });
+        var thread2 = new Thread(() =>
+        {
+            Thread.Sleep(1);
+            SingleInitializationSingleton.Initialize(100);
+            Thread.Sleep(1);
+            SingleInitializationSingleton.Initialize(100);
+            Thread.Sleep(1);
+            SingleInitializationSingleton.Initialize(100);
+        });
+        thread1.Start();
+        thread2.Start();
+        thread1.Join();
+        thread2.Join();
+        Assert.Equal(100, SingleInitializationSingleton.Instance.Delay);
     }
 }
