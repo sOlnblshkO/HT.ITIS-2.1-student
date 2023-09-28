@@ -29,14 +29,14 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
 
+    //Не работает на github по какой-то причине
     //[Homework(Homeworks.HomeWork3)]
-    [Fact(Skip = "Не работает на github по какой-то причине")]
-    public void EightThreads_100KIterations_RaceIsReproduced()
-    {
-        var expected = Concurrency.Increment(8, 100_000);
-        Assert.NotEqual(expected, Concurrency.Index);
-        _toh.WriteLine($"Expected: {expected}; Actual: {Concurrency.Index}");
-    }
+    //public void EightThreads_100KIterations_RaceIsReproduced()
+    //{
+    //    var expected = Concurrency.Increment(8, 100_000);
+    //    Assert.NotEqual(expected, Concurrency.Index);
+    //    _toh.WriteLine($"Expected: {expected}; Actual: {Concurrency.Index}");
+    //}
 
     [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_WithLock_NoRaces()
