@@ -1,4 +1,4 @@
-namespace Tests.CSharp.Homework3;
+namespace Hw3;
 
 public class SingleInitializationSingleton
 {
@@ -18,9 +18,9 @@ public class SingleInitializationSingleton
 
     public static SingleInitializationSingleton Instance => _lazy.Value;
 
-    internal static void Reset()
+    public static void Reset()
     {
-        _lazy = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton(), true);
+        _lazy = new Lazy<SingleInitializationSingleton>(() => new SingleInitializationSingleton());
         _isInitialized = false;
     }
 

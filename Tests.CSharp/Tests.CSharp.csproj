@@ -31,6 +31,7 @@
       <ProjectReference Include="..\Homework1\Hw1\Hw1.csproj" />
       <ProjectReference Include="..\Homework2\Hw2\Hw2.ilproj" />
       <ProjectReference Include="..\Homework3\Hw3.Mutex\Hw3.Mutex.csproj" />
+      <ProjectReference Include="..\Homework3\Hw3\Hw3.csproj" />
       <ProjectReference Include="..\Homework6\Hw6\Hw6.fsproj" />
       <ProjectReference Include="..\Homework7\Hw7\Hw7.csproj" />
       <ProjectReference Include="..\Homework8\Hw8\Hw8.csproj" />
