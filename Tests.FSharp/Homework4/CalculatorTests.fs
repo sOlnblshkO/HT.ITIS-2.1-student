@@ -20,7 +20,7 @@ let ``+, -, *, / work return correct calculation results`` (value1, value2, oper
 [<Homework(Homeworks.HomeWork4)>]
 let ``Undefined operations throw ArgumentOutOfRangeException`` () =
     //assert
-    Assert.Throws<ArgumentOutOfRangeException>(fun () -> calculate 15 CalculatorOperation.Undefined 5 |> ignore)
+    Assert.Throws<InvalidOperationException>(fun () -> calculate 15 CalculatorOperation.Undefined 5 |> ignore)
     
 [<Homework(Homeworks.HomeWork4)>]
 let ``0 / anything but 0 = 0`` () =
