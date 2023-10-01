@@ -1,7 +1,5 @@
 ﻿module Hw4.Calculator
 
-open System
-
 type CalculatorOperation =
     | Plus = 0
     | Minus = 1

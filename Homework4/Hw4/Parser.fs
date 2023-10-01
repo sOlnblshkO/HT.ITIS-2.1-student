@@ -1,9 +1,5 @@
 ﻿module Hw4.Parser
-
-open System
-open System.ComponentModel
 open Hw4.Calculator
-
 
 type CalcOptions =
     { arg1: float
@@ -19,7 +15,6 @@ let parseOperation (arg: string) =
     | "*" -> CalculatorOperation.Multiply
     | "/" -> CalculatorOperation.Divide
     | _ -> raise (System.InvalidOperationException("Incorrect input operation"))
-
 
 let parseArgument (arg: string) =
     match System.Double.TryParse(arg) with

@@ -45,5 +45,3 @@ let ``0 / 0 = NaN`` () =
     
     //assert
     Assert.Equal(Double.NaN, actual)
-    
-
