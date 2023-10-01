@@ -19,7 +19,7 @@ let parseOperation (arg : string) =
     | "-" -> CalculatorOperation.Minus
     | "*" -> CalculatorOperation.Multiply
     | "/" -> CalculatorOperation.Divide
-    | _  -> ArgumentException($"Unaviable operation: {arg}") |> raise
+    | _  -> ArgumentException($"Unavailable operation: {arg}") |> raise
     
     
 let parseCalcArguments(args : string[]) =
