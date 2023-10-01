@@ -2,22 +2,23 @@ using System.IO.MemoryMappedFiles;
 
 namespace Hw3.Mutex;
 
-public class WithMutex: IDisposable
+public class WithMutex : IDisposable
 {
     private static readonly string MutexName = "Global\\MyMutex__!";
 
     private bool _disposed;
-    
+
     private readonly System.Threading.Mutex _mutex;
 
     private int _index;
 
     public const int Delay = 3000;
-    
+
     public WithMutex()
     {
         _mutex = new System.Threading.Mutex(false, MutexName);
         _mutex.WaitOne(Delay + 100);
+        Thread.Sleep(Delay);
     }
 
     public int Increment()
@@ -26,7 +27,7 @@ public class WithMutex: IDisposable
         Thread.Sleep(Delay);
         return _index;
     }
-    
+
     // https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose
     public void Dispose()
     {
@@ -35,7 +36,7 @@ public class WithMutex: IDisposable
         // Suppress finalization.
         GC.SuppressFinalize(this);
     }
-    
+
     protected virtual void Dispose(bool disposing)
     {
         if (_disposed)
@@ -54,6 +55,6 @@ public class WithMutex: IDisposable
         _mutex.ReleaseMutex();
         _disposed = true;
     }
-    
+
     ~WithMutex() => Dispose(false);
 }
