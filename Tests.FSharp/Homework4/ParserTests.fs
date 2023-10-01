@@ -40,7 +40,7 @@ let ``Incorrect operations throw ArgumentException``() =
     let args = [|"3";".";"4"|]
     
     // act/assert
-    Assert.Throws<ArgumentException>(fun () -> parseCalcArguments args |> ignore)
+    Assert.Throws<InvalidOperationException>(fun () -> parseCalcArguments args |> ignore)
 
 [<Homework(Homeworks.HomeWork4)>]
 let ``Incorrect argument count throws ArgumentException``() =
