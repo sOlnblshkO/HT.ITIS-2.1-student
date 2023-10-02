@@ -44,6 +44,6 @@ public class SingleInitializationSingleton
                 }
             }
         }
-        throw new InvalidOperationException("Синглтон уже был инициализирован");
+        throw new InvalidOperationException("Singlton was already initialized");
     }
 }
