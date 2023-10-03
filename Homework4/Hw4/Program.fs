@@ -5,6 +5,5 @@ let main args =
     let operation = args[1]
     let arg2 = args[2]
     
-    let result = $"{arg1}{operation}{arg2}"
-    printfn "%s" result
+    printfn "%s" $"{arg1}{operation}{arg2}"
     0

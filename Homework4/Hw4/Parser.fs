@@ -11,9 +11,9 @@ type CalcOptions = {
 }
 
 let isArgLengthSupported (args : string[]) =
-    if (args.Length = 3)
-    then true
-    else raise (ArgumentException("Wrong args length"))
+    match (args.Length = 3) with
+    | true -> true
+    | false -> ArgumentException("Wrong args length") |> raise
 
 let parseOperation (arg : string) =
     match arg with
