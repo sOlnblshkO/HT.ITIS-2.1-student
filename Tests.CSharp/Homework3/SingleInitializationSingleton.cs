@@ -7,6 +7,8 @@ public class SingleInitializationSingleton
 
     private static volatile bool _isInitialized = false;
 
+    private static Lazy<SingleInitializationSingleton> _instance = new();
+
     private SingleInitializationSingleton(int delay = DefaultDelay)
     {
         Delay = delay;
@@ -16,15 +18,32 @@ public class SingleInitializationSingleton
 
     public int Delay { get; }
 
-    public static SingleInitializationSingleton Instance => throw new NotImplementedException();
+    public static SingleInitializationSingleton Instance => _instance.Value;
+
 
     internal static void Reset()
     {
-        throw new NotImplementedException();
+        lock (Locker)
+        {
+            _instance = new(() => new SingleInitializationSingleton(DefaultDelay), true);
+            _isInitialized = false;
+        }
     }
 
     public static void Initialize(int delay)
     {
-        throw new NotImplementedException();
+        if (!_isInitialized)
+        {
+            lock (Locker)
+            {
+                if (!_isInitialized)
+                {
+                    _instance = new(() => new SingleInitializationSingleton(delay), true);
+                    _isInitialized = true;
+                    return;
+                }
+            }
+        }
+        throw new InvalidOperationException("Singlton was already initialized");
     }
 }
