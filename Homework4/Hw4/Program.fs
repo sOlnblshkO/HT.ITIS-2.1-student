@@ -1,9 +1,13 @@
-﻿
+﻿open Hw4
+open Hw4.Parser
+open Hw4.Calculator
+
 [<EntryPoint>]
 let main args =
-    let arg1 = args[0]
-    let operation = args[1]
-    let arg2 = args[2]
-    
-    printfn "%s" $"{arg1}{operation}{arg2}"
+    try
+        let calcOptions = parseCalcArguments args
+        let result = (calculate calcOptions.arg1 calcOptions.operation calcOptions.arg2)
+        printfn $"%f{result}"
+    with e ->
+        printfn $"%s{e.Message}"
     0
