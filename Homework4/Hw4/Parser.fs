@@ -20,11 +20,15 @@ let parseOperation (arg : string) =
     | "*" -> CalculatorOperation.Multiply
     | "/" -> CalculatorOperation.Divide
     | _ -> raise (new ArgumentException($"Invalid argument: {arg}"))
-    
+   
+let parseArgument (arg : string) (order : int) : float = 
+    let isArgValid, val1 = Double.TryParse arg
+    if not isArgValid then raise (new ArgumentException($"{order} argument invalid"))
+    val1
+
 let parseCalcArguments(args : string[]) : CalcOptions =
     if not (isArgLengthSupported args) then raise (new ArgumentException("Invalid argument count"))
-    let isOk1, val1 = Double.TryParse args[0]
-    if not isOk1 then raise (new ArgumentException("First argument invalid"))
-    let isOk2, val2 = Double.TryParse args[2]
-    if not isOk2 then raise (new ArgumentException("Second argument invalid"))
+    let val1=parseArgument args[0] 1
+    let val2=parseArgument args[2] 2
     {CalcOptions.arg1 = val1; CalcOptions.arg2 = val2; CalcOptions.operation = parseOperation args[1]}
+
