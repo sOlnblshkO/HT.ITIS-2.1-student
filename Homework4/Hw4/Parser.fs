@@ -33,10 +33,3 @@ let parseCalcArguments(args : string[]) =
              | true, val2 -> { arg1 = val1; arg2 = val2; operation = op }
              | false, _ -> ArgumentException("Некорректные значения") |> raise
         | false, _ -> ArgumentException("Некорректные значения") |> raise
-
-    
-    
-
-    
-
-    
