@@ -14,8 +14,9 @@ let isArgLengthSupported (args : string[]) =
     
 let parseNumber(arg: string) =
     let mutable result: double = 0
-    if (Double.TryParse(arg,  &result)) then result
-    else raise(ArgumentException($"Incorrect number: {arg}"))
+    match Double.TryParse(arg,  &result) with 
+    | true -> result
+    | false ->  ArgumentException($"Incorrect number: {arg}") |> raise
     
 let parseOperation (arg : string) =
     match arg with
@@ -23,10 +24,15 @@ let parseOperation (arg : string) =
         | "-" -> CalculatorOperation.Minus   
         | "*" -> CalculatorOperation.Multiply   
         | "/" -> CalculatorOperation.Divide   
-        | _ -> raise(ArgumentException($"Incorrect operation - {arg}"))
+        | _ -> ArgumentException($"Incorrect operation - {arg}") |> raise
         
 let parseCalcArguments(args : string[]) =
-    if (not(isArgLengthSupported(args))) then
-        raise(ArgumentException("Incorrect count of arguments"))
-    {arg1 = parseNumber(args[0]); arg2 = parseNumber(args[2]); operation = parseOperation(args[1])}
+    match isArgLengthSupported(args) with
+    | true -> {arg1 = parseNumber(args[0])
+               arg2 = parseNumber(args[2])
+               operation = parseOperation(args[1])}
+    | false -> ArgumentException("Incorrect count of arguments") |> raise
+
+    
+        
         
