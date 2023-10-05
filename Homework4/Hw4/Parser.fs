@@ -24,7 +24,8 @@ let parseOperation (arg : string) =
 let tryParseDouble (str:string) =
     match Double.TryParse str with
     | true, value -> value
-    | false, _    -> ArgumentException("arg is not a number") |> raise
+    | _ -> ArgumentException("arg is not a number") |> raise
+    
 let parseCalcArguments(args : string[]) =
     if (isArgLengthSupported args = false) then
         ArgumentException("length is not supported") |> raise
