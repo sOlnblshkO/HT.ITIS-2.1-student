@@ -31,7 +31,7 @@ let parseCalcArguments(args : string[]) =
     else
         let operation = parseOperation args[1]
         
-        let arg1 = tryParseDouble args.[0]
-        let arg2 = tryParseDouble args.[2]
+        let arg1 = tryParseDouble args[0]
+        let arg2 = tryParseDouble args[2]
         
         { arg1 = arg1; arg2 = arg2; operation = operation }     
