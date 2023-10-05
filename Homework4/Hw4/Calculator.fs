@@ -1,6 +1,7 @@
 ﻿module Hw4.Calculator
 
 open System
+open System.Diagnostics
 
 type CalculatorOperation =
      | Plus = 0
@@ -8,7 +9,14 @@ type CalculatorOperation =
      | Multiply = 2
      | Divide = 3
      | Undefined = 4
+
      
 let calculate (value1 : float) (operation : CalculatorOperation) (value2 : float) =
-    NotImplementedException() |> raise
+    match operation with
+    | CalculatorOperation.Plus -> value1 + value2
+    | CalculatorOperation.Minus -> value1 - value2
+    | CalculatorOperation.Multiply -> value1 * value2
+    | CalculatorOperation.Divide -> value1 / value2
+    | _ -> ArgumentOutOfRangeException("Undefined operation") |> raise 
+
     
