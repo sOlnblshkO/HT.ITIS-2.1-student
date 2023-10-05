@@ -19,20 +19,19 @@ let parseOperation (arg : string) =
         |"-" -> CalculatorOperation.Minus
         |"*" -> CalculatorOperation.Multiply
         |"/" -> CalculatorOperation.Divide
-        |_ -> CalculatorOperation.Undefined
+        |_ -> InvalidOperationException("calculator operation is not supported") |> raise
     
+let tryParseDouble (str:string) =
+    match Double.TryParse str with
+    | true, value -> value
+    | false, _    -> ArgumentException("arg is not a number") |> raise
 let parseCalcArguments(args : string[]) =
     if (isArgLengthSupported args = false) then
         ArgumentException("length is not supported") |> raise
-    elif (parseOperation args[1] = CalculatorOperation.Undefined) then
-        InvalidOperationException("calculator operation is not supported") |> raise
     else
         let operation = parseOperation args[1]
         
-        match Double.TryParse args[0] with
-        |true, arg1 ->
-            match Double.TryParse args[2] with
-            |true, arg2 ->
-                { arg1 = arg1; arg2 = arg2; operation = operation }
-            |false, _ -> ArgumentException("second arg is not a number") |> raise
-        |false, _ -> ArgumentException("thirst arg is not a number") |> raise
+        let arg1 = tryParseDouble args.[0]
+        let arg2 = tryParseDouble args.[2]
+        
+        { arg1 = arg1; arg2 = arg2; operation = operation }     
