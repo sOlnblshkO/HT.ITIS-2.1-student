@@ -11,9 +11,7 @@ type CalcOptions = {
 }
 
 let isArgLengthSupported (args : string[]) =
-    match args.Length with
-    | 3 -> true
-    | _ -> ArgumentException("Ошибочная длина") |> raise
+    args.Length = 3
 
 let parseOperation (arg : string) =
     match arg with
@@ -31,7 +29,7 @@ let parseArgument (arg : string) =
     
 let parseCalcArguments(args : string[]) =
     if not (isArgLengthSupported args) then
-        ArgumentException("") |> raise
+        ArgumentException("Ошибочное число аргументов") |> raise
     
     let val1 = parseArgument(args[0])
     let oper = parseOperation(args[1])
