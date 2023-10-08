@@ -125,6 +125,19 @@ let ``Incorrect argument count throws ArgumentException`` () =
     | Error resultError -> Assert.Equal(resultError, Message.WrongArgLength)
 
 [<Homework(Homeworks.HomeWork5)>]
+let ``Null args throws ArgumentException`` () =
+    //arrange
+    let args = null
+
+    //act
+    let result = parseCalcArguments args
+
+    //assert
+    match result with
+    | Ok _ -> raise (InvalidOperationException("This test must always return Error Result Type"))
+    | Error resultError -> Assert.Equal(resultError, Message.WrongArgLength)
+
+[<Homework(Homeworks.HomeWork5)>]
 let ``any / 0 -> Error(Message.DivideByZero)`` () =
     //arrange
     let args = [| "3"; "/"; "0" |]

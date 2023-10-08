@@ -4,9 +4,6 @@ open System
 open Hw5.Calculator
 open Hw5.MaybeBuilder
 
-// REASON: Bug in codecov. Although all match paths get covered,
-// it doesn't want to admit full coverage.
-[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let isArgLengthSupported (args: string[]) : Result<(string * string * string), Message> =
     match args with
     | [| arg1; operation; arg2 |] -> Ok(arg1, operation, arg2)
