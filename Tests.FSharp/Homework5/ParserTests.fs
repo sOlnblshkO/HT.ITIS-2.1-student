@@ -63,10 +63,10 @@ let ``decimals parsed correctly`` (value1 : decimal, value2: decimal, operation,
 [<InlineData("15", "-", "5", 10)>]
 [<InlineData("15", "*", "5", 75)>]
 [<InlineData("15", "/", "5",  3)>]
-[<InlineData("15.6", "+", "5,6", 21.2)>]
-[<InlineData("15.6", "-", "5,6", 10)>]
-[<InlineData("15.6", "*", "5,6", 87.36)>]
-[<InlineData("15.6", "/", "5,6", 2.7857)>]
+[<InlineData("15.6", "+", "5.6", 21.2)>]
+[<InlineData("15.6", "-", "5.6", 10)>]
+[<InlineData("15.6", "*", "5.6", 87.36)>]
+[<InlineData("15.6", "/", "5.6", 2.7857)>]
 let ``values parsed correctly`` (value1, operation, value2, expectedValue) =
     //arrange
     let values = [|value1;operation;value2|]
