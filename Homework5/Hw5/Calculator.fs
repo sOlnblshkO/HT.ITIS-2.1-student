@@ -21,8 +21,6 @@ let multiply = "*"
 [<Literal>] 
 let divide = "/"
 
-let maybe = MaybeBuilder()
-
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let inline calculate value1 operation value2: 'a =
     match operation with
