@@ -25,28 +25,24 @@ let tryParseToDouble (arg: string) =
 
 
 let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message> =
-    maybe
-        {
+    maybe {
         let! arg1 = tryParseToDouble args[0]
         let! arg2 = tryParseToDouble args[2]
         let! result = isOperationSupported (arg1, args[1] , arg2)
         return result
-        }
+    }
 
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =
-    if operation = CalculatorOperation.Divide then
-        match arg2 with
-        | 0.0 -> Error Message.DivideByZero
-        | _ -> Ok (arg1, operation, arg2)
-    else Ok (arg1, operation, arg2)
+    match (operation, arg2) with
+    | (CalculatorOperation.Divide, 0.0) -> Error Message.DivideByZero
+    | _ -> Ok (arg1, operation, arg2)
     
 let parseCalcArguments (args: string[]): Result<'a, 'b> =
-    maybe
-        {
+    maybe {
         let! argsLengthSupported = args |> isArgLengthSupported
         let! argsParsed = argsLengthSupported |> parseArgs
         let! dividedByZero = argsParsed |> isDividingByZero
         return dividedByZero
-        }
+    }
     
