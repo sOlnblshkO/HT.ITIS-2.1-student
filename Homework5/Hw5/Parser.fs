@@ -27,9 +27,8 @@ let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message>
     maybe {
         let! parsedArgs = (args[0],args[1], args[2]) |> isOperationSupported
         let! arg1 = parsedArgs.Item1 |> parseArgument
-        let operation = parsedArgs.Item2
         let! arg2 = parsedArgs.Item3 |> parseArgument
-        return (arg1, operation , arg2)
+        return (arg1, parsedArgs.Item2, arg2)
     }
 
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
