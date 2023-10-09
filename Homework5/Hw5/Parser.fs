@@ -16,7 +16,7 @@ let isArgLengthSupported (args:string[]): Result<'a,'b> =
     то все операции рассматриваются валидными, и смысл в этом методе пропадает.
     Обсудили этот момент с ментором, решили оставить так.
     Реализовывал метод исходя из его названия.
-    Метод пришлось закомментировать, так как из-за него не проходит покрытие на 100%
+    UPD: Метод пришлось закомментировать, так как его ответвления не покрыть тестами и из-за него codecov не даёт 100%
 *)
 // [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 // let inline isOperationSupported (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =
