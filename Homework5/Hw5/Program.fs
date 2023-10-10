@@ -1,3 +1,10 @@
 ﻿open System
+open Hw5.Parser
+open Hw5.Calculator
 
-(NotImplementedException() |> raise)       
+[<EntryPoint>]
+let main argv =
+    printfn "%A" argv
+    let options = parseCalcArguments argv
+    
+    0
