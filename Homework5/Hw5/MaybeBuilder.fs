@@ -4,7 +4,9 @@ open System
 
 type MaybeBuilder() =
     member builder.Bind(a, f): Result<'e,'d> =
-        (NotImplementedException() |> raise)
+        match a with
+        | Error message -> Error message
+        | Ok a -> f a
     member builder.Return x: Result<'a,'b> =
-        (NotImplementedException() |> raise)
+        Ok x
 let maybe = MaybeBuilder()
