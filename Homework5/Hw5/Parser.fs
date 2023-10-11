@@ -2,11 +2,12 @@
 
 open System
 open Hw5.Calculator
+open Hw5.MaybeBuilder
 
 let isArgLengthSupported (args:string[]): Result<'a,'b> =
     let isSupported = args.Length = 3
     match isSupported with
-    | true -> Ok true
+    | true -> Ok args
     | false -> Error Message.WrongArgLength
     
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
@@ -18,6 +19,7 @@ let inline isOperationSupported (arg1, operation, arg2): Result<('a * Calculator
     | CalculatorOperation.Divide -> Ok (arg1, operation, arg2)
     | _ -> Error Message.WrongArgFormatOperation
 
+
 let parseOperation(arg:string):Result<CalculatorOperation,Message>=
     match arg with
     | "+" -> Ok CalculatorOperation.Plus
@@ -25,6 +27,7 @@ let parseOperation(arg:string):Result<CalculatorOperation,Message>=
     | "*" -> Ok CalculatorOperation.Multiply
     | "/" -> Ok CalculatorOperation.Divide
     | _ -> Error Message.WrongArgFormatOperation
+
 
 let tryChangeType<'T> (value : obj) = 
     try 
@@ -56,52 +59,44 @@ let getTypeOfArg (arg:string) : Result<Type,Message> =
             | (true,value) -> Ok typeof<decimal>
             | _ -> Error Message.WrongArgFormat
 
-let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message> =
-    let isLengthSupported = isArgLengthSupported args
-    match isLengthSupported with
-    | Error msg -> Error msg
-    | Ok _ ->       
-        let typeOfFirstValue = getTypeOfArg args[0]
-        match typeOfFirstValue with
-        | Error err -> Error err
-        | Ok firstArgType -> 
-            let typeOfSecondValue = getTypeOfArg args[2]
-            match typeOfSecondValue with
+let convertValues (args:string[]) (firstArgType) (secondArgType) : Result<('a * CalculatorOperation * 'b), Message> = 
+    let converterA = ComponentModel.TypeDescriptor.GetConverter(firstArgType)
+    let converterB = ComponentModel.TypeDescriptor.GetConverter(secondArgType)
+    match firstArgType.FullName with
+    | "System.Double" -> 
+        let a = converterA.ConvertFrom(args[0]) :?> double
+        match secondArgType.FullName with
+        | "System.Double" ->
+            let b = converterB.ConvertFrom(args[2]) :?> double
+            let resultOperation = parseOperation args[1] 
+            match resultOperation with
             | Error err -> Error err
-            | Ok secondArgType ->                
-                let converterA = ComponentModel.TypeDescriptor.GetConverter(firstArgType)
-                let converterB = ComponentModel.TypeDescriptor.GetConverter(secondArgType)
-                match firstArgType.FullName with
-                | "System.Double" -> 
-                    let a = converterA.ConvertFrom(args[0]) :?> double
-                    match secondArgType.FullName with
-                    | "System.Double" ->
-                        let b = converterB.ConvertFrom(args[2]) :?> double
-                        let resultOperation = parseOperation args[1] 
-                        match resultOperation with
-                        | Error err -> Error err
-                        | Ok operation ->
-                            Ok (a,operation,b)       
-                | _ ->
-                    let a = converterA.ConvertFrom(args[0]) :?> int
-                    let b = converterB.ConvertFrom(args[2]) :?> int
-                    let resultOperation = parseOperation args[1] 
-                    match resultOperation with
-                    | Error err -> Error err
-                    | Ok operation ->
-                        Ok (a,operation,b)  
+            | Ok operation ->
+                Ok (a,operation,b)       
+    | _ ->
+        let a = converterA.ConvertFrom(args[0]) :?> int
+        let b = converterB.ConvertFrom(args[2]) :?> int
+        let resultOperation = parseOperation args[1] 
+        match resultOperation with
+        | Error err -> Error err
+        | Ok operation ->
+            Ok (a,operation,b)  
+
+let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message> = 
+    maybe
+        {
+        let! supportedArgs = isArgLengthSupported args
+        let! firstArgType = getTypeOfArg supportedArgs[0]
+        let! secondArgType = getTypeOfArg supportedArgs[2]   
+        let! convertedArgs = convertValues supportedArgs firstArgType secondArgType        
+        return convertedArgs
+        }    
         
-    
 let parseCalcArguments (args: string[]): Result<'a, 'b>  =    
-    let parsedArgs = parseArgs args
-    match parsedArgs with
-    | Error err -> Error err
-    | Ok arguments ->
-        let isOperationCorrect = isOperationSupported arguments
-        match isOperationCorrect with
-        | Error err -> Error err
-        | Ok correctArguments ->
-            let isDivByZero = isDividingByZero correctArguments
-            match isDivByZero with
-            | Error err -> Error err
-            | Ok _ -> parsedArgs
+    maybe
+        {        
+        let! parsedArgs = parseArgs args
+        let! parsedArgs = isOperationSupported parsedArgs
+        let! parsedArgs = isDividingByZero parsedArgs
+        return parsedArgs
+        }    
