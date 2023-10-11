@@ -79,7 +79,7 @@ let ``values parsed correctly`` (value1, operation, value2, expectedValue) =
     | Ok resultOk ->
         match resultOk with
         | arg1, operation, arg2 -> Assert.True((abs (expectedValue - Calculator.calculate arg1 operation arg2)) |> decimal < epsilon)
-    | Error e -> raise (InvalidOperationException(e))
+    | Error e -> raise (InvalidOperationException(e.ToString()))
         
 [<HomeworkTheory(Homeworks.HomeWork5)>]
 [<InlineData("f", "+", "3")>]
@@ -136,3 +136,38 @@ let ``any / 0 -> Error(Message.DivideByZero)`` () =
     | Ok _ -> raise (InvalidOperationException("This test must always return Error Result Type"))
     | Error resultError -> Assert.Equal(resultError, Message.DivideByZero)
 
+[<HomeworkTheory(Homeworks.HomeWork5)>]
+[<InlineData("15", "+", "5", typedefof<int>, typedefof<int>, 20)>]
+[<InlineData("15", "-", "5", typedefof<int>, typedefof<int>, 10)>]
+[<InlineData("15", "*", "5", typedefof<int>, typedefof<int>, 75)>]
+[<InlineData("15", "/", "5",  typedefof<int>, typedefof<int>, 3)>]
+[<InlineData("15.6", "+", "5.6", typedefof<double>, typedefof<double>, 21.2)>]
+[<InlineData("15.6", "-", "5.6", typedefof<double>, typedefof<double>, 10)>]
+[<InlineData("15.6", "*", "5.6", typedefof<double>, typedefof<double>, 87.36)>]
+[<InlineData("15.6", "/", "5.6", typedefof<double>, typedefof<double>, 2.7857)>]
+let ``values converted correctly`` (value1, operation, value2, type1, type2, expectedValue) =
+    //arrange
+    let args = [|value1;operation;value2|]
+
+    //act
+    let result = convertValues args
+
+    //assert
+    match result with
+    | Ok resultOk ->
+        match resultOk with
+        | arg1, operation, arg2 -> Assert.True((abs (expectedValue - Calculator.calculate arg1 operation arg2)) |> decimal < epsilon)
+    | Error e -> raise (InvalidOperationException(e.ToString()))
+
+
+[<Fact>]
+let ``test pow operation`` () =
+    let args = [|"3";"^";"4"|]
+    
+    //act
+    let result = parseCalcArguments args
+    
+    //assert
+    match result with
+    | Ok _ -> raise (InvalidOperationException("This test must always return Error Result Type"))
+    | Error resultError -> Assert.Equal(resultError, Message.WrongArgFormatOperation)
