@@ -5,8 +5,7 @@
       <DataCollector friendlyName="XPlat code coverage">
         <Configuration>
           <Format>opencover</Format>          
-          <ExcludeByFile>**/Tests.RunLogic/**,**/*.cshtml,**/Hw*/Program.cs,**/Hw*/Program.fs,**/HT-ITIS.2.1-student/Homework3/Hw3.Mutex/WithMutex.cs
-****/HT-ITIS.2.1-student/Homework5/Hw5/MaybeBuilder.fs,**/Homework6/**,**/Homework7/**,**/Homework8/**,**/Homework9/**,**/Homework10/**,**/Homework11/**,**/Homework12/**,**/Homework13/**</ExcludeByFile>
+          <ExcludeByFile>**/Tests.RunLogic/**,**/*.cshtml,**/Hw*/Program.cs,**/Hw*/Program.fs,**/HT-ITIS.2.1-student/Homework3/Hw3.Mutex/WithMutex.cs,**/HT-ITIS.2.1-student/Homework5/Hw5/MaybeBuilder.fs,**/Homework6/**,**/Homework7/**,**/Homework8/**,**/Homework9/**,**/Homework10/**,**/Homework11/**,**/Homework12/**,**/Homework13/**</ExcludeByFile>
         </Configuration>
       </DataCollector>
     </DataCollectors>

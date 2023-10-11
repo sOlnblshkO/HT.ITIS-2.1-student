@@ -10,15 +10,6 @@ let isArgLengthSupported (args:string[]): Result<'a,'b> =
     | true -> Ok args
     | false -> Error Message.WrongArgLength
     
-[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
-let inline isOperationSupported (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =
-    match operation with
-    | CalculatorOperation.Plus -> Ok (arg1, operation, arg2)
-    | CalculatorOperation.Minus -> Ok (arg1, operation, arg2)
-    | CalculatorOperation.Multiply -> Ok (arg1, operation, arg2)
-    | CalculatorOperation.Divide -> Ok (arg1, operation, arg2)
-    | _ -> Error Message.WrongArgFormatOperation
-
 
 let parseOperation(arg:string):Result<CalculatorOperation,Message> =
     match arg with
@@ -39,6 +30,14 @@ let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOper
         | _ -> Ok (arg1,operation,arg2)
     | _ -> Ok (arg1,operation,arg2)
 
+[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
+let inline isOperationSupported (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =
+    match operation with
+    | CalculatorOperation.Plus -> Ok (arg1, operation, arg2)
+    | CalculatorOperation.Minus -> Ok (arg1, operation, arg2)
+    | CalculatorOperation.Multiply -> Ok (arg1, operation, arg2)
+    | CalculatorOperation.Divide -> Ok (arg1, operation, arg2)
+    | _ -> Error Message.WrongArgFormatOperation
 
 let convertValue (arg:string) : Result<double,Message> = 
     match Double.TryParse arg with
@@ -66,8 +65,8 @@ let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message>
 let parseCalcArguments (args: string[]): Result<'a, 'b>  =    
     maybe
         {        
-        let! parsedArgs = parseArgs args
-        let! parsedArgs = isOperationSupported parsedArgs
-        let! parsedArgs = isDividingByZero parsedArgs
-        return parsedArgs
+        let! parsedArgs = parseArgs args     
+        let! parsedSupportedArgs = isOperationSupported parsedArgs
+        let! resultArgs = isDividingByZero parsedSupportedArgs
+        return resultArgs
         }    
