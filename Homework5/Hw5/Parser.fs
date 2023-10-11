@@ -20,7 +20,7 @@ let inline isOperationSupported (arg1, operation, arg2): Result<('a * Calculator
     | _ -> Error Message.WrongArgFormatOperation
 
 
-let parseOperation(arg:string):Result<CalculatorOperation,Message>=
+let parseOperation(arg:string):Result<CalculatorOperation,Message> =
     match arg with
     | "+" -> Ok CalculatorOperation.Plus
     | "-" -> Ok CalculatorOperation.Minus
@@ -48,47 +48,26 @@ let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOper
         | _ -> Ok (arg1,operation,arg2)
 
 
-let getTypeOfArg (arg:string) : Result<Type,Message> = 
-    match Int32.TryParse arg with
-    | (true,value) -> Ok typeof<int>
-    | _ -> 
-        match Double.TryParse arg with
-        | (true,value) -> Ok typeof<double>
-        | _ ->
-            match Decimal.TryParse arg with
-            | (true,value) -> Ok typeof<decimal>
-            | _ -> Error Message.WrongArgFormat
+let convertValue (arg:string) : Result<double,Message> = 
+    match Double.TryParse arg with
+        | (true,value) -> Ok value
+        | _ -> Error Message.WrongArgFormat
 
-let convertValues (args:string[]) (firstArgType) (secondArgType) : Result<('a * CalculatorOperation * 'b), Message> = 
-    let converterA = ComponentModel.TypeDescriptor.GetConverter(firstArgType)
-    let converterB = ComponentModel.TypeDescriptor.GetConverter(secondArgType)
-    match firstArgType.FullName with
-    | "System.Double" -> 
-        let a = converterA.ConvertFrom(args[0]) :?> double
-        match secondArgType.FullName with
-        | "System.Double" ->
-            let b = converterB.ConvertFrom(args[2]) :?> double
-            let resultOperation = parseOperation args[1] 
-            match resultOperation with
-            | Error err -> Error err
-            | Ok operation ->
-                Ok (a,operation,b)       
-    | _ ->
-        let a = converterA.ConvertFrom(args[0]) :?> int
-        let b = converterB.ConvertFrom(args[2]) :?> int
-        let resultOperation = parseOperation args[1] 
-        match resultOperation with
-        | Error err -> Error err
-        | Ok operation ->
-            Ok (a,operation,b)  
+let convertValues (args:string[]) : Result<('a * CalculatorOperation * 'b), Message> = 
+    maybe
+        {
+        let! firstValue = convertValue args[0]
+        let! secondValue = convertValue args[2]
+        let! operation = parseOperation args[1]
+        return (firstValue,operation,secondValue)
+        }
+    
 
 let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message> = 
     maybe
         {
-        let! supportedArgs = isArgLengthSupported args
-        let! firstArgType = getTypeOfArg supportedArgs[0]
-        let! secondArgType = getTypeOfArg supportedArgs[2]   
-        let! convertedArgs = convertValues supportedArgs firstArgType secondArgType        
+        let! supportedArgs = isArgLengthSupported args           
+        let! convertedArgs = convertValues supportedArgs        
         return convertedArgs
         }    
         
