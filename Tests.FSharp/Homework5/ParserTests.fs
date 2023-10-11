@@ -160,3 +160,14 @@ let ``values converted correctly`` (value1, operation, value2, type1, type2, exp
     | Error e -> raise (InvalidOperationException(e.ToString()))
 
 
+[<Fact>]
+let ``test pow operation`` () =
+    let args = [|"3";"^";"4"|]
+    
+    //act
+    let result = parseCalcArguments args
+    
+    //assert
+    match result with
+    | Ok _ -> raise (InvalidOperationException("This test must always return Error Result Type"))
+    | Error resultError -> Assert.Equal(resultError, Message.WrongArgFormatOperation)

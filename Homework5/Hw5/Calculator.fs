@@ -7,6 +7,7 @@ type CalculatorOperation =
      | Minus = 1
      | Multiply = 2
      | Divide = 3
+     | Pow = 4
 
 [<Literal>] 
 let plus = "+"

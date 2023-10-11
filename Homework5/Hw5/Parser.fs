@@ -17,6 +17,7 @@ let parseOperation(arg:string):Result<CalculatorOperation,Message> =
     | "-" -> Ok CalculatorOperation.Minus
     | "*" -> Ok CalculatorOperation.Multiply
     | "/" -> Ok CalculatorOperation.Divide
+    | "^" -> Ok CalculatorOperation.Pow
     | _ -> Error Message.WrongArgFormatOperation
 
 
