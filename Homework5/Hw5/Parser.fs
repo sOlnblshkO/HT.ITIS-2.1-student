@@ -29,23 +29,15 @@ let parseOperation(arg:string):Result<CalculatorOperation,Message> =
     | _ -> Error Message.WrongArgFormatOperation
 
 
-let tryChangeType<'T> (value : obj) = 
-    try 
-        Some (Convert.ChangeType(value, typeof<'T>) :?> 'T)
-    with
-    | _ -> None
-
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =
-    match tryChangeType<'b> 0 with
-    | None -> Ok (arg1,operation,arg2)
-    | Some zero ->
-        match operation with  
-        | CalculatorOperation.Divide ->
-            match arg2 with
-            | _ when arg2 = zero -> Error Message.DivideByZero
-            | _ -> Ok (arg1,operation,arg2)
+    let zero = Convert.ChangeType(0, typeof<'b>) :?> 'b
+    match operation with  
+    | CalculatorOperation.Divide ->
+        match arg2 with
+        | _ when arg2 = zero -> Error Message.DivideByZero
         | _ -> Ok (arg1,operation,arg2)
+    | _ -> Ok (arg1,operation,arg2)
 
 
 let convertValue (arg:string) : Result<double,Message> = 
