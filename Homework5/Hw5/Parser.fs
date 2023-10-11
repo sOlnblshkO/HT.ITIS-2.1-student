@@ -13,14 +13,14 @@ let inline isOperationSupported (operation): Result<(CalculatorOperation), Messa
     match operation with
     | Calculator.plus -> Ok CalculatorOperation.Plus
     | Calculator.minus -> Ok CalculatorOperation.Minus
-    | Calculator.multiply -> Ok CalculatorOperation.Divide
-    | Calculator.divide -> Ok CalculatorOperation.Multiply
+    | Calculator.multiply -> Ok CalculatorOperation.Multiply
+    | Calculator.divide -> Ok CalculatorOperation.Divide
     | _ -> Error Message.WrongArgFormatOperation
 
 let parseDouble (num: string): Result<double, Message> =
     match Double.TryParse(num) with
     | true, value -> Ok value
-    | false, value -> Error Message.WrongArgFormat
+    | _ -> Error Message.WrongArgFormat
 
 let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message> =
     MaybeBuilder.maybe{
@@ -32,7 +32,7 @@ let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message>
 
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =
-    if arg2 = 0.0 && operation = CalculatorOperation.Divide then
+    if operation = CalculatorOperation.Divide && arg2 = 0.0 then
         Error Message.DivideByZero
     else
         Ok (arg1, operation, arg2)
