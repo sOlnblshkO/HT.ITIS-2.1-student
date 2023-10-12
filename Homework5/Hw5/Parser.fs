@@ -4,14 +4,14 @@ open System
 open Hw5.Calculator
 open Hw5.MaybeBuilder
 
-let isArgLengthSupported (args:string[]): Result<'a,'b> =
+let isArgLengthSupported (args:string[]): Result<string[],Message> =
     if args.Length = 3 then
         Ok args
     else
         Error Message.WrongArgLength 
      
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
-let inline isOperationSupported (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =
+let inline isOperationSupported (arg1, operation, arg2): Result<'a * CalculatorOperation * 'b, Message> =
     match operation with
     | Calculator.plus -> Ok(arg1, CalculatorOperation.Plus, arg2)
     | Calculator.minus -> Ok(arg1, CalculatorOperation.Minus, arg2)
@@ -24,7 +24,7 @@ let FromStringToDouble (arg : string) =
     | true, value -> Ok value
     | _ -> Error Message.WrongArgFormat
 
-let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message> =
+let parseArgs (args: string[]): Result<double * CalculatorOperation * double, Message> =
     maybe{
         let! сheckLength = args |> isArgLengthSupported
         let! args1 = args[0] |> FromStringToDouble
@@ -34,13 +34,13 @@ let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message>
     }
     
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
-let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =
+let inline isDividingByZero (arg1, operation, arg2): Result<double * CalculatorOperation * double, Message> =
     if (operation,arg2) = (CalculatorOperation.Divide, 0.0) then
         Error Message.DivideByZero
     else
         Ok(arg1, operation, arg2)
     
-let parseCalcArguments (args: string[]): Result<'a, 'b> =
+let parseCalcArguments (args: string[]): Result<double * CalculatorOperation * double, Message> =
     maybe{
         let! argsParsed = args |> parseArgs
         let! divideByZero = argsParsed |> isDividingByZero
