@@ -8,11 +8,10 @@ let getErrorMessage e =
         | Message.WrongArgFormatOperation -> "operation is not supported"
         | Message.DivideByZero -> "division by 0"
         | _ -> "unknown error"
-        |> printfn "error occured: %s"
         
 [<EntryPoint>]
 let main args =
     match Parser.parseCalcArguments args with
     | Ok (arg1, operation, arg2) -> Calculator.calculate arg1 operation arg2 |> printfn "%f"
-    | Error errorMsg -> getErrorMessage errorMsg
+    | Error errorMsg -> getErrorMessage errorMsg |> printfn "error occured: %s"
     0
