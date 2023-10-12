@@ -1,5 +1,4 @@
-﻿open System
-open Hw5
+﻿open Hw5
 open Hw5.Parser
 open Hw5.Calculator
 
@@ -9,6 +8,8 @@ let createMessage message =
     | Message.WrongArgFormat -> "Argument could not be converted to the double type"
     | Message.WrongArgFormatOperation -> "Unknown operation"
     | Message.DivideByZero -> "Divide by zero"
+    | Message.SuccessfulExecution -> "Well done"
+    | _ -> "Unknown error"
 
 let Main args =
     match parseCalcArguments args with
