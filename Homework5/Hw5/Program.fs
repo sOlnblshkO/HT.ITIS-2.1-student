@@ -1,4 +1,5 @@
-﻿open Hw5
+﻿open System
+open Hw5
 open Hw5.Parser
 open Hw5.Calculator
 
@@ -11,8 +12,13 @@ let createMessage message =
     | Message.SuccessfulExecution -> "Well done"
     | _ -> "Unknown error"
 
+[<EntryPoint>]
 let Main args =
     match parseCalcArguments args with
     | Ok (arg1,operation,arg2) -> calculate arg1 operation arg2 |> printfn "%f"
     | Error message -> createMessage message |> printfn "%s"
+    0
+    
+
+
         
