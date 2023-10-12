@@ -4,7 +4,7 @@ open System
 open Hw5.Calculator
 open System.Globalization
 
-let isArgLengthSupported (args:string[]): Result<'a,'b> =
+let isArgLengthSupported (args:string[]): Result<_, _> =
     match Array.length args = 3 with
     | true -> Ok args
     | false -> Error Message.WrongArgLength
@@ -18,7 +18,7 @@ let inline isOperationSupported (arg1, operation, arg2): Result<('a * Calculator
     | "/" -> Ok (arg1, CalculatorOperation.Divide, arg2)
     | _ -> Error Message.WrongArgFormatOperation
 
-let parseArgs (args: string[]): Result<('a * string * 'b), Message> =
+let parseArgs (args: string[]): Result<(_ * string * _), Message> =
     match Double.TryParse(args[0], NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture) with
     | true, val1 ->
          match Double.TryParse(args[2], NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture) with
@@ -27,7 +27,7 @@ let parseArgs (args: string[]): Result<('a * string * 'b), Message> =
     | false, _ -> Error Message.WrongArgFormat
 
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
-let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =
+let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOperation * _), Message> =
     match operation with
     | CalculatorOperation.Divide ->
         match arg2 with
@@ -35,7 +35,7 @@ let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOper
         | _ -> Ok (arg1, operation, arg2)
     | _ -> Ok (arg1, operation, arg2)
     
-let parseCalcArguments (args: string[]): Result<'a, 'b> =
+let parseCalcArguments (args: string[]): Result<_, _> =
     MaybeBuilder.maybe {
         let! args = isArgLengthSupported args
         let! args = parseArgs args
