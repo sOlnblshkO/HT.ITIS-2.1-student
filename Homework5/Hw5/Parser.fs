@@ -37,11 +37,8 @@ let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message>
 
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =
-    match (operation) with
-    | CalculatorOperation.Divide ->
-        match arg2 with
-        |0.0 -> Error Message.DivideByZero
-        | _ -> Ok (arg1, operation, arg2)
+    match operation, arg2 with
+    | CalculatorOperation.Divide, 0.0 -> Error Message.DivideByZero
     | _ -> Ok (arg1, operation, arg2)
     
 let parseCalcArguments (args: string[]): Result<'a, 'b> =
