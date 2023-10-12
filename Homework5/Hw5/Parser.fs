@@ -24,9 +24,10 @@ let stringDoubleParser (arg : string) =
     match Double.TryParse(arg) with
     | true, value -> Ok value
     | _ -> Error Message.WrongArgFormat
+    
 let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message> =
     maybe{
-        let! tupleArgs = isArgLengthSupported args
+        let! tupleArgs = isArgLengthSupported args 
         let! arg1 = stringDoubleParser args[0]
         let! arg2 =  stringDoubleParser args[2]
         let! _, operation, _ = isOperationSupported tupleArgs
@@ -45,7 +46,8 @@ let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOper
     
 let parseCalcArguments (args: string[]): Result<'a, 'b> =
     maybe {
-        let! tupleArgs = parseArgs args
-        let! finalArgs = isDividingByZero tupleArgs
+        let! tupleArgs = args |> parseArgs
+        let! finalArgs = tupleArgs |> isDividingByZero
+        
         return finalArgs
     }
