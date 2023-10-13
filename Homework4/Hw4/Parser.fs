@@ -19,7 +19,7 @@ let parseOperation (arg: string) =
 let parseArgument (arg: string) =
     match System.Double.TryParse(arg) with
     | (true, num) -> num
-    | _ -> raise (System.ArgumentException("Incorrect input number"))
+    | _ -> raise (System.ArgumentException("Wrong arg"))
 
 let parseCalcArguments (args: string[]) =
     if (not (isArgLengthSupported args)) then
