@@ -14,10 +14,12 @@ let parseArgument (arg: string) =
     | (true, num) -> Ok num
     | _ -> Error $"Could not parse value '{arg}'"
     
+    
 let Calculate (value1: string, operation: string, value2: string): Result<string, string> =
-   
+    
     let val1 = parseArgument value1
     let val2 = parseArgument value2
+    
     match val1 with
         | Ok val1 ->  match val2 with
                       | Ok val2 -> match operation with
@@ -45,8 +47,6 @@ let webApp =
              route "/" >=> text "/calculate?value1=<VAL1>&operation=<OPERATION>&value2=<VAL2>"
              route "/hello" >=> text "Hello"
              route "/calculate" >=> calculatorHandler 
-                
-                
             ]
         setStatusCode 404 >=> text "Not Found" 
     ]
