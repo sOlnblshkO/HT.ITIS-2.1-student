@@ -25,7 +25,7 @@ let Calculate (value1: string, operation: string, value2: string): Result<string
                                      | "Minus" -> Ok ((val1-val2).ToString())
                                      | "Multiply" -> Ok ((val1*val2).ToString())
                                      | "Divide" -> match val2 with
-                                                   | 0.0 -> Error "DivideByZero"
+                                                   | 0.0 -> Ok "DivideByZero"
                                                    | _ -> Ok ((val1/val2).ToString())
                                      | _ -> Error $"Could not parse value '{operation}'"
                       | Error errorMessage -> Error errorMessage
