@@ -14,8 +14,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Include="MaybeBuilder.fs" />
         <Compile Include="Service\Calculator.fs" />
-        <Compile Include="Service\MaybeBuilder.fs" />
         <Compile Include="Handlers\CalculatorHandler.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
@@ -25,10 +25,5 @@
         <Content Include="WebRoot\**\*">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Include="Service\Calculator.fs" />
-      <Compile Include="Service\MaybeBuilder.fs" />
     </ItemGroup>
 </Project>
