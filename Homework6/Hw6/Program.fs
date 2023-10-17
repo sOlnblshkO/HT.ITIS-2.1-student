@@ -21,7 +21,7 @@ let getValuesFromRequest(context:HttpContext):string[] =
 
 let calculatorHandler : HttpHandler =
     fun next ctx ->
-        let result: Result<string, Message> = 
+        let result: Result<string, string> = 
             maybe
                 {
                     let args = getValuesFromRequest ctx
@@ -32,7 +32,7 @@ let calculatorHandler : HttpHandler =
 
         match result with
         | Ok ok -> (setStatusCode 200 >=> text (ok.ToString())) next ctx
-        | Error error -> (setStatusCode 400 >=> text (error.ToString())) next ctx
+        | Error error -> (setStatusCode 400 >=> text error) next ctx
 
 let webApp =
     choose [
