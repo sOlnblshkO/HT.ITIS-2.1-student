@@ -11,7 +11,7 @@ let getInput () =
     let value2 = Console.ReadLine()
     (value1, operation, value2)
 
-let send value1 (operation: string) value2 =
+let send value1 operation value2 =
     async {
         use client = new HttpClient()
 
