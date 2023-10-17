@@ -6,6 +6,7 @@ type CalculatorOperation =
      | Multiply = 2
      | Divide = 3
 
+[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let calculate (value1:double, operation:CalculatorOperation, value2:double)=
     match operation with
     | CalculatorOperation.Plus -> Ok $"{value1 + value2}"
