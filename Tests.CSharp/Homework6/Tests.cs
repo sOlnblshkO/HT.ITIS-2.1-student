@@ -91,6 +91,7 @@ public class BasicTests : IClassFixture<CustomWebApplicationFactory<App.Startup>
     [InlineData(null, "5.6", "Plus", "'value1' not present in a query", HttpStatusCode.BadRequest)]
     [InlineData("15.6", null, "Plus", "'value2' not present in a query", HttpStatusCode.BadRequest)]
     [InlineData("15.6", "5.6", null, "'operation' not present in a query", HttpStatusCode.BadRequest)]
+    [InlineData(null, null, null, "'value1' not present in a query", HttpStatusCode.BadRequest)]
     public async Task TestIncompleteQuery(string? value1, string? value2, string? operation,
         string expectedValue, HttpStatusCode statusCode)
     {
