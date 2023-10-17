@@ -14,7 +14,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="Model\Message.fs" />
         <Compile Include="Model\MaybeBuilder.fs" />
         <Compile Include="Model\Calculator.fs" />
         <Compile Include="Model\Parser.fs" />

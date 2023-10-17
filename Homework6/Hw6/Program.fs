@@ -32,6 +32,7 @@ let calculatorHandler : HttpHandler =
 
         match result with
         | Ok ok -> (setStatusCode 200 >=> text (ok.ToString())) next ctx
+        | Error "DivideByZero" -> (setStatusCode 200 >=> text "DivideByZero") next ctx
         | Error error -> (setStatusCode 400 >=> text error) next ctx
 
 let webApp =

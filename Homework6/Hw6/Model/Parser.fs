@@ -18,7 +18,7 @@ let parseOperation(arg:string):Result<CalculatorOperation,string> =
     | "Multiply" -> Ok CalculatorOperation.Multiply
     | "Divide" -> Ok CalculatorOperation.Divide
     | "Pow" -> Ok CalculatorOperation.Pow
-    | _ -> Error $"Could not parse value {arg}" 
+    | _ -> Error $"Could not parse value '{arg}'" 
 
 
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
@@ -38,12 +38,12 @@ let inline isOperationSupported (arg1, operation, arg2): Result<('a * Calculator
     | CalculatorOperation.Minus -> Ok (arg1, operation, arg2)
     | CalculatorOperation.Multiply -> Ok (arg1, operation, arg2)
     | CalculatorOperation.Divide -> Ok (arg1, operation, arg2)
-    | _ -> Error $"Could not parse value {operation}" 
+    | _ -> Error $"Could not parse value '{operation}'" 
 
 let convertValue (arg:string) : Result<double,string> = 
     match Double.TryParse arg with
         | (true,value) -> Ok value
-        | _ -> Error $"Could not parse value {arg}" 
+        | _ -> Error $"Could not parse value '{arg}'" 
 
 let convertValues (args:string[]) : Result<('a * CalculatorOperation * 'b), string> = 
     maybe
