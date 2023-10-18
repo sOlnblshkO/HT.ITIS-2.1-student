@@ -1,16 +1,24 @@
 module Hw6.App
 
-open System
+open System.Threading.Tasks
+open Hw6.MaybeBuilder
+open Hw6.Calculator
+open Hw6.Parser
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
-
 let calculatorHandler: HttpHandler =
     fun next ctx ->
-        let result: Result<string, string> = raise(NotImplementedException())
+       
+        let query = ctx.Request.Query
+        let result: Result<string, string> = maybe {
+            let! argsParsed = parseCalcArguments([|query.Item "value1" ; query.Item "operation" ; query.Item "value2"|])
+            let! calculated = calculate argsParsed
+            return calculated
+        }
 
         match result with
         | Ok ok -> (setStatusCode 200 >=> text (ok.ToString())) next ctx
@@ -20,6 +28,7 @@ let webApp =
     choose [
         GET >=> choose [
              route "/" >=> text "Use //calculate?value1=<VAL1>&operation=<OPERATION>&value2=<VAL2>"
+             route "/calculate" >=> calculatorHandler
         ]
         setStatusCode 404 >=> text "Not Found" 
     ]
