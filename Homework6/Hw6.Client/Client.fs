@@ -9,14 +9,12 @@ let parseOperation operation =
     | "/" -> "Divide"
     | _ -> operation
 
-
 let sendRequestAsync(client : HttpClient) (url : string) =
     async {
         let! response = Async.AwaitTask (client.GetAsync url)
         let! res = Async.AwaitTask (response.Content.ReadAsStringAsync())
         return res
     }
-    
     
 [<EntryPoint>]
 let main args =

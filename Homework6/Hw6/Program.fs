@@ -33,7 +33,6 @@ let Calculate (value1: string, operation: string, value2: string): Result<string
                       | Error errorMessage -> Error errorMessage
         | Error errorMessage -> Error errorMessage
     
-    
 let calculatorHandler: HttpHandler =
     fun next ctx ->
         let result: Result<string, string> = Calculate (ctx.Request.Query.Item "value1", ctx.Request.Query.Item "operation", ctx.Request.Query.Item "value2")
@@ -50,7 +49,6 @@ let webApp =
         setStatusCode 404 >=> text "Not Found" 
     ]
     
-
 type Startup() =
     member _.ConfigureServices (services : IServiceCollection) =
         services.AddGiraffe() |> ignore
