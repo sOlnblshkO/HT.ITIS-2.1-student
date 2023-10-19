@@ -27,10 +27,10 @@ let parseArgs (args: string[]): Result<('a * string * 'b), String> =
         | _ -> Error $"Could not parse value '{args[2]}'"
     | _ -> Error $"Could not parse value '{args[0]}'"
 
-let isArgLengthSupported (args:string[]): Result<'a,'b> =
-    match args.Length with
-    | 3 -> Ok args
-    | _ -> Error "Wrong argument length"
+// let isArgLengthSupported (args:string[]): Result<'a,'b> =
+//     match args.Length with
+//     | 3 -> Ok args
+//     | _ -> Error "Wrong argument length"
     
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let inline isOperationSupported (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), String> =
@@ -45,8 +45,8 @@ let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOper
     
 let parseCalcArguments (args: string[]): Result<'a, 'b> =
     maybe {
-        let! argLengthSupported = args |> isArgLengthSupported   
-        let! argsParse = argLengthSupported |> parseArgs 
+        // let! argLengthSupported = args |> isArgLengthSupported   
+        let! argsParse = args |> parseArgs 
         let! operationParse = argsParse |> isOperationSupported 
         let! checkDividindByZero = operationParse |> isDividingByZero 
         return checkDividindByZero
