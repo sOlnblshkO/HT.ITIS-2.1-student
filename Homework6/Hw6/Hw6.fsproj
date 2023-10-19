@@ -14,6 +14,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Include="CalculatorOperation.fs" />
+        <Compile Include="Calculator.fs" />
+        <Compile Include="MaybeBuilder.fs" />
+        <Compile Include="Parser.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
