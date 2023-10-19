@@ -1,6 +1,7 @@
 ﻿module Hw5.Parser
 
 open System
+open System.Globalization
 open Hw5.Calculator
 open Hw5.MaybeBuilder
 let isArgLengthSupported (args:string[]): Result<'a,'b> =
@@ -19,7 +20,7 @@ let inline isOperationSupported (arg1, operation, arg2): Result<('a * Calculator
     | _ -> Error (Message.WrongArgFormatOperation)
     
 let parseArgument (arg: string) =
-    match Double.TryParse(arg) with
+    match Double.TryParse(arg, NumberStyles.Float, CultureInfo.InvariantCulture) with
     | (true, num) -> Ok num
     | _ -> Error Message.WrongArgFormat
     

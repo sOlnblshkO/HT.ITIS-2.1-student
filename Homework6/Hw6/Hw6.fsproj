@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
         <AssemblyName>Hw6.App</AssemblyName>
         <EnableDefaultContentItems>false</EnableDefaultContentItems>
         <RootNamespace>Hw6</RootNamespace>
+        <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
