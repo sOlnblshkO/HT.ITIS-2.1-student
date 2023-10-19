@@ -27,13 +27,13 @@ let parseArgs (args: string[]): Result<('a * string * 'b), String> =
         | _ -> Error $"Could not parse value '{args[2]}'"
     | _ -> Error $"Could not parse value '{args[0]}'"
     
-
+[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let inline isOperationSupported (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), String> =
     match operation with
     | ParseOpr operation -> Ok (arg1, operation, arg2)
     | _ -> Error $"Could not parse value '{operation}'"
 
-
+[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let inline isDividingByZero (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), String> =
     if arg2 = 0.0 && operation = CalculatorOperation.Divide then Error "DivideByZero"
     else Ok (arg1, operation, arg2)
