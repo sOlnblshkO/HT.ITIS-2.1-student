@@ -15,6 +15,7 @@ let Multiply = "*"
 [<Literal>]
 let Divide = "/"
 
+[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let inline calculate value1 operation value2: 'a =
     match operation with
     | CalculatorOperation.Plus -> value1 + value2
