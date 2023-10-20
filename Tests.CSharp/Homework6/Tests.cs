@@ -83,7 +83,7 @@ public class BasicTests : IClassFixture<CustomWebApplicationFactory<App.Startup>
     [Homework(Homeworks.HomeWork6)]
     public async Task TestParserDividingByZero()
     {
-        await RunTest("15.6", "0", "Divide", "DivideByZero", HttpStatusCode.OK, true);
+        await RunTest("15.6", "0", "Divide", "DivideByZero", HttpStatusCode.BadRequest, true);
     }
 
     private async Task RunTest(string value1, string value2, string operation, string expectedValueOrError,

@@ -14,9 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="Calculator.fs" />
         <Compile Include="MaybeBuilder.fs" />
-        <Compile Include="Parser.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
@@ -25,5 +23,9 @@
         <Content Include="WebRoot\**\*">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Homework5\Hw5\Hw5.fsproj" />
     </ItemGroup>
 </Project>
