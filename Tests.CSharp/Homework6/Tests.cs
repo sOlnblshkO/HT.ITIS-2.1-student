@@ -88,10 +88,10 @@ public class BasicTests : IClassFixture<CustomWebApplicationFactory<App.Startup>
 
 
     [HomeworkTheory(Homeworks.HomeWork6)]
-    [InlineData(null, "5.6", "Plus", "'value1' not present in a query", HttpStatusCode.BadRequest)]
-    [InlineData("15.6", null, "Plus", "'value2' not present in a query", HttpStatusCode.BadRequest)]
-    [InlineData("15.6", "5.6", null, "'operation' not present in a query", HttpStatusCode.BadRequest)]
-    [InlineData(null, null, null, "'value1' not present in a query", HttpStatusCode.BadRequest)]
+    [InlineData(null, "5.6", "Plus", "Missing value for required property value1.", HttpStatusCode.BadRequest)]
+    [InlineData("15.6", null, "Plus", "Missing value for required property value2.", HttpStatusCode.BadRequest)]
+    [InlineData("15.6", "5.6", null, "Missing value for required property operation.", HttpStatusCode.BadRequest)]
+    [InlineData(null, null, null, "Missing value for required property value1.", HttpStatusCode.BadRequest)]
     public async Task TestIncompleteQuery(string? value1, string? value2, string? operation,
         string expectedValue, HttpStatusCode statusCode)
     {

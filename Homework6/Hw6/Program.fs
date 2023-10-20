@@ -9,13 +9,15 @@ open Giraffe
 
 open Hw6.WebCalculator
 
+let (>>=) a f = Result.bind f a
+
 let calculatorHandler: HttpHandler =
     fun next ctx ->
-        let result = calculate ctx
+        let result = ctx.TryBindQueryString<CalculatorModel>() >>= calculate
 
         match result with
         | Ok ok -> (setStatusCode 200 >=> text (ok.ToString())) next ctx
-        | Error error -> (setStatusCode 400 >=> text error) next ctx
+        | Error error -> (setStatusCode 400 >=> text (error.Replace("System.Double", "double"))) next ctx
 
 let webApp =
     choose
