@@ -10,5 +10,5 @@ let resStr = match parsedArguments with
                  let arg1, operation, arg2 = success
                  printfn $"Result: {calculate arg1 operation arg2}"
              | Error error ->
-                 printfn $"Something went wrong: {error}"
+                  printfn $"Something went wrong: {error}"
                  
