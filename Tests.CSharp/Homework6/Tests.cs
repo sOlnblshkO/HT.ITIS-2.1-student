@@ -86,11 +86,29 @@ public class BasicTests : IClassFixture<CustomWebApplicationFactory<App.Startup>
         await RunTest("15.6", "0", "Divide", "DivideByZero", HttpStatusCode.OK, true);
     }
 
-    private async Task RunTest(string value1, string value2, string operation, string expectedValueOrError,
+
+    [HomeworkTheory(Homeworks.HomeWork6)]
+    [InlineData(null, "5.6", "Plus", "Missing value for required property value1.", HttpStatusCode.BadRequest)]
+    [InlineData("15.6", null, "Plus", "Missing value for required property value2.", HttpStatusCode.BadRequest)]
+    [InlineData("15.6", "5.6", null, "Missing value for required property operation.", HttpStatusCode.BadRequest)]
+    [InlineData(null, null, null, "Missing value for required property value1.", HttpStatusCode.BadRequest)]
+    public async Task TestIncompleteQuery(string? value1, string? value2, string? operation,
+        string expectedValue, HttpStatusCode statusCode)
+    {
+        await RunTest(value1, value2, operation, expectedValue, statusCode);
+    }
+
+    private async Task RunTest(string? value1, string? value2, string? operation, string expectedValueOrError,
         HttpStatusCode statusCode, bool isDividingByZero = false)
     {
         // arrange
-        var url = $"/calculate?value1={value1}&operation={operation}&value2={value2}";
+        var url = "/calculate?";
+        if (value1 != null)
+            url += $"value1={value1}&";
+        if (operation != null)
+            url += $"operation={operation}&";
+        if (value2 != null)
+            url += $"value2={value2}";
 
         // act
         var client = _factory.CreateClient();
