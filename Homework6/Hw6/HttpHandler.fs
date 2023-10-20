@@ -8,8 +8,11 @@ let calculatorHandler: HttpHandler =
     fun next ctx ->
        
         let query = ctx.Request.Query
+        let val1 = query.Item "value1"
+        let op = query.Item "operation"
+        let val2 = query.Item "value2"
         let result: Result<string, string> = maybe {
-            let! argsParsed = parseCalcArguments([|query.Item "value1" ; query.Item "operation" ; query.Item "value2"|])
+            let! argsParsed = parseCalcArguments([|val1.ToString()  ; op.ToString() ; val2.ToString()|])
             let! calculated = calculate argsParsed
             return calculated
         }
