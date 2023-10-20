@@ -7,7 +7,6 @@ open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
-open Hw6.MaybeBuilder
 open Hw5
 open Hw5.Calculator
 open System.Globalization
@@ -64,7 +63,7 @@ let calculateArgs val1 op val2 =
  
 let calculatorHandler: HttpHandler =
     fun next ctx ->
-        let result: Result<string, string> = maybe {
+        let result: Result<string, string> = Hw5.MaybeBuilder.maybe {
             let! args = ctx.TryBindQueryString<CalcArgs>()
             let! val1, op, val2 = parseArgs args 
             let! output = calculateArgs val1 op val2
