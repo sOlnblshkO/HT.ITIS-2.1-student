@@ -25,5 +25,6 @@ let inline calculate(value1:double,  operation:string,  value2:double) =
     | "/" -> match value2 = 0.0 with
              | true -> Ok "Dividing by zero"
              | false -> Ok $"{value1 / value2}"
+    | _ -> Error $"Undefined operation"
             
             
