@@ -11,7 +11,7 @@ namespace Hw7.MyHtmlServices;
 
 public static class HtmlHelperExtensions
 {
-    private static IHtmlParser _htmlParser;
+    private static IHtmlParser? _htmlParser;
     public static IHtmlContent MyEditorForModel(this IHtmlHelper helper)
     {
         var entity = helper.ViewData.Model;
@@ -50,31 +50,6 @@ public static class HtmlHelperExtensions
 
         return htmlContent.ToString();
     }
-
-    private static string GetHtmlForField(PropertyInfo property)
-    {
-        var htmlContent = new StringBuilder();
-
-        htmlContent.AppendLine(
-            $"<input type=\"{GetInputType(property.PropertyType)}\" name=\"{property.Name}\" id=\"{property.Name}\"/>");
-
-        return htmlContent.ToString();
-    }
-
-    private static string GetHtmlForEnum(PropertyInfo property)
-    {
-        var htmlContent = new StringBuilder();
-
-        htmlContent.AppendLine($"<select name=\"{property.Name}\" required>");
-        foreach (var value in Enum.GetValues(property.PropertyType))
-        {
-            htmlContent.AppendLine($"<option value=\"{value}\">{value}</option>");
-        }
-
-        htmlContent.AppendLine("</select>");
-
-        return htmlContent.ToString();
-    }
     
     private static string GetFieldDisplay(PropertyInfo property)
     {
@@ -86,6 +61,4 @@ public static class HtmlHelperExtensions
 
         return displayAttribute.Name ?? string.Empty;
     }
-    
-    private static string GetInputType(Type type) => type == typeof(string) ? "text" : "number";
 }
