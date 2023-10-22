@@ -35,8 +35,8 @@ public static class HtmlHelperExtensions
                 _htmlParser = new EnumParser();
             else
                 _htmlParser = new FieldParser();
-            
-            htmlContent.AppendLine(_htmlParser.GetHtml(property));
+
+            htmlContent.AppendLine(_htmlParser.GetHtml(property) ?? throw new FormatException($"Неподдерживаемый тип данных: {propertyType.FullName}"));
 
             var validationResult = Validator.ValidateProperty(property, entity);
             
@@ -59,6 +59,6 @@ public static class HtmlHelperExtensions
             return string.Join(' ', Regex.Split(property.Name, "(?<!^)(?=[A-Z])"));
         }
 
-        return displayAttribute.Name ?? string.Empty;
+        return displayAttribute.Name!;
     }
 }
