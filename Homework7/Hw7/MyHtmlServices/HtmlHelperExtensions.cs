@@ -26,17 +26,16 @@ public static class HtmlHelperExtensions
         foreach (var property in properties)
         {
             var display = GetFieldDisplay(property);
-            var propertyType = property.PropertyType;
 
             htmlContent.AppendLine("<div>");
             htmlContent.AppendLine($"<label for=\"{property.Name}\">{display}</label><br>");
 
-            if (propertyType.IsEnum)
+            if (property.PropertyType.IsEnum)
                 _htmlParser = new EnumParser();
             else
                 _htmlParser = new FieldParser();
 
-            htmlContent.AppendLine(_htmlParser.GetHtml(property) ?? throw new FormatException($"Неподдерживаемый тип данных: {propertyType.FullName}"));
+            htmlContent.AppendLine(_htmlParser.GetHtml(property));
 
             var validationResult = Validator.ValidateProperty(property, entity);
             
