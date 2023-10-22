@@ -2,6 +2,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using Hw7.Enums;
+using Hw7.Parsers.HtmlParser;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -9,6 +11,7 @@ namespace Hw7.MyHtmlServices;
 
 public static class HtmlHelperExtensions
 {
+    private static IHtmlParser _htmlParser;
     public static IHtmlContent MyEditorForModel(this IHtmlHelper helper)
     {
         var entity = helper.ViewData.Model;
@@ -28,12 +31,20 @@ public static class HtmlHelperExtensions
             htmlContent.AppendLine("<div>");
             htmlContent.AppendLine($"<label for=\"{property.Name}\">{display}</label><br>");
 
-            Func<PropertyInfo, string> getHtml = propertyType.IsEnum ? GetHtmlForEnum : GetHtmlForField;
+            if (propertyType.IsEnum)
+                _htmlParser = new EnumParser();
+            else
+                _htmlParser = new FieldParser();
+            
+            htmlContent.AppendLine(_htmlParser.GetHtml(property));
 
-            htmlContent.AppendLine(getHtml(property));
-
-            Validator.PropertyValidate(property, entity, out var message);
-            htmlContent.AppendLine($"<span>{message}</span>");
+            var validationResult = Validator.ValidateProperty(property, entity);
+            
+            if (validationResult.Status == ResultStatus.Error)
+            {
+                htmlContent.AppendLine($"<span>{validationResult.Data}</span>");
+            }
+            
             htmlContent.AppendLine("</div><br><br>");
         }
 
@@ -64,11 +75,17 @@ public static class HtmlHelperExtensions
 
         return htmlContent.ToString();
     }
+    
+    private static string GetFieldDisplay(PropertyInfo property)
+    {
+        if (Attribute.GetCustomAttribute(property, typeof(DisplayAttribute)) is not DisplayAttribute displayAttribute)
+        {
+            //Regexp разделяет CamelCase по большим буквам 
+            return string.Join(' ', Regex.Split(property.Name, "(?<!^)(?=[A-Z])"));
+        }
 
-    private static string? GetFieldDisplay(PropertyInfo property) =>
-        (DisplayAttribute?)Attribute.GetCustomAttribute(property, typeof(DisplayAttribute)) == null
-            ? string.Join(' ', Regex.Split(property.Name, @"(?<!^)(?=[A-Z])"))
-            : ((DisplayAttribute)Attribute.GetCustomAttribute(property, typeof(DisplayAttribute))!).Name;
-
+        return displayAttribute.Name ?? string.Empty;
+    }
+    
     private static string GetInputType(Type type) => type == typeof(string) ? "text" : "number";
 }

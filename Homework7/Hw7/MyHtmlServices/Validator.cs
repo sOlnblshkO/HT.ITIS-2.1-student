@@ -1,31 +1,37 @@
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using Hw7.Enums;
+using Hw7.Response;
 
 namespace Hw7.MyHtmlServices;
 
+
 public static class Validator
 {
-    public static void PropertyValidate(PropertyInfo propertyInfo, object? entity, out string message)
+    public static Response<string> ValidateProperty(PropertyInfo propertyInfo, object? entity)
     {
-        if (entity == null)
+        var response = new Response<string>
         {
-            message = string.Empty;
-            return;
-        }
-
-        var validationAttributes = propertyInfo.GetCustomAttributes(typeof(ValidationAttribute), true);
-
-        foreach (ValidationAttribute attribute in validationAttributes)
+            Status = ResultStatus.Ok,
+            Data = string.Empty
+        };
+        
+        if (entity != null)
         {
-            bool isValid = attribute.IsValid(propertyInfo.GetValue(entity));
+            var validationAttributes = propertyInfo.GetCustomAttributes(typeof(ValidationAttribute), true);
 
-            if (!isValid)
+            foreach (ValidationAttribute attribute in validationAttributes)
             {
-                message = attribute.ErrorMessage!;
-                return;
+                bool isValid = attribute.IsValid(propertyInfo.GetValue(entity));
+
+                if (!isValid)
+                {
+                    response.Status = ResultStatus.Error;
+                    response.Data = attribute.ErrorMessage!;
+                }
             }
         }
 
-        message = string.Empty;
+        return response;
     }
 }
