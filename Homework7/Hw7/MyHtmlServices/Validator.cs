@@ -28,6 +28,7 @@ public static class Validator
                 {
                     response.Status = ResultStatus.Error;
                     response.Data = attribute.ErrorMessage!;
+                    break;
                 }
             }
         }

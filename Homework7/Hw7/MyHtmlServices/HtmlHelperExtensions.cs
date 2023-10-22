@@ -11,7 +11,6 @@ namespace Hw7.MyHtmlServices;
 
 public static class HtmlHelperExtensions
 {
-    private static IHtmlParser? _htmlParser;
     public static IHtmlContent MyEditorForModel(this IHtmlHelper helper)
     {
         var entity = helper.ViewData.Model;
@@ -29,13 +28,15 @@ public static class HtmlHelperExtensions
 
             htmlContent.AppendLine("<div>");
             htmlContent.AppendLine($"<label for=\"{property.Name}\">{display}</label><br>");
+            
+            IHtmlParser? htmlParser;
 
             if (property.PropertyType.IsEnum)
-                _htmlParser = new EnumParser();
+                htmlParser = new EnumParser();
             else
-                _htmlParser = new FieldParser();
+                htmlParser = new FieldParser();
 
-            htmlContent.AppendLine(_htmlParser.GetHtml(property));
+            htmlContent.AppendLine(htmlParser.GetHtml(property));
 
             var validationResult = Validator.ValidateProperty(property, entity);
             
@@ -52,12 +53,12 @@ public static class HtmlHelperExtensions
     
     private static string GetFieldDisplay(PropertyInfo property)
     {
-        if (Attribute.GetCustomAttribute(property, typeof(DisplayAttribute)) is not DisplayAttribute displayAttribute)
+        if (Attribute.GetCustomAttribute(property, typeof(DisplayAttribute)) is DisplayAttribute displayAttribute)
         {
-            //Regexp разделяет CamelCase по большим буквам 
-            return string.Join(' ', Regex.Split(property.Name, "(?<!^)(?=[A-Z])"));
+            return displayAttribute.Name!;
         }
-
-        return displayAttribute.Name!;
+        
+        //Regexp разделяет CamelCase по большим буквам 
+        return string.Join(' ', Regex.Split(property.Name, "(?<!^)(?=[A-Z])"));
     }
 }
