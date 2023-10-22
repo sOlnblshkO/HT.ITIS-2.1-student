@@ -28,15 +28,8 @@ public static class HtmlHelperExtensions
 
             htmlContent.AppendLine("<div>");
             htmlContent.AppendLine($"<label for=\"{property.Name}\">{display}</label><br>");
-            
-            IHtmlParser? htmlParser;
 
-            if (property.PropertyType.IsEnum)
-                htmlParser = new EnumParser();
-            else
-                htmlParser = new FieldParser();
-
-            htmlContent.AppendLine(htmlParser.GetHtml(property));
+            htmlContent.AppendLine(GetHtmlContent(property));
 
             var validationResult = Validator.ValidateProperty(property, entity);
             
@@ -49,6 +42,18 @@ public static class HtmlHelperExtensions
         }
 
         return htmlContent.ToString();
+    }
+
+    private static string GetHtmlContent(PropertyInfo property)
+    {
+        IHtmlParser? htmlParser;
+        
+        if (property.PropertyType.IsEnum)
+            htmlParser = new EnumParser();
+        else
+            htmlParser = new FieldParser();
+
+        return htmlParser.GetHtml(property);
     }
     
     private static string GetFieldDisplay(PropertyInfo property)
