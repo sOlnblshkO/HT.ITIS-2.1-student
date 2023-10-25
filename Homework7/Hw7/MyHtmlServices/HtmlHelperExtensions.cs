@@ -83,7 +83,7 @@ public static class HtmlHelperExtensions
             if (model != null)
             {
                 var value = property.GetValue(model);
-                if (value != null && property.PropertyType.GetEnumName(value) == name)
+                if (property.PropertyType.GetEnumName(value!) == name)
                     selected = "selected";
             }
 
