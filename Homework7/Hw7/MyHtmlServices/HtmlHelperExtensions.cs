@@ -105,7 +105,7 @@ public static class HtmlHelperExtensions
         {
             if (attribute is not ValidationAttribute validationAttribute) continue;
             if (validationAttribute.IsValid(property.GetValue(model))) continue;
-            _ = builder.Append(validationAttribute.ErrorMessage ?? "");
+            _ = builder.Append(validationAttribute.ErrorMessage);
             break;
         }
 
