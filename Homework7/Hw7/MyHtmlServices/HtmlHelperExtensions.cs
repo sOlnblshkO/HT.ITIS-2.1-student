@@ -21,14 +21,11 @@ public static class HtmlHelperExtensions
 
     private static IHtmlContent HandleProperty(PropertyInfo property, object? model)
     {
-        var builder = new HtmlContentBuilder();
-        _ = builder.AppendHtml("<div>")
+        return new HtmlContentBuilder().AppendHtml("<div>")
             .AppendHtml(CreateLabel(property))
             .AppendHtml(CreateField(property, model))
             .AppendHtml(CreateValidationField(property, model))
             .AppendHtml("</div>");
-
-        return builder;
     }
 
     private static IHtmlContent CreateLabel(PropertyInfo property)
@@ -43,6 +40,7 @@ public static class HtmlHelperExtensions
     private static IHtmlContent CreateLabel(string propertyName, string propertyDisplayName)
     {
         var label = $"<label for={propertyName}>{propertyDisplayName}</label>";
+
         return new HtmlString(label);
     }
 
@@ -54,6 +52,7 @@ public static class HtmlHelperExtensions
             return CreateIntegerField(property.Name, model == null ? null : property.GetValue(model) as int?);
         if (property.PropertyType.IsEnum)
             return CreateEnumField(property, model);
+
         return new HtmlString("Unsupported property type");
     }
 
@@ -76,6 +75,7 @@ public static class HtmlHelperExtensions
     private static IHtmlContent CreateEnumField(PropertyInfo property, object? model)
     {
         var builder = new HtmlContentBuilder();
+
         _ = builder.AppendHtml($"<select id=\"{property.Name}\" class=\"form-control\" name={property.Name}>");
         foreach (var name in property.PropertyType.GetEnumNames())
         {
@@ -91,6 +91,7 @@ public static class HtmlHelperExtensions
         }
 
         _ = builder.AppendHtml("</select>");
+
         return builder;
     }
 
