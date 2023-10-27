@@ -100,10 +100,9 @@ public static class HtmlHelperExtensions
 
         _ = builder.AppendHtml("<span>");
         if (model == null) return builder.AppendHtml("</span>");
-        var attributes = property.GetCustomAttributes();
-        foreach (var attribute in attributes)
+        var attributes = property.GetCustomAttributes<ValidationAttribute>();
+        foreach (var validationAttribute in attributes)
         {
-            if (attribute is not ValidationAttribute validationAttribute) continue;
             if (validationAttribute.IsValid(property.GetValue(model))) continue;
             _ = builder.Append(validationAttribute.ErrorMessage);
             break;
