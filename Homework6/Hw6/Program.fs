@@ -7,10 +7,19 @@ open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
+open Hw6.MaybeBuilder
+open Hw6.Parser
+open Hw6.Calculator
 
 let calculatorHandler: HttpHandler =
     fun next ctx ->
-        let result: Result<string, string> = raise(NotImplementedException())
+        let query = ctx.Request.Query
+        let result: Result<string, string> = maybe {
+            let! args = ctx.TryBindQueryString<calculatorArgs>()
+            let! args = parseArgs args
+            let! result = calculate args
+            return result
+        }
 
         match result with
         | Ok ok -> (setStatusCode 200 >=> text (ok.ToString())) next ctx
@@ -20,6 +29,8 @@ let webApp =
     choose [
         GET >=> choose [
              route "/" >=> text "Use //calculate?value1=<VAL1>&operation=<OPERATION>&value2=<VAL2>"
+             route "/calculate" >=> calculatorHandler
+             route "/hello" >=> text "Hello, Olga"
         ]
         setStatusCode 404 >=> text "Not Found" 
     ]
@@ -30,8 +41,9 @@ type Startup() =
 
     member _.Configure (app : IApplicationBuilder) (_ : IHostEnvironment) (_ : ILoggerFactory) =
         app.UseGiraffe webApp
-        
-[<EntryPoint>]
+   
+   
+[<EntryPoint>]       
 let main _ =
     Host
         .CreateDefaultBuilder()
