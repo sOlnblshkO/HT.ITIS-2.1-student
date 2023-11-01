@@ -30,7 +30,6 @@ let webApp =
         GET >=> choose [
              route "/" >=> text "Use //calculate?value1=<VAL1>&operation=<OPERATION>&value2=<VAL2>"
              route "/calculate" >=> calculatorHandler
-             route "/hello" >=> text "Hello, Olga"
         ]
         setStatusCode 404 >=> text "Not Found" 
     ]
