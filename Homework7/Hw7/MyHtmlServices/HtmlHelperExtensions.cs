@@ -8,7 +8,7 @@ namespace Hw7.MyHtmlServices;
 
 public static class HtmlHelperExtensions
 {
-    public static IHtmlContent MyEditorForModel<TModel>(this IHtmlHelper<TModel?> helper)
+    public static IHtmlContent MyEditorForModel(this IHtmlHelper helper)
     {
         var typeModel = helper.ViewData.ModelExplorer.ModelType;
         var model = helper.ViewData.Model;
@@ -64,8 +64,12 @@ public static class HtmlHelperExtensions
         var values = property.PropertyType.GetEnumValues();
         select.Attributes.Add("id", property.Name);
         foreach (var value in values)
-            select.InnerHtml.AppendHtml($"<option value=\"{value}\">{value}<option/>");
-
+        {
+            var option = new TagBuilder("option");
+            option.Attributes.Add("value", value.ToString());
+            option.InnerHtml.AppendHtml(value.ToString());
+            select.InnerHtml.AppendHtml(option);
+        }
         return select;
     }
     private static IHtmlContent Validate(PropertyInfo propertyInfo, object? model)
