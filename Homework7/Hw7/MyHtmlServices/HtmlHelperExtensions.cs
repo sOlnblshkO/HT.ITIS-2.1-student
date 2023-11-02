@@ -49,10 +49,10 @@ public static class HtmlHelperExtensions
             return CreateInputField(property.Name, "text", HttpUtility.HtmlEncode(model == null ? null : property.GetValue(model)) ?? "");
         if (property.PropertyType == typeof(int))
             return CreateInputField(property.Name, "number", ((model == null ? null : property.GetValue(model)) ?? 0).ToString()!);
-        if (property.PropertyType.IsEnum)
+        //if (property.PropertyType.IsEnum)
             return CreateEnumField(property, model);
 
-        return new HtmlString("Unsupported property type");
+        // return new HtmlString("Unsupported property type");
     }
     
     private static IHtmlContent CreateValidationMessage<TModel>(PropertyInfo property, TModel? model)
