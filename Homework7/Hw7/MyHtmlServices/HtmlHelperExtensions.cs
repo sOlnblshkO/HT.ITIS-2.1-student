@@ -30,7 +30,6 @@ public static class HtmlHelperExtensions
             htmlContent.InnerHtml.AppendHtml(GetLabel(propertyInfo));
             htmlContent.InnerHtml.AppendHtml(GetInput(propertyInfo));
         }
-
         else
         {
             htmlContent.InnerHtml.AppendHtml(GetLabel(propertyInfo));
