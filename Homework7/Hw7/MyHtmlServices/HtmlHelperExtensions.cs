@@ -25,7 +25,7 @@ public static class HtmlHelperExtensions
             var display = GetDisplayName(propertyInfo);
             htmlString.AppendLine("<div>");
             htmlString.AppendLine($"<label for=\"{propertyInfo.Name}\">{display}</label><br>");
-            htmlString.AppendLine(DistinctPropertyAndParseIt(propertyInfo));
+            htmlString.AppendLine(ParseField(propertyInfo));
             var validationResult = ValidateField(entity, propertyInfo);
             if (!validationResult.IsSuccess)
             {
@@ -38,11 +38,12 @@ public static class HtmlHelperExtensions
         return new HtmlString(htmlString.ToString());
     }
 
-    private static string DistinctPropertyAndParseIt(PropertyInfo propertyInfo)
+    private static string ParseField(PropertyInfo propertyInfo)
     {
-        return propertyInfo.PropertyType.IsEnum
-            ? ParseEnum(propertyInfo)
-            : ParseNotEnum(propertyInfo);
+        if (propertyInfo.PropertyType.IsEnum) return ParseEnum(propertyInfo);
+        
+        string type = propertyInfo.PropertyType == typeof(string) ? "text" : "number";
+        return $"<input type=\"{type}\" name=\"{propertyInfo.Name}\" id=\"{propertyInfo.Name}\"/>";
     }
     private static String ParseEnum(PropertyInfo propertyInfo)
     {
@@ -56,12 +57,7 @@ public static class HtmlHelperExtensions
         sb.AppendLine("</select>");
         return sb.ToString();
     }
-
-    private static String ParseNotEnum(PropertyInfo propertyInfo)
-    {
-        string type = propertyInfo.PropertyType == typeof(string) ? "text" : "number";
-        return $"<input type=\"{type}\" name=\"{propertyInfo.Name}\" id=\"{propertyInfo.Name}\"/>";
-    }
+    
 
     private static String GetDisplayName(PropertyInfo propertyInfo)
     {
