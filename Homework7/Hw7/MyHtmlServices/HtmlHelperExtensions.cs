@@ -72,7 +72,6 @@ public static class HtmlHelperExtensions
     private static Result ValidateField(object? entity, PropertyInfo propertyInfo)
     {
         var result = new Result{IsSuccess = true};
-
         if (entity != null)
         {
             var validationAttributes = propertyInfo.GetCustomAttributes<ValidationAttribute>();
@@ -87,7 +86,6 @@ public static class HtmlHelperExtensions
                 
             }
         }
-        
         return result;
     }
 
