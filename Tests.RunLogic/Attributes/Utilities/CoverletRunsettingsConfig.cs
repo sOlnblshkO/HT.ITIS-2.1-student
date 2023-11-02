@@ -78,6 +78,6 @@ public static class CoverletRunsettingsConfig
         {
             directory = directory.Parent;
         }
-        return directory;
+        return directory!;
     }
 }

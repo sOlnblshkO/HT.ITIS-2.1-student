@@ -1,3 +1,4 @@
+using Hw7;
 using Hw7.ErrorMessages;
 using Hw7.Models.ForTests;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -6,12 +7,12 @@ using Tests.RunLogic.Attributes;
 
 namespace Tests.CSharp.Homework7;
 
-public class TestFormTests : IClassFixture<WebApplicationFactory<Hw7.Program>>
+public class TestFormTests : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly HttpClient _client;
     private readonly string _url = "/Test/TestModel";
 
-    public TestFormTests(WebApplicationFactory<Hw7.Program> fixture)
+    public TestFormTests(WebApplicationFactory<Program> fixture)
     {
         _client = fixture.CreateClient();
     }
