@@ -15,7 +15,7 @@ public static class HtmlHelperExtensions
         var htmlContent = new TagBuilder("form");
         foreach (var property in type.GetProperties())
             htmlContent.InnerHtml.AppendHtml(CreateFormGroup(property, model)); 
-        return htmlContent;
+        return htmlContent.InnerHtml;
     }
 
     private static IHtmlContent CreateFormGroup(PropertyInfo property, object? model)
@@ -65,7 +65,7 @@ public static class HtmlHelperExtensions
             return span;
         foreach (var validationAttribute in property.GetCustomAttributes<ValidationAttribute>())
             if (!validationAttribute.IsValid(property.GetValue(model)))
-                span.InnerHtml.AppendHtml(validationAttribute.ErrorMessage!);
+                span.InnerHtml.AppendFormat(validationAttribute.ErrorMessage!);
         return span;
     }
 
