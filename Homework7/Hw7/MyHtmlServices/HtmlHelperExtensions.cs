@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using Hw7.UtilClasses;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -41,23 +42,25 @@ public static class HtmlHelperExtensions
     private static string ParseField(PropertyInfo propertyInfo)
     {
         if (propertyInfo.PropertyType.IsEnum) return ParseEnum(propertyInfo);
-        
+
         string type = propertyInfo.PropertyType == typeof(string) ? "text" : "number";
         return $"<input type=\"{type}\" name=\"{propertyInfo.Name}\" id=\"{propertyInfo.Name}\"/>";
     }
+
     private static String ParseEnum(PropertyInfo propertyInfo)
     {
         var sb = new StringBuilder();
-        
+
         sb.AppendLine($"<select name=\"{propertyInfo.Name}\" required>");
         foreach (var value in Enum.GetValues(propertyInfo.PropertyType))
         {
             sb.AppendLine($"<option value=\"{value}\">{value}</option>");
         }
+
         sb.AppendLine("</select>");
         return sb.ToString();
     }
-    
+
 
     private static String GetDisplayName(PropertyInfo propertyInfo)
     {
@@ -66,12 +69,13 @@ public static class HtmlHelperExtensions
         {
             return displayAttribute.Name!;
         }
+
         return Regex.Replace(propertyInfo.Name, "([A-Z])", " $1", RegexOptions.Compiled).Trim();
     }
 
     private static Result ValidateField(object? entity, PropertyInfo propertyInfo)
     {
-        var result = new Result{IsSuccess = true};
+        var result = new Result { IsSuccess = true };
         if (entity != null)
         {
             var validationAttributes = propertyInfo.GetCustomAttributes<ValidationAttribute>();
@@ -83,15 +87,9 @@ public static class HtmlHelperExtensions
                     result.IsSuccess = false;
                     break;
                 }
-                
             }
         }
+
         return result;
     }
-
-    private class Result
-    {
-        public string? Message { get; set; }
-        public bool IsSuccess { get; set; }
-    }
-} 
+}
