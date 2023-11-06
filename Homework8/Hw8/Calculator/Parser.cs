@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using Hw8.Exceptions;
 
 namespace Hw8.Calculator;
 
@@ -21,6 +20,6 @@ public static class Parser
     {
         if (!double.TryParse(arg1, NumberStyles.Float, CultureInfo.InvariantCulture, out val1) 
             || !double.TryParse(arg2, NumberStyles.Float, CultureInfo.InvariantCulture, out val2))
-            throw new InvalidNumberException(Messages.InvalidNumberMessage);
+            throw new ArgumentException(Messages.InvalidNumberMessage);
     }
 }

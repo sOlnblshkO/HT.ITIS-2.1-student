@@ -1,5 +1,8 @@
-﻿namespace Hw8.Calculator;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Hw8.Calculator;
+
+[ExcludeFromCodeCoverage]
 public class Calculator : ICalculator
 {
     public double Calculate(string arg1, string operation, string arg2)
