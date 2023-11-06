@@ -12,6 +12,8 @@ public class Program
 
         builder.Services.AddControllersWithViews();
 
+        builder.Services.AddScoped<ICalculator, Calculator.Calculator>();
+
         var app = builder.Build();
 
         if (!app.Environment.IsDevelopment())

@@ -13,4 +13,8 @@
       <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Calculator\Calculate.cshtml" />
+    </ItemGroup>
+
 </Project>
