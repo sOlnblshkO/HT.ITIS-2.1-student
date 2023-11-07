@@ -14,22 +14,11 @@ public class CalculatorController : Controller
     {
         try
         {
-            return Parser.ParseArguments(val1, operation, val2)switch
-            {
-                (var firstValue, Operation.Plus, var secondValue) => calculator.Plus(firstValue, secondValue),
-                (var firstValue, Operation.Minus, var secondValue) => calculator.Minus(firstValue, secondValue),
-                (var firstValue, Operation.Multiply, var secondValue) => calculator.Multiply(firstValue, secondValue),
-                (var firstValue, Operation.Divide, 0) => Content(Messages.DivisionByZeroMessage),
-                (var firstValue, Operation.Divide, var secondValue) => calculator.Divide(firstValue, secondValue),
-            };
+            return Ok(calculator.Calculate(val1, operation, val2));
         }
-        catch (ArgumentException)
+        catch (Exception e)
         {
-            return Content(Messages.InvalidNumberMessage);
-        }
-        catch
-        {
-            return Content(Messages.InvalidOperationMessage);
+            return BadRequest(e.Message);
         }
     }
     

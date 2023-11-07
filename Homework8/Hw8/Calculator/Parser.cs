@@ -13,6 +13,7 @@ public class Parser
             throw new ArgumentException(Messages.InvalidNumberMessage);
 
         var operation = ParseOperation(op);
+      
 
         if (operation == Operation.Invalid)
             throw new InvalidOperationException(Messages.InvalidOperationMessage);
@@ -20,7 +21,7 @@ public class Parser
         return (firstValue,operation ,secondValue);
     }
 
-    public static Operation ParseOperation(string op) 
+    private static Operation ParseOperation(string op) 
     {
         return op switch
         {
@@ -31,8 +32,5 @@ public class Parser
             _ => Operation.Invalid
         };
     }
-    
-
-  
     
 }
