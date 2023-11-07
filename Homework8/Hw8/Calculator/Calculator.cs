@@ -12,6 +12,7 @@ public class Calculator : ICalculator
             Operation.Minus => Minus(firstValue, secondValue),
             Operation.Multiply => Multiply(firstValue, secondValue),
             Operation.Divide => Divide(firstValue, secondValue),
+            _ => throw new InvalidOperationException(Messages.InvalidOperationMessage)
         };
     }
    
