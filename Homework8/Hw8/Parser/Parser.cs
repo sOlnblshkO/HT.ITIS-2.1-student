@@ -1,17 +1,18 @@
 ﻿using System.Globalization;
+using Hw8.Calculator;
 
-namespace Hw8.Calculator;
+namespace Hw8.Parser;
 
-public class Parser
+public class Parser : IParser
 {
-    public static bool ParseToDouble(string input, out double val)
+    public bool ParseArgument(string input, out double val)
     {
         return double.TryParse(input, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out val);
     }
 
-    public static Operation ParseOperation(string arg)
+    public Operation ParseOperation(string operation)
     {
-        return arg switch
+        return operation switch
         {
             "Plus" => Operation.Plus,
             "Minus" => Operation.Minus,

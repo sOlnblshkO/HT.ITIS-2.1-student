@@ -1,6 +1,6 @@
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Hw8.Calculator;
+using Hw8.Parser;
 
 namespace Hw8;
 
@@ -14,6 +14,7 @@ public class Program
         builder.Services.AddControllersWithViews();
 
         builder.Services.AddScoped<ICalculator, Calculator.Calculator>();
+        builder.Services.AddScoped<IParser, Parser.Parser>();
 
         var app = builder.Build();
 
