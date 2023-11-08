@@ -12,7 +12,26 @@ public class CalculatorController : Controller
         string operation,
         string val2)
     {
-        throw new NotImplementedException();
+        try
+        {
+            Parser.ParseCalcArguments(new[] { val1, operation, val2 },
+                out var value1,
+                out var operation1,
+                out var value2);
+
+            return operation1 switch
+            {
+                Operation.Plus => calculator.Plus(value1, value2),
+                Operation.Minus => calculator.Minus(value1, value2),
+                Operation.Multiply => calculator.Multiply(value1, value2),
+                Operation.Divide => value2 != 0 ? calculator.Divide(value1, value2) : this.Content(Messages.DivisionByZeroMessage),
+                _ => this.Content(Messages.InvalidOperationMessage)
+            };
+        }
+        catch (ArgumentException)
+        {
+            return this.Content(Messages.InvalidNumberMessage);
+        }
     }
     
     [ExcludeFromCodeCoverage]
