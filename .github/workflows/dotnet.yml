@@ -12,6 +12,7 @@ on:
       - hw5
       - hw6
       - hw7
+      - hw8
   pull_request:
     branches:
       - main
@@ -23,6 +24,7 @@ on:
       - hw5
       - hw6
       - hw7
+      - hw8
 
 jobs:
   build:
