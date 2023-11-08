@@ -12,26 +12,23 @@ public class CalculatorController : Controller
         string operation,
         string val2)
     {
-        if (parser.ParseArgument(val1, out var value1) && parser.ParseArgument(val2, out var value2))
+        if (!parser.ParseArgument(val1, out var value1) || !parser.ParseArgument(val2, out var value2))
+            return BadRequest(Messages.InvalidNumberMessage);
+        try
         {
-            try
+            return parser.ParseOperation(operation) switch
             {
-                return parser.ParseOperation(operation) switch
-                {
-                    Operation.Plus => calculator.Plus(value1, value2),
-                    Operation.Minus => calculator.Minus(value1, value2),
-                    Operation.Multiply => calculator.Multiply(value1, value2),
-                    Operation.Divide => calculator.Divide(value1, value2),
-                    _ => BadRequest(Messages.InvalidOperationMessage)
-                };
-            }
-            catch(InvalidOperationException)
-            {
-                return BadRequest(Messages.DivisionByZeroMessage);
-            }
-
+                Operation.Plus => calculator.Plus(value1, value2),
+                Operation.Minus => calculator.Minus(value1, value2),
+                Operation.Multiply => calculator.Multiply(value1, value2),
+                Operation.Divide => calculator.Divide(value1, value2),
+                _ => BadRequest(Messages.InvalidOperationMessage)
+            };
         }
-        return BadRequest(Messages.InvalidNumberMessage);
+        catch(InvalidOperationException)
+        {
+            return BadRequest(Messages.DivisionByZeroMessage);
+        }
     }
     
     [ExcludeFromCodeCoverage]
