@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Hw8.Calculator;
 
@@ -11,6 +12,8 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddControllersWithViews();
+
+        builder.Services.AddScoped<ICalculator, Calculator.Calculator>();
 
         var app = builder.Build();
 
