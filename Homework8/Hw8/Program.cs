@@ -12,6 +12,8 @@ public class Program
 
         builder.Services.AddControllersWithViews();
 
+        builder.Services.AddSingleton<ICalculator, DoubleCalculator>();
+
         var app = builder.Build();
 
         if (!app.Environment.IsDevelopment())
@@ -27,8 +29,8 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Calculator}/{action=Index}");
+            "default",
+            "{controller=Calculator}/{action=Index}");
 
         app.Run();
     }
