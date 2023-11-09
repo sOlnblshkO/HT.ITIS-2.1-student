@@ -27,11 +27,11 @@ public class CalculatorController : Controller
         }
         catch (ArgumentException)
         {
-            return this.Content(Messages.InvalidNumberMessage);
+            return BadRequest(Messages.InvalidNumberMessage);
         }
         catch 
         {
-            return this.Content(Messages.InvalidOperationMessage);
+            return BadRequest(Messages.InvalidOperationMessage);
         }
     }
     
