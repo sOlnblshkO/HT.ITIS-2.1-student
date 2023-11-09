@@ -1,20 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using Hw8.Calculator;
+using Hw8.Parser;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hw8.Controllers;
 
 public class CalculatorController : Controller
 {
-    public ActionResult<double> Calculate([FromServices] ICalculator calculator,
+    public ActionResult<string> Calculate([FromServices] IParser parser,
         string val1,
         string operation,
         string val2)
     {
-        throw new NotImplementedException();
+        return parser.Parse(val1, operation, val2);
     }
-    
+
     [ExcludeFromCodeCoverage]
     public IActionResult Index()
     {

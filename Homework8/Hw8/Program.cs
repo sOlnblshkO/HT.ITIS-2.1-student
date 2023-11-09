@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Hw8.Calculator;
+using Hw8.Parser;
 
 namespace Hw8;
 
@@ -11,6 +12,9 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddControllersWithViews();
+
+        builder.Services.AddSingleton<ICalculator, DoubleCalculator>();
+        builder.Services.AddSingleton<IParser, DoubleParser>();
 
         var app = builder.Build();
 
@@ -27,8 +31,8 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Calculator}/{action=Index}");
+            "default",
+            "{controller=Calculator}/{action=Index}");
 
         app.Run();
     }
