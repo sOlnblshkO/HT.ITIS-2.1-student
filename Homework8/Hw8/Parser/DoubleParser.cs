@@ -1,6 +1,5 @@
 using System.Globalization;
 using Hw8.Calculator;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Hw8.Parser;
 
@@ -8,7 +7,7 @@ public class DoubleParser : IParser
 {
     private readonly ICalculator _calculator;
 
-    public DoubleParser([FromServices] ICalculator calculator)
+    public DoubleParser(ICalculator calculator)
     {
         _calculator = calculator;
     }
