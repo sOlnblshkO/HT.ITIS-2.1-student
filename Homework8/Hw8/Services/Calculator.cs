@@ -16,4 +16,18 @@ public class Calculator : ICalculator
             throw new DivideByZeroException(Messages.DivisionByZeroMessage); 
         return firstValue / secondValue;
     }
+    
+    public double Calculate(string val1, string op, string val2)
+    {
+        var (firstValue, operation , secondValue) = Parser.ParseArguments(val1, op, val2);
+
+        return operation switch
+        {
+            Operation.Plus => Plus(firstValue, secondValue),
+            Operation.Minus => Minus(firstValue, secondValue),
+            Operation.Multiply => Multiply(firstValue, secondValue),
+            Operation.Divide => Divide(firstValue, secondValue),
+            _ => throw new InvalidOperationException(Messages.InvalidOperationMessage)
+        };
+    }
 }

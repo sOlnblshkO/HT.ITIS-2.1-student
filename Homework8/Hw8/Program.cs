@@ -11,7 +11,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddControllersWithViews();
-        builder.Services.AddScoped<ICalculator, Calculator.Calculator>();
+        builder.Services.AddSingleton<ICalculator, Calculator.Calculator>();
 
         var app = builder.Build();
 

@@ -15,25 +15,23 @@ public class CalculatorController : Controller
     {
         try
         {
-            return Ok(Parser.ParseArguments(val1, operation, val2) switch
-            {
-                (var value1, Operation.Plus, var value2) => calculator.Plus(value1, value2),
-                (var value1, Operation.Minus, var value2) => calculator.Minus(value1, value2),
-                (var value1, Operation.Multiply, var value2) => calculator.Multiply(value1, value2),
-                (var value1, Operation.Divide, var value2) => calculator.Divide(value1, value2),
-            });
+            return Ok(calculator.Calculate(val1, operation, val2));
         }
-        catch (ArgumentException)
+        catch (ArgumentException ex)
         {
-            return BadRequest(Messages.InvalidNumberMessage);
+            return BadRequest(ex.Message);
         }
-        catch (DivideByZeroException)
+        catch (DivideByZeroException ex)
         {
-            return this.Content(Messages.DivisionByZeroMessage);
+            return BadRequest(ex.Message);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
         }
         catch 
         {
-            return BadRequest(Messages.InvalidOperationMessage);
+            return StatusCode(500);
         }
     }
     

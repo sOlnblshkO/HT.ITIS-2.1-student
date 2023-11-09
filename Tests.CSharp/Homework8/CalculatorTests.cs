@@ -69,7 +69,7 @@ public class CalculatorTests
     }
 
     [Homework(Homeworks.HomeWork8)]
-    public void DivideByZero_ThrowsInvalidOperationException()
+    public void DivideByZero_ThrowsDivideByZeroException()
     {
         ICalculator calculator = new Calculator();
 

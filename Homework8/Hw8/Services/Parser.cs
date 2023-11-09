@@ -14,7 +14,7 @@ public class Parser
 
         var operation = ParseOperation(op);
         if (operation == Operation.Invalid)
-            throw new InvalidOperationException();
+            throw new InvalidOperationException(Messages.InvalidOperationMessage);
 
         return (firstValue,operation ,secondValue);
     }
