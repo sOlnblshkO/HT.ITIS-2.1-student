@@ -7,6 +7,6 @@ public static class HtmlHelperExtensions
 {
     public static IHtmlContent MyEditorForModel(this IHtmlHelper helper)
     {
-        throw new NotImplementedException();
+        return default;
     }
 } 
