@@ -13,7 +13,7 @@ public class Calculator : ICalculator
     public double Divide(double firstValue, double secondValue)
     {
         if (secondValue == 0)
-            throw new DivideByZeroException(Messages.DivisionByZeroMessage); 
+            throw new InvalidOperationException(Messages.DivisionByZeroMessage); 
         return firstValue / secondValue;
     }
 }

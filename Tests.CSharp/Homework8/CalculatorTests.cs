@@ -74,6 +74,6 @@ public class CalculatorTests
         ICalculator calculator = new Calculator();
 
         //act + assert
-        Assert.Throws<DivideByZeroException>(() => { calculator.Divide(1, 0); });
+        Assert.Throws<InvalidOperationException>(() => { calculator.Divide(1, 0); });
     }
 }
