@@ -10,7 +10,7 @@ public class Parser
             "minus" => Operation.Minus,
             "multiply" => Operation.Multiply,
             "divide" => Operation.Divide,
-            _ => throw new InvalidOperationException(Messages.InvalidOperationMessage)
+            _ => Operation.Invalid
         };
     }
 
