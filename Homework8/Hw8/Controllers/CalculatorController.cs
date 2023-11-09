@@ -7,12 +7,12 @@ namespace Hw8.Controllers;
 
 public class CalculatorController : Controller
 {
-    public ActionResult<string> Calculate([FromServices] ICalculator calculator, [FromServices] IParser parser,
+    public ActionResult<string> Calculate([FromServices] IParser parser,
         string val1,
         string operation,
         string val2)
     {
-        return parser.Parse(val1, operation, val2, calculator);
+        return parser.Parse(val1, operation, val2);
     }
 
     [ExcludeFromCodeCoverage]
