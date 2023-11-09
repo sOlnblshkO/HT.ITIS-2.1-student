@@ -76,4 +76,14 @@ public class CalculatorTests
         //act + assert
         Assert.Throws<DivideByZeroException>(() => { calculator.Divide(1, 0); });
     }
+    [HomeworkTheory(Homeworks.HomeWork8)]
+    [InlineData("0", "24.3", "bbbbbbbb")]
+    public void InvalidOperationThrowsException(string val1, string val2, string operation)
+    {
+        //arrange
+        ICalculator calculator = new CalculatorImpl();
+        
+        //assert + act
+        Assert.Throws<InvalidOperationException>(() => calculator.Calculate(val1,operation,val2));
+    }
 }
