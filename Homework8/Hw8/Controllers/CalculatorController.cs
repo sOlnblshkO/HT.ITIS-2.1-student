@@ -20,7 +20,7 @@ public class CalculatorController : Controller
                 (var value1, Operation.Plus, var value2) => calculator.Plus(value1, value2),
                 (var value1, Operation.Minus, var value2) => calculator.Minus(value1, value2),
                 (var value1, Operation.Multiply, var value2) => calculator.Multiply(value1, value2),
-                (var value1, Operation.Divide, 0) => BadRequest(Messages.DivisionByZeroMessage),
+                (var value1, Operation.Divide, 0) => Content(Messages.DivisionByZeroMessage),
                 (var value1, Operation.Divide, var value2) => calculator.Divide(value1, value2)
 
             };
