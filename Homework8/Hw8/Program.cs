@@ -11,6 +11,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddControllersWithViews();
+        builder.Services.AddScoped<ICalculator, Services.Calculator>();
 
         var app = builder.Build();
 
@@ -19,7 +20,7 @@ public class Program
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
-
+        
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
