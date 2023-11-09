@@ -9,12 +9,10 @@ public class Parser
         if (!Double.TryParse(val1, NumberStyles.Any, CultureInfo.InvariantCulture, out var firstValue))
             throw new ArgumentException(Messages.InvalidNumberMessage);
 
-        if(!Double.TryParse(val2,NumberStyles.Any, CultureInfo.InvariantCulture,out var secondValue))
+        if(!Double.TryParse(val2,NumberStyles.Any, CultureInfo.InvariantCulture, out var secondValue))
             throw new ArgumentException(Messages.InvalidNumberMessage);
 
         var operation = ParseOperation(op);
-        if (operation == Operation.Invalid)
-            throw new InvalidOperationException(Messages.InvalidOperationMessage);
 
         return (firstValue,operation ,secondValue);
     }

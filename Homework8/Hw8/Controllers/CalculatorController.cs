@@ -17,21 +17,9 @@ public class CalculatorController : Controller
         {
             return Ok(calculator.Calculate(val1, operation, val2));
         }
-        catch (ArgumentException ex)
+        catch (Exception ex)
         {
             return BadRequest(ex.Message);
-        }
-        catch (DivideByZeroException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-        catch 
-        {
-            return StatusCode(500);
         }
     }
     
