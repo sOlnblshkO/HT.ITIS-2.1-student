@@ -19,10 +19,10 @@ public class CalculatorController : Controller
 
             return op switch
             {
-                Operation.Plus => calculator.Plus(arg1, arg2),
-                Operation.Minus => calculator.Minus(arg1, arg2),
-                Operation.Multiply => calculator.Multiply(arg1, arg2),
-                Operation.Divide => calculator.Divide(arg1, arg2),
+                Operation.Plus => Ok(calculator.Plus(arg1, arg2)),
+                Operation.Minus => Ok(calculator.Minus(arg1, arg2)),
+                Operation.Multiply => Ok(calculator.Multiply(arg1, arg2)),
+                Operation.Divide => Ok(calculator.Divide(arg1, arg2)),
                 _ => BadRequest(Messages.InvalidOperationMessage)
             };
         }
