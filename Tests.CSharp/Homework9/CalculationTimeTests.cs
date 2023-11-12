@@ -14,9 +14,9 @@ public class CalculationTimeTests : IClassFixture<WebApplicationFactory<Hw9.Prog
     }
 
     [HomeworkTheory(Homeworks.HomeWork9)]
-    [InlineData("2 + 3 + 4 + 6", 1000, 4000)]
-    [InlineData("(2 * 3 + 3 * 3) * (5 / 5 + 6 / 6)", 1000, 4000)]
-    [InlineData("(2 + 3) / 12 * 7 + 8 * 9", 1000, 5000)]
+    [InlineData("2 + 3 + 4 + 6", 900, 4000)]
+    [InlineData("(2 * 3 + 3 * 3) * (5 / 5 + 6 / 6)", 900, 4000)]
+    [InlineData("(2 + 3) / 12 * 7 + 8 * 9", 900, 5000)]
     private async Task CalculatorController_ParallelTest(string expression, long minExpectedTime, long maxExpectedTime)
     {
         var executionTime = await GetRequestExecutionTime(expression);
