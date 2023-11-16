@@ -3,6 +3,7 @@
 ![.NET](https://github.com/fuz1kort/HT-ITIS.2.1-student/actions/workflows/dotnet.yml/badge.svg)
 [![codecov](https://codecov.io/gh/fuz1kort/HT-ITIS.2.1-student/graph/badge.svg?token=KNJF3352V6)](https://codecov.io/gh/fuz1kort/HT-ITIS.2.1-student/HW9)
 
+
 ## Как устроены Actions
 
 1. **_build_**: _Проверка: собирается ли проект._
