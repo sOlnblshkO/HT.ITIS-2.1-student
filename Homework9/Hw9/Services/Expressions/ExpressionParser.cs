@@ -72,6 +72,6 @@ public static class ExpressionParser
         var val1 = polish.Pop();
         var val2 = polish.Pop();
         
-        polish.Push(val2 + " " + val1 + " " + operations);
+        polish.Push(val2 + " " + val1 + " " + operation);
     }
 }
