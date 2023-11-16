@@ -10,8 +10,6 @@ public class MathCalculatorService : IMathCalculatorService
 {
     public async Task<CalculationMathExpressionResultDto> CalculateMathExpressionAsync(string? expression)
     {
-        Thread.Sleep(2000);
-        
         try
         {
             var validatorMessage = ExpressionValidator.Validate(expression!);
