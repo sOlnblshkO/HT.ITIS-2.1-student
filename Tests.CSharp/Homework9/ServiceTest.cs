@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using Hw9;
 using Hw9.ErrorMessages;
+using Hw9.Services.ExpressionTree;
 using Hw9.Services.MathCalculator;
 using Hw9.Services.ParserAndValidator;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -39,5 +40,20 @@ public class ServicesTest : IClassFixture<WebApplicationFactory<Program>>
         Assert.Equal(MathErrorMessager.UnknownCharacter, exception.Message);
     }
 
+    [Theory]
+    [InlineData("2 * 2", "(2 * 2)")]
+    [InlineData("3 + 6", "(3 + 6)")]
+    [InlineData("2 - 1", "(2 - 1)")]
+    [InlineData("-11 - 2", "(-11 - 2)")]
+    [InlineData("3 / 3", "(3 / 3)")]
+
+    public async Task ExpressionTreeBuilderTest(string input, string result)
+    {
+        var postfix = Parser.ConvertToPostfixForm(input);
+
+        var tree = ExpressionTreeBuilder.CreateExpressionTree(postfix);
+        Assert.Equal(result, tree.ToString());
+        
+    }
 	
 }
