@@ -1,6 +1,7 @@
 using System.Text;
 
-namespace Hw9.Services.ParseInput;
+namespace Hw9.Services.ParserAndValidator;
+
 public static class Parser
 {
     public static string ConvertToPostfixForm(string input)
