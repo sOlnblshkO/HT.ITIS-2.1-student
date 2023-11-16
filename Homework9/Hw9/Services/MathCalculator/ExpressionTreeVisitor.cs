@@ -7,21 +7,26 @@ public class ExpressionTreeVisitor : ExpressionVisitor
 {
     public static async Task<double> VisitAsync(Expression expression)
     {
-        if (expression is BinaryExpression)
+        if (expression is BinaryExpression binExpr)
         {
-            var binExpr = expression as BinaryExpression;
             await Task.Delay(1000);
-            var leftExpr = Task.Run(() => VisitAsync(binExpr!.Left));
-            var rightExpr = Task.Run(() => VisitAsync(binExpr!.Right));
+        
+            var leftExpr = Task.Run(() => VisitAsync(binExpr.Left));
+            var rightExpr = Task.Run(() => VisitAsync(binExpr.Right));
             var res = await Task.WhenAll(leftExpr, rightExpr);
 
             var constLeft = res[0];
             var constRight = res[1];
 
-            return Calculate(binExpr!.NodeType, constLeft, constRight);
-
+            return Calculate(binExpr.NodeType, constLeft, constRight);
         }
-        return (double)(expression as ConstantExpression).Value;
+    
+        if (expression is ConstantExpression constExpr)
+        {
+            return (double)constExpr.Value!;
+        }
+    
+        throw new Exception();
     }
 
     public static double Calculate(ExpressionType binExpr, double constLeft,double constRight)

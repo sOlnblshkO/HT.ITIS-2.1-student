@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+using Hw9.ErrorMessages;
 
-namespace Hw9.Services.ExpressionTree;
+namespace Hw9.Services.ExpressionBuilder;
+
 [ExcludeFromCodeCoverage]
 public class ExpressionTreeBuilder
 {
@@ -24,7 +26,8 @@ public class ExpressionTreeBuilder
                     "+" => Expression.Add(left,right),
                     "-" => Expression.Subtract(left,right),
                     "*" => Expression.Multiply(left,right),
-                    "/" => Expression.Divide(left,right)
+                    "/" => Expression.Divide(left,right),
+                    _ => throw new Exception(MathErrorMessager.UnknownCharacter)
                 });
                 
             }

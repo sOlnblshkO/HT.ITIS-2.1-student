@@ -1,5 +1,5 @@
 using Hw9.Dto;
-using Hw9.Services.ExpressionTree;
+using Hw9.Services.ExpressionBuilder;
 using Hw9.Services.ParserAndValidator;
 
 namespace Hw9.Services.MathCalculator;
@@ -10,8 +10,8 @@ public class MathCalculatorService : IMathCalculatorService
     {
         try
         {
-            Validator.Validate(expression);
-            var parse = Parser.ConvertToPostfixForm(expression);
+            Validator.Validate(expression!);
+            var parse = Parser.ConvertToPostfixForm(expression!);
             var tree = ExpressionTreeBuilder.CreateExpressionTree(parse);
             var result = await ExpressionTreeVisitor.VisitAsync(tree);
             return new CalculationMathExpressionResultDto(result);
