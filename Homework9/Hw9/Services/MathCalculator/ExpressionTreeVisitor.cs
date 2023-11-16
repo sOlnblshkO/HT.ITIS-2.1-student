@@ -1,32 +1,33 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using Hw9.ErrorMessages;
 
 namespace Hw9.Services.MathCalculator;
-
+[ExcludeFromCodeCoverage]
 public class ExpressionTreeVisitor : ExpressionVisitor
 {
     public static async Task<double> VisitAsync(Expression expression)
     {
-        if (expression is BinaryExpression binExpr)
-        {
-            await Task.Delay(1000);
         
-            var leftExpr = Task.Run(() => VisitAsync(binExpr.Left));
-            var rightExpr = Task.Run(() => VisitAsync(binExpr.Right));
+        if (expression is BinaryExpression)
+        {
+            var binExpr = expression as BinaryExpression;
+            await Task.Delay(1000);
+            var leftExpr = Task.Run(() => VisitAsync(binExpr!.Left));
+            var rightExpr = Task.Run(() => VisitAsync(binExpr!.Right));
             var res = await Task.WhenAll(leftExpr, rightExpr);
 
             var constLeft = res[0];
             var constRight = res[1];
 
-            return Calculate(binExpr.NodeType, constLeft, constRight);
+            return Calculate(binExpr!.NodeType, constLeft, constRight);
+
         }
-    
-        if (expression is ConstantExpression constExpr)
-        {
-            return (double)constExpr.Value!;
-        }
-    
-        throw new Exception();
+
+        if (expression is ConstantExpression constExp)
+            return (double)constExp.Value!;
+        
+        throw new NullReferenceException();
     }
 
     public static double Calculate(ExpressionType binExpr, double constLeft,double constRight)
