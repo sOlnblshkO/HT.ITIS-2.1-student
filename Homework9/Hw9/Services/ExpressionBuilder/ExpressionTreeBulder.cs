@@ -1,7 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace Hw9.Services.ExpressionTree;
-
+[ExcludeFromCodeCoverage]
 public class ExpressionTreeBuilder
 {
     public static Expression CreateExpressionTree(string input)

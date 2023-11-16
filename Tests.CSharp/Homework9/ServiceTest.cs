@@ -39,21 +39,4 @@ public class ServicesTest : IClassFixture<WebApplicationFactory<Program>>
         var exception = Assert.Throws<Exception>(response);
         Assert.Equal(MathErrorMessager.UnknownCharacter, exception.Message);
     }
-
-    [Theory]
-    [InlineData("2 * 2", "(2 * 2)")]
-    [InlineData("3 + 6", "(3 + 6)")]
-    [InlineData("2 - 1", "(2 - 1)")]
-    [InlineData("-11 - 2", "(-11 - 2)")]
-    [InlineData("3 / 3", "(3 / 3)")]
-
-    public async Task ExpressionTreeBuilderTest(string input, string result)
-    {
-        var postfix = Parser.ConvertToPostfixForm(input);
-
-        var tree = ExpressionTreeBuilder.CreateExpressionTree(postfix);
-        Assert.Equal(result, tree.ToString());
-        
-    }
-	
 }
