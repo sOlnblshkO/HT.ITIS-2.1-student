@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace Hw9.Services.ExpressionCalculator;
@@ -39,6 +40,7 @@ public class MathExpressionCalculator : ExpressionVisitor, IExpressionCalculator
         return Result[expression];
     }
 
+    [ExcludeFromCodeCoverage]
     private async Task<double> CalculateBinaryAsync(BinaryExpression expression)
     {
         await Task.Delay(1000);
@@ -56,6 +58,7 @@ public class MathExpressionCalculator : ExpressionVisitor, IExpressionCalculator
         return Result[expression];
     }
 
+    [ExcludeFromCodeCoverage]
     private async Task<double> CalculateUnaryAsync(UnaryExpression expression)
     {
         await Task.Delay(1000);
