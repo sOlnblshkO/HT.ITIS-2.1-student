@@ -15,7 +15,7 @@ public static class ExpressionValidator
         }
 
         var expressionWithoutEmpties = expression.Replace(" ", "");
-
+        
         if (Operators.Contains(expressionWithoutEmpties[0]))
         {
             return MathErrorMessager.StartingWithOperation;
@@ -25,26 +25,7 @@ public static class ExpressionValidator
             return MathErrorMessager.EndingWithOperation;
         }
 
-        var bracketsCount = 0;
-        foreach (var c in expressionWithoutEmpties)
-        {
-            switch (c)
-            {
-                case '(':
-                    bracketsCount++;
-                    break;
-                case ')':
-                    bracketsCount--;
-                    break;
-            }
-
-            if (bracketsCount < 0)
-            {
-                return MathErrorMessager.IncorrectBracketsNumber;
-            }
-        }
-
-        if (bracketsCount != 0)
+        if (!IsCorrectBrackets(expressionWithoutEmpties))
         {
             return MathErrorMessager.IncorrectBracketsNumber;
         }
@@ -89,5 +70,34 @@ public static class ExpressionValidator
         var match = regex.Match(expressionWithoutEmpties);
 
         return match.Success ? MathErrorMessager.NotNumberMessage(match.Value) : "OK";
+    }
+
+    private static bool IsCorrectBrackets(string expression)
+    {
+        var bracketsCount = 0;
+        foreach (var c in expression)
+        {
+            switch (c)
+            {
+                case '(':
+                    bracketsCount++;
+                    break;
+                case ')':
+                    bracketsCount--;
+                    break;
+            }
+
+            if (bracketsCount < 0)
+            {
+                return false;
+            }
+        }
+
+        if (bracketsCount != 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
