@@ -69,10 +69,7 @@ public class ExpressionValidator
         return null;
     }
 
-    private static bool IsNull(string? expression)
-    {
-        return expression is "" or null;
-    }
+    private static bool IsNull(string? expression) => expression is null or "";
 
     private static string ContainsInvalidChar(string expression)
     {

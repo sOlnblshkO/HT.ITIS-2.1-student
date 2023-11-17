@@ -9,20 +9,18 @@ public class ExpressionTreeVisitorImpl: ExpressionVisitor
     {
         Console.WriteLine(head.Left.NodeType);
         var result = CompileLeftAndRight(head.Left, head.Right).Result;
-        switch (head.NodeType)
+        return head.NodeType switch
         {
-            case ExpressionType.Add: return Expression.Add(Expression.Constant(result[0]), Expression.Constant(result[1]));
-            case ExpressionType.Subtract:
-                return Expression.Subtract(Expression.Constant(result[0]),
-                    Expression.Constant(result[1]));
-            case ExpressionType.Multiply:
-                return Expression.Multiply(Expression.Constant(result[0]),
-                    Expression.Constant(result[1]));
-            case ExpressionType.Divide when result[1] != 0:
-                return Expression.Divide(Expression.Constant(result[0]), Expression.Constant(result[1]));
-            case ExpressionType.Divide when result[1] == 0: throw new Exception(DivisionByZero);
-            default: throw new Exception();
-        }   
+            ExpressionType.Add => Expression.Add(Expression.Constant(result[0]), Expression.Constant(result[1])),
+            ExpressionType.Subtract => Expression.Subtract(Expression.Constant(result[0]),
+                Expression.Constant(result[1])),
+            ExpressionType.Multiply => Expression.Multiply(Expression.Constant(result[0]),
+                Expression.Constant(result[1])),
+            ExpressionType.Divide when result[1] != 0 => Expression.Divide(Expression.Constant(result[0]),
+                Expression.Constant(result[1])),
+            ExpressionType.Divide when result[1] == 0 => throw new Exception(DivisionByZero),
+            _ => throw new Exception()
+        };
     }
 
     public static async Task<Expression> VisitExpression(Expression expression) =>

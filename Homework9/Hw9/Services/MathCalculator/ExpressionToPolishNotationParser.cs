@@ -17,6 +17,7 @@ public class ExpressionToPolishNotationParser {
         { "*", 2 },
         { "/", 2 }
     };
+    
     public static string ToReversePolishNotation(string expression)
     {
         string[] expressions = _delimiters.Split(expression.Replace(" ",""));
@@ -44,13 +45,11 @@ public class ExpressionToPolishNotationParser {
                     considerMinusAsNegation = true;
                     continue;
                 case ")":
-                {
                     while (operations.Peek() != "(")
                         PushExpression(operations, polish);
                     operations.Pop();
                     considerMinusAsNegation = false;
                     continue;
-                }
             }
 
             while (operations.Count > 0 && Priorities[item] <= Priorities[operations.Peek()])

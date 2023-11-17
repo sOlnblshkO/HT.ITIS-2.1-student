@@ -21,7 +21,7 @@ public class ExpressionBuilder
                 "+" => Expression.Add(left, right),
                 "-" => Expression.Subtract(left, right),
                 "*" => Expression.Multiply(left, right),
-                _ => Expression.Divide(left, right)
+                "/" => Expression.Divide(left, right)
             };
 
             result.Push(node);
