@@ -21,7 +21,6 @@ public class ExpressionParser : IExpressionParser
 {
     private readonly Regex _numbers = new(@"^\d+");
     private readonly Regex _delimiters = new("(?<=[-+*/()])|(?=[-+*/()])");
-    private readonly char[] _validOperations = { '+', '-', '*', '/' };
     private readonly Dictionary<string, int> _operatorPriorities = new()
     {
         { "(", 0 },

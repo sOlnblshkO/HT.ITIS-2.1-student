@@ -5,7 +5,7 @@ namespace Hw9.Services.ExpressionValidator;
 
 public class ExpressionValidator : IExpressionValidator
 {
-    private readonly char[] ValidOperations = { '+', '-', '*', '/' };
+    private readonly HashSet<char> ValidOperations = new() { '+', '-', '*', '/' };
 
     public void Validate(string? expression)
     {
@@ -101,7 +101,7 @@ public class ExpressionValidator : IExpressionValidator
     
     private int IndexOfUnknownCharacter(string expression)
     {
-        var validCharacters = new [] { '(', ')', '.', ',' };
+        var validCharacters = new HashSet<char> { '(', ')', '.', ',' };
         for (var i = 0; i < expression.Length; i++)
             if (!char.IsDigit(expression[i]) 
                 && !ValidOperations.Contains(expression[i]) 
