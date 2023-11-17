@@ -29,7 +29,7 @@ public class IntegrationCalculatorControllerTests : IClassFixture<WebApplication
         Assert.True(response!.IsSuccess);
         Assert.Equal(result, response.Result.ToString(CultureInfo.InvariantCulture));
     }
-
+    
     [HomeworkTheory(Homeworks.HomeWork9)]
     [InlineData(null, MathErrorMessager.EmptyString)]
     [InlineData("", MathErrorMessager.EmptyString)]
