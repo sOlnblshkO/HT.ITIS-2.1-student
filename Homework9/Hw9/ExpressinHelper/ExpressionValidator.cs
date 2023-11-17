@@ -84,7 +84,7 @@ public static class ExpressionValidator
             return MathErrorMessager.DivisionByZero;
         }
 
-        regex = new Regex(@"\d+\.\d+\.\d+");
+        regex = new Regex(@"\d+\.\d+[\.\d+]+");
 
         var match = regex.Match(expressionWithoutEmpties);
 
