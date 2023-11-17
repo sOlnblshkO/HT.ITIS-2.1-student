@@ -18,7 +18,7 @@ public class MathCalculatorService : IMathCalculatorService
             _expressionValidator.Validate(expression);
             var parsedExpression = _expressionParser.Parse(expression!);
             var func = 
-                Expression.Lambda<Func<double>>(await _expressionVisitor.VisitExpression(parsedExpression));
+                Expression.Lambda<Func<double>>(_expressionVisitor.VisitExpression(parsedExpression));
             return new CalculationMathExpressionResultDto(func.Compile().Invoke());
         }
         catch(Exception ex)

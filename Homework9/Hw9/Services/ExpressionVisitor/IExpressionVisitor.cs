@@ -4,5 +4,5 @@ namespace Hw9.Services.MyExpressionVisitor;
 
 public interface IExpressionVisitor
 {
-    public Task<Expression> VisitExpression(Expression expression);
+    public Expression VisitExpression(Expression expression);
 }

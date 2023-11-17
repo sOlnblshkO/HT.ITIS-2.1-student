@@ -7,20 +7,20 @@ namespace Hw9.Services.MyExpressionVisitor;
 [ExcludeFromCodeCoverage]
 public class MyExpressionVisitor : ExpressionVisitor, IExpressionVisitor
 {
-    public Task<Expression> VisitExpression(Expression expression) =>
-        Task.Run(() => new MyExpressionVisitor().Visit(expression));
+    public Expression VisitExpression(Expression expression) =>
+        new MyExpressionVisitor().Visit(expression);
 
     protected override Expression VisitBinary(BinaryExpression node)
     {
-        var expressionValues = CompileAsync(node.Left, node.Right).Result;
+        var expressionValues =  CompileAsync(node.Left, node.Right).Result;
         return GetExpressionByType(node.NodeType, expressionValues);
     }
 
     private async Task<double[]> CompileAsync(Expression left, Expression right)
     {
         await Task.Delay(1000);
-        var t1 = Task.Run(() => Expression.Lambda<Func<double>>(VisitExpression(left).Result).Compile().Invoke());
-        var t2 = Task.Run(() => Expression.Lambda<Func<double>>(VisitExpression(right).Result).Compile().Invoke());
+        var t1 = Task.Run(() => Expression.Lambda<Func<double>>(VisitExpression(left)).Compile().Invoke());
+        var t2 = Task.Run(() => Expression.Lambda<Func<double>>(VisitExpression(right)).Compile().Invoke());
         return await Task.WhenAll(t1, t2);
     }
     private Expression GetExpressionByType(ExpressionType expressionType, IReadOnlyList<double> values)
