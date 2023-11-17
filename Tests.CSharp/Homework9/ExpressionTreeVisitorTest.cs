@@ -32,4 +32,16 @@ public class ExpressionTreeVisitorTest
 
         Assert.Throws<Exception>(() => expressionVisitor.Visit(division));
     }
+    [Homework(Homeworks.HomeWork9)]
+    public void VisitBinaryUnknownExpression()
+    {
+        var constant1 = Expression.Constant(10.0, typeof(double));
+        var constant2 = Expression.Constant(3.0, typeof(double));
+        
+        var division = Expression.Power(constant1, constant2);
+        
+        ExpressionVisitor expressionVisitor = new ExpressionTreeVisitorImpl();
+
+        Assert.Throws<Exception>(() => expressionVisitor.Visit(division));
+    }
 }
