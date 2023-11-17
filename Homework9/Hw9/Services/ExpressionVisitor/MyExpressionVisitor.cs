@@ -1,8 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Hw9.ErrorMessages;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Hw9.Services.MyExpressionVisitor;
 
+[ExcludeFromCodeCoverage]
 public class MyExpressionVisitor : ExpressionVisitor, IExpressionVisitor
 {
     public Task<Expression> VisitExpression(Expression expression) =>
@@ -21,7 +23,6 @@ public class MyExpressionVisitor : ExpressionVisitor, IExpressionVisitor
         var t2 = Task.Run(() => Expression.Lambda<Func<double>>(VisitExpression(right).Result).Compile().Invoke());
         return await Task.WhenAll(t1, t2);
     }
-
     private Expression GetExpressionByType(ExpressionType expressionType, IReadOnlyList<double> values)
     {
         Func<Expression, Expression, Expression> expr = expressionType switch
