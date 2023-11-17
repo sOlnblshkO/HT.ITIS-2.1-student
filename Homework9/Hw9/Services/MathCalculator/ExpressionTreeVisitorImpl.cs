@@ -7,8 +7,8 @@ public class ExpressionTreeVisitorImpl: ExpressionVisitor
 {
     protected override Expression VisitBinary(BinaryExpression head)
     {
+        Console.WriteLine(head.Left.NodeType);
         var result = CompileLeftAndRight(head.Left, head.Right).Result;
-
         switch (head.NodeType)
         {
             case ExpressionType.Add: return Expression.Add(Expression.Constant(result[0]), Expression.Constant(result[1]));
@@ -30,7 +30,7 @@ public class ExpressionTreeVisitorImpl: ExpressionVisitor
 
     private static async Task<double[]> CompileLeftAndRight(Expression left, Expression right)
     {
-        await Task.Delay(1000);
+        await Task.Delay(3000);
         var leftPart = Task.Run(() => ((Func<double>)Expression.Lambda(left).Compile()).Invoke());
         var rightPart = Task.Run(() => ((Func<double>)Expression.Lambda(right).Compile()).Invoke());
         return await Task.WhenAll(leftPart, rightPart);
