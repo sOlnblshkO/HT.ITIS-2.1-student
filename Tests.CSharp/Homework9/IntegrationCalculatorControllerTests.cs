@@ -23,6 +23,8 @@ public class IntegrationCalculatorControllerTests : IClassFixture<WebApplication
     [InlineData("3 - 4 / 2", "1")]
     [InlineData("8 * (2 + 2) - 3 * 4", "20")]
     [InlineData("10 - 3 * (-4)", "22")]
+    [InlineData("(-10) - 3 * (-4)", "2")]
+    [InlineData("3 * (-4)", "-12")]
     public async Task Calculate_CalculateExpression_Success(string expression, string result)
     {
         var response = await CalculateAsync(expression);
@@ -35,7 +37,9 @@ public class IntegrationCalculatorControllerTests : IClassFixture<WebApplication
     [InlineData("", MathErrorMessager.EmptyString)]
     [InlineData("10 + i", $"{MathErrorMessager.UnknownCharacter} i")]
     [InlineData("10 : 2", $"{MathErrorMessager.UnknownCharacter} :")]
+    [InlineData("10 @ 2", $"{MathErrorMessager.UnknownCharacter} @")]
     [InlineData("3 - 4 / 2.2.3", $"{MathErrorMessager.NotNumber} 2.2.3")]
+    [InlineData("3 - 4 / 2.2.3.4", $"{MathErrorMessager.NotNumber} 2.2.3.4")]
     [InlineData("2 - 2.23.1 - 23", $"{MathErrorMessager.NotNumber} 2.23.1")]
     [InlineData("8 - / 2", $"{MathErrorMessager.TwoOperationInRow} - and /")]
     [InlineData("8 + (34 - + 2)", $"{MathErrorMessager.TwoOperationInRow} - and +")]
@@ -45,6 +49,7 @@ public class IntegrationCalculatorControllerTests : IClassFixture<WebApplication
     [InlineData("10 + 2 -", MathErrorMessager.EndingWithOperation)]
     [InlineData("((10 + 2)", MathErrorMessager.IncorrectBracketsNumber)]
     [InlineData("(10 - 2))", MathErrorMessager.IncorrectBracketsNumber)]
+    [InlineData("(10 - 2) * 3)", MathErrorMessager.IncorrectBracketsNumber)]
     [InlineData("10 / 0", MathErrorMessager.DivisionByZero)]
     [InlineData("10 / (1 - 1)", MathErrorMessager.DivisionByZero)]
     public async Task Calculate_CalculateExpression_Error(string expression, string result)
