@@ -1,22 +1,46 @@
 ﻿using Hw10.DbModels;
 using Hw10.Dto;
-using Hw10.Services.MathCalculator;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hw10.Services.CachedCalculator;
 
 public class MathCachedCalculatorService : IMathCalculatorService
 {
-	private readonly ApplicationContext _dbContext;
-	private readonly IMathCalculatorService _simpleCalculator;
+    private readonly ApplicationContext _dbContext;
+    private readonly IMathCalculatorService _simpleCalculator;
 
-	public MathCachedCalculatorService(ApplicationContext dbContext, IMathCalculatorService simpleCalculator)
-	{
-		_dbContext = dbContext;
-		_simpleCalculator = simpleCalculator;
-	}
+    public MathCachedCalculatorService(ApplicationContext dbContext, IMathCalculatorService simpleCalculator)
+    {
+        _dbContext = dbContext;
+        _simpleCalculator = simpleCalculator;
+    }
 
-	public async Task<CalculationMathExpressionResultDto> CalculateMathExpressionAsync(string? expression)
-	{
-		throw new NotImplementedException();
-	}
+    public async Task<CalculationMathExpressionResultDto> CalculateMathExpressionAsync(string? expressionString)
+    {
+        if (expressionString == null)
+            return await _simpleCalculator.CalculateMathExpressionAsync(expressionString);
+
+        var expression = await _dbContext.SolvingExpressions
+            .FirstOrDefaultAsync(x => x.Expression == expressionString);
+
+        if (expression != null)
+            return new CalculationMathExpressionResultDto(expression.Result);
+
+        var response = await _simpleCalculator.CalculateMathExpressionAsync(expressionString);
+
+        if (!response.IsSuccess)
+            return response;
+
+        var currentExpression = new SolvingExpression()
+        {
+            Expression = expressionString,
+            Result = response.Result
+        };
+
+        await _dbContext.SolvingExpressions.AddAsync(currentExpression);
+
+        await _dbContext.SaveChangesAsync();
+
+        return response;
+    }
 }
