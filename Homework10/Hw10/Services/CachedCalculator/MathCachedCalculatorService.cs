@@ -37,7 +37,7 @@ public class MathCachedCalculatorService : IMathCalculatorService
             Result = response.Result
         };
 
-        _dbContext.SolvingExpressions.Add(currentExpression);
+        await _dbContext.SolvingExpressions.AddAsync(currentExpression);
 
         await _dbContext.SaveChangesAsync();
 
