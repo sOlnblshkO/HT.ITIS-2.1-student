@@ -28,6 +28,20 @@ public class IntegrationCalculatorControllerTests : IClassFixture<TestApplicatio
         Assert.True(response!.IsSuccess);
         Assert.Equal(result, response.Result.ToString(CultureInfo.InvariantCulture));
     }
+    
+    [HomeworkTheory(Homeworks.HomeWork10)]
+    
+    [InlineData("2 + 3")]
+    public async Task Calculate_TwoIdenticalCalculateExpression_Success(string expression)
+    {
+        var response = await CalculateAsync(expression);
+        Assert.True(response!.IsSuccess);
+
+        var response2 = await CalculateAsync(expression);
+        Assert.True(response2!.IsSuccess);
+
+        Assert.Equal(response.Result, response2.Result);
+    }
 
     [HomeworkTheory(Homeworks.HomeWork10)]
     [InlineData(null, MathErrorMessager.EmptyString)]

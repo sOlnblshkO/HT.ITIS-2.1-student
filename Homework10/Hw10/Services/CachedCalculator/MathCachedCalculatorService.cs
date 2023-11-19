@@ -39,6 +39,8 @@ public class MathCachedCalculatorService : IMathCalculatorService
 
         _dbContext.SolvingExpressions.Add(currentExpression);
 
+        await _dbContext.SaveChangesAsync();
+
         return response;
     }
 }
