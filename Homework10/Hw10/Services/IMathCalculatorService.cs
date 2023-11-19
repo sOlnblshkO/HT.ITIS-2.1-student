@@ -4,5 +4,5 @@ namespace Hw10.Services;
 
 public interface IMathCalculatorService
 {
-    public Task<CalculationMathExpressionResultDto> CalculateMathExpressionAsync(string? expression);
+    public Task<CalculationMathExpressionResultDto> CalculateMathExpressionAsync(string? expressionString);
 }
