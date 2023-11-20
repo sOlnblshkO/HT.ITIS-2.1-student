@@ -40,4 +40,16 @@ public class ExpressionTreeVisitorTest
 
         Assert.ThrowsAsync<Exception>(async () => await ExpressionTreeVisitorImpl.VisitBinary(division));
     }
+    [Homework(Homeworks.HomeWork10)]
+    public void VisitBinaryInvalidOperation()
+    {
+        var constant1 = Expression.Constant(10.0, typeof(double));
+        var constant2 = Expression.Constant(3.0, typeof(double));
+        ;
+        
+        var division = Expression.Power(constant1,constant2);
+        
+
+        Assert.ThrowsAsync<Exception>(async () => await ExpressionTreeVisitorImpl.VisitBinary(division));
+    }
 }
