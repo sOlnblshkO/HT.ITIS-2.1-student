@@ -33,12 +33,10 @@ public class ExpressionTreeVisitorTest
     [Homework(Homeworks.HomeWork10)]
     public void VisitBinaryUnknownExpression()
     {
-        var constant1 = Expression.Constant(10.0, typeof(double));
-        var constant2 = Expression.Constant(3.0, typeof(double));
+        var constant1 = Expression.Constant(5.0, typeof(double));
         
-        var division = Expression.Power(constant1, constant2);
+        var division = Expression.Decrement(constant1);
         
-        ExpressionVisitor expressionVisitor = new ExpressionTreeVisitorImpl();
 
         Assert.ThrowsAsync<Exception>(async () => await ExpressionTreeVisitorImpl.VisitBinary(division));
     }
