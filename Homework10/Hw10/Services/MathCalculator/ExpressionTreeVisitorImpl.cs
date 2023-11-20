@@ -1,19 +1,20 @@
 ﻿using System.Linq.Expressions;
 using Hw10.ErrorMessages;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Hw10.Services.MathCalculator;
 
 public class ExpressionTreeVisitorImpl: ExpressionVisitor
 {
-    public static async Task<double> EvaluateAsync(Expression expression)
+    public static async Task<double> VisitBinary(Expression expression)
     {
         switch (expression)
         {
             case BinaryExpression binaryExpression:
                 await Task.Delay(1000);
                 
-                var leftTask = EvaluateAsync(binaryExpression.Left);
-                var rightTask = EvaluateAsync(binaryExpression.Right);
+                var leftTask = VisitBinary(binaryExpression.Left);
+                var rightTask = VisitBinary(binaryExpression.Right);
                 
                 var results = await Task.WhenAll(leftTask, rightTask);
                 
@@ -26,7 +27,6 @@ public class ExpressionTreeVisitorImpl: ExpressionVisitor
                 throw new InvalidOperationException("Unsupported expression type.");
         }
     }
-
     private static double EvaluateBinaryExpression(BinaryExpression binaryExpr, double value1, double value2)
     {
         return binaryExpr.NodeType switch

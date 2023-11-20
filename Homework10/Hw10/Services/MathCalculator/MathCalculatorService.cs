@@ -17,7 +17,7 @@ public class MathCalculatorService : IMathCalculatorService
             var polishNotation = ExpressionToPolishNotationParser.ToReversePolishNotation(expression!);
             var tree = ExpressionBuilder.ConvertToExpression(polishNotation);
 
-            var res = await ExpressionTreeVisitorImpl.EvaluateAsync(tree);
+            var res = await ExpressionTreeVisitorImpl.VisitBinary(tree);
             return new CalculationMathExpressionResultDto(res){IsSuccess = true};
             
         }
