@@ -1,7 +1,7 @@
 # Домашняя работа для третьего учебного семестра (2 год обучения, 1 семестр)
 
 ![.NET](https://github.com/s1ches/HT-ITIS.2.1-student/actions/workflows/dotnet.yml/badge.svg)
-[![codecov](https://codecov.io/gh/s1ches/HT-ITIS.2.1-student/hw01/badge.svg?token=NO1IIRZODR)](https://codecov.io/gh/s1ches/HT-ITIS.2.1-student)
+[![codecov](https://codecov.io/gh/s1ches/HT-ITIS.2.1-student/main/badge.svg?token=NO1IIRZODR)](https://codecov.io/gh/s1ches/HT-ITIS.2.1-student)
 
 ## Как устроены Actions
 1. ***build***: *Проверка: собирается ли проект.*
