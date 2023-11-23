@@ -14,6 +14,7 @@ on:
       - hw7
       - hw8
       - hw9
+      - hw10
   pull_request:
     branches:
       - main
@@ -27,6 +28,7 @@ on:
       - hw7
       - hw8
       - hw9
+      - hw10
 
 jobs:
   build:
