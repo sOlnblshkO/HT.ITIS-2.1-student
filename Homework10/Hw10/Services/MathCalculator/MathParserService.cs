@@ -35,8 +35,6 @@ public static class MathParserService
                 case "/":
                     operations.Push(Expression.Divide(left, right));
                     break;
-                default:
-                    throw new InvalidOperationException("Operation not supported");
             }
         }
 
