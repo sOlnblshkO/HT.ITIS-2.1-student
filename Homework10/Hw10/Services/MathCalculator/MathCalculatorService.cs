@@ -11,7 +11,7 @@ public class MathCalculatorService : IMathCalculatorService
     private readonly IExpressionValidator _expressionValidator;
     private readonly IExpressionParser _expressionParser;
     private readonly IExpressionVisitor _expressionVisitor;
-    public async Task<CalculationMathExpressionResultDto> CalculateMathExpressionAsync(string? expression)
+    public Task<CalculationMathExpressionResultDto> CalculateMathExpressionAsync(string? expression)
     {
         try
         {
@@ -19,11 +19,11 @@ public class MathCalculatorService : IMathCalculatorService
             var parsedExpression = _expressionParser.Parse(expression!);
             var func = 
                 Expression.Lambda<Func<double>>(_expressionVisitor.VisitExpression(parsedExpression));
-            return new CalculationMathExpressionResultDto(func.Compile().Invoke());
+            return Task.FromResult(new CalculationMathExpressionResultDto(func.Compile().Invoke()));
         }
         catch(Exception ex)
         {
-            return new CalculationMathExpressionResultDto(ex.Message);
+            return Task.FromResult(new CalculationMathExpressionResultDto(ex.Message));
         }
     }
     public MathCalculatorService(IExpressionValidator expressionValidator, IExpressionParser expressionParser, IExpressionVisitor expressionVisitor)
