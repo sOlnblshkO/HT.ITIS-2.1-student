@@ -2,21 +2,21 @@
 
 public static class Parser
 {
-    public static void ParseCalcArguments(string[] args, 
+    public static void ParseCalcArguments(IReadOnlyCollection<string> args, 
         out double val1, 
         out CalculatorOperation operation, 
         out double val2)
     {
         if (!IsArgLengthSupported(args))
-            throw new ArgumentException($"Need 3 arguments, was given {args.Length}");
+            throw new ArgumentException($"Need 3 arguments, was given {args.Count}");
 
-        if (!(double.TryParse(args[0], out val1) && double.TryParse(args[2], out val2)))
-            throw new ArgumentException($"Wrong arguments, expected numbers, was given {args[0]} and {args[2]}");
+        if (!(double.TryParse(args.ElementAt(0), out val1) && double.TryParse(args.ElementAt(2), out val2)))
+            throw new ArgumentException($"Wrong arguments, expected numbers, was given {args.ElementAt(0)} and {args.ElementAt(2)}");
 
-        operation = ParseOperation(args[1]);
+        operation = ParseOperation(args.ElementAt(1));
     }
 
-    private static bool IsArgLengthSupported(string[] args) => args.Length == 3;
+    private static bool IsArgLengthSupported(IReadOnlyCollection<string> args) => args.Count == 3;
 
     private static CalculatorOperation ParseOperation(string arg)
     {
