@@ -1,11 +1,6 @@
 # Домашняя работа для третьего учебного семестра (2 год обучения, 1 семестр)
 ![.NET](https://github.com/BuLbl4/HT-ITIS.2.1-student/actions/workflows/dotnet.yml/badge.svg)
-<<<<<<< HEAD
-[![codecov](https://codecov.io/gh/BuLbl4/HT-ITIS.2.1-student/branch/hw8/graph/badge.svg?token=HNLJJ3FL50)](https://codecov.io/gh/BuLbl4/HT-ITIS.2.1-student)
-=======
-[![codecov](https://codecov.io/gh/BuLbl4/HT-ITIS.2.1-student/branch/hw9/graph/badge.svg?token=HNLJJ3FL50)](https://codecov.io/gh/BuLbl4/HT-ITIS.2.1-student)
->>>>>>> 88e617ab62b41a6cbe3221a92797a7e5b2e43317
-
+[![codecov](https://codecov.io/gh/BuLbl4/HT-ITIS.2.1-student/branch/hw10/graph/badge.svg?token=HNLJJ3FL50)](https://codecov.io/gh/BuLbl4/HT-ITIS.2.1-student)
 ## Как устроены Actions
 1. ***build***: *Проверка: собирается ли проект.*
 2. ***test*** и ***test-report***: *Все тесты должны проходить*
