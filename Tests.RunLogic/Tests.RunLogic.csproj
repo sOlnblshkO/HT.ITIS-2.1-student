@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -9,6 +9,10 @@
     <ItemGroup>
       <PackageReference Include="xunit.abstractions" Version="2.0.3" />
       <PackageReference Include="xunit.core" Version="2.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Homework1\Hw1\Hw1.csproj" />
     </ItemGroup>
 
 </Project>
