@@ -1,4 +1,5 @@
-﻿using static Hw11.ErrorMessages.MathErrorMessager;
+﻿using Hw11.Exceptions;
+using static Hw11.ErrorMessages.MathErrorMessager;
 using static Hw11.Patterns.Patterns;
 
 namespace Hw11.Services.Expressions;
@@ -8,19 +9,19 @@ public static class ExpressionValidator
     public static void Validate(string? expression, out string[] splittedExpression)
     {
         if (string.IsNullOrEmpty(expression))
-            throw new Exception(EmptyString);
+            throw new InvalidSyntaxException(EmptyString);
         if (!CheckCorrectBracketsNumber(expression))
-            throw new Exception(IncorrectBracketsNumber);
+            throw new InvalidSyntaxException(IncorrectBracketsNumber);
         splittedExpression = SmartSplitPattern.Split(expression.Replace(" ", ""))
             .Where(c => c is not "").ToArray();
         foreach (var element in expression)
             if(!NumPattern.IsMatch(element.ToString()) 
                && !new[] { '+', '-', '*', '/', '(', ')', '.', ' ' }.Contains(element))
-                throw new Exception(UnknownCharacterMessage(element));
+                throw new InvalidSymbolException(UnknownCharacterMessage(element));
         if (!NumPattern.IsMatch(splittedExpression[0]) && !new[] { "-", "(" }.Contains(splittedExpression[0]))
-            throw new Exception(StartingWithOperation);
+            throw new InvalidSyntaxException(StartingWithOperation);
         if (!NumPattern.IsMatch(splittedExpression[^1]) && splittedExpression[^1] != ")")
-            throw new Exception(EndingWithOperation);
+            throw new InvalidSyntaxException(EndingWithOperation);
 
         var lastCharacter = "";
         var isOpenParenthesis = true;
@@ -32,7 +33,7 @@ public static class ExpressionValidator
                 lastCharacter = character;
                 isOpenParenthesis = false;
                 if (!double.TryParse(character, out _))
-                    throw new Exception(NotNumberMessage(character));
+                    throw new InvalidNumberException(NotNumberMessage(character));
                 continue;
             }
 
@@ -52,7 +53,7 @@ public static class ExpressionValidator
                 case ")":
                 {
                     if (isOpenParenthesis)
-                        throw new Exception(OperationBeforeParenthesisMessage(lastCharacter));
+                        throw new InvalidSyntaxException(OperationBeforeParenthesisMessage(lastCharacter));
                     lastCharacter = character;
                     isOpenParenthesis = false;
                     continue;
@@ -62,8 +63,8 @@ public static class ExpressionValidator
             if (isOpenParenthesis)
             {
                 if (lastCharacter == "(")
-                    throw new Exception(InvalidOperatorAfterParenthesisMessage(character));
-                throw new Exception(TwoOperationInRowMessage(lastCharacter, character));
+                    throw new InvalidSyntaxException(InvalidOperatorAfterParenthesisMessage(character));
+                throw new InvalidSyntaxException(TwoOperationInRowMessage(lastCharacter, character));
             }
 
             lastCharacter = character;

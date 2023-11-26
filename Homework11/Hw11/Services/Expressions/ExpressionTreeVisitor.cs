@@ -5,7 +5,7 @@ using static Hw11.ErrorMessages.MathErrorMessager;
 namespace Hw11.Services.Expressions;
 
 [ExcludeFromCodeCoverage]
-public class ExpressionTreeVisitor : ExpressionVisitor
+public static class ExpressionTreeVisitor
 {
     private static async Task<double> VisitNode(BinaryExpression root)
     {
