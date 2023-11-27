@@ -1,13 +1,13 @@
 ﻿using System.Linq.Expressions;
-using Hw10.Services.ExpressionUtils;
-using Hw10.Services.MathCalculator;
+using Hw11.Services.ExpressionUtils;
+using Hw11.Services.MathCalculator;
 using Tests.RunLogic.Attributes;
 
-namespace Tests.CSharp.Homework10;
+namespace Tests.CSharp.Homework11;
 
 public class ExpressionBuilderTest
 {
-    [Homework(Homeworks.HomeWork10)]
+    [Homework(Homeworks.HomeWork11)]
     public void VisitBinaryDivision()
     {
         Assert.Throws<Exception>(() => ExpressionBuilder.ConvertToExpression("1 3 ^"));

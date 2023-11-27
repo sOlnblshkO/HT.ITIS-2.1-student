@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Hw10.Services.MathCalculator;
+namespace Hw10.Services.ExpressionUtils;
 
 using System.Collections.Generic;
 

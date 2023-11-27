@@ -1,6 +1,6 @@
 ﻿using Hw10.ErrorMessages;
 
-namespace Hw10.Services.MathCalculator;
+namespace Hw10.Services.ExpressionUtils;
 
 public class ExpressionValidator
 {

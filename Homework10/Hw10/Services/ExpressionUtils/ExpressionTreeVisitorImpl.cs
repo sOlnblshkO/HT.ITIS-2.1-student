@@ -2,7 +2,7 @@
 using Hw10.ErrorMessages;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hw10.Services.MathCalculator;
+namespace Hw10.Services.ExpressionUtils;
 
 public class ExpressionTreeVisitorImpl: ExpressionVisitor
 {

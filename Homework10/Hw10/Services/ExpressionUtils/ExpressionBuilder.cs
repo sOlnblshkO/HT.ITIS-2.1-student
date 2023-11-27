@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Hw10.Services.MathCalculator;
+namespace Hw10.Services.ExpressionUtils;
 
 public class ExpressionBuilder
 {
