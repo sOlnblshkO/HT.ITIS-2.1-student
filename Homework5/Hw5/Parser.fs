@@ -9,7 +9,7 @@ let isArgLengthSupported (args:string[]): Result<'a,'b> =
     else Ok args 
 
 let tryToDouble (arg : string) : Result<'arg, Message> =
-    match Double.TryParse (arg.Replace(".",",")) with
+    match Double.TryParse arg with
         | true, v -> Ok v
         | _ -> Error Message.WrongArgFormat
     
