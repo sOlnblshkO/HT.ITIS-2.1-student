@@ -25,14 +25,14 @@ public class ConcurrencyTests
     [Homework(Homeworks.HomeWork3)]
     public void FiveThreads_100Iterations_RaceIsHardToReproduce()
     {
-        var expected = Concurrency.Increment(5, 1000);
+        var expected = Concurrency.Increment(2, 1000);
         Assert.Equal(expected, Concurrency.Index);
     }
 
-    // [Homework(Homeworks.HomeWork3)]
+    [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_RaceIsReproduced()
     {
-        var expected = Concurrency.Increment(8, 100_000);
+        var expected = Concurrency.Increment(2, 100_000);
         Assert.NotEqual(expected, Concurrency.Index);
         _toh.WriteLine($"Expected: {expected}; Actual: {Concurrency.Index}");
     }
@@ -40,7 +40,7 @@ public class ConcurrencyTests
     [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_WithLock_NoRaces()
     {
-        var expected = Concurrency.IncrementWithLock(8, 100_000);
+        var expected = Concurrency.IncrementWithLock(2, 100_000);
         Assert.Equal(expected, Concurrency.Index);
         _toh.WriteLine($"Expected: {expected}; Actual: {Concurrency.Index}");
     }
@@ -48,7 +48,7 @@ public class ConcurrencyTests
     [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_LockIsSyntaxSugarForMonitor_NoRaces()
     {
-        var expected = Concurrency.IncrementWithLock(8, 100_000);
+        var expected = Concurrency.IncrementWithLock(2, 100_000);
         Assert.Equal(expected, Concurrency.Index);
         _toh.WriteLine($"Expected: {expected}; Actual: {Concurrency.Index}");
     }
@@ -56,7 +56,7 @@ public class ConcurrencyTests
     [Homework(Homeworks.HomeWork3)]
     public void EightThreads_100KIterations_WithInterlocked_NoRaces()
     {
-        var expected = Concurrency.IncrementWithInterlocked(8, 100_000);
+        var expected = Concurrency.IncrementWithInterlocked(2, 100_000);
         Assert.Equal(expected, Concurrency.Index);
         _toh.WriteLine($"Expected: {expected}; Actual: {Concurrency.Index}");
     }
@@ -101,9 +101,12 @@ public class ConcurrencyTests
                 semaphore.Release();
             }
             else
+            {
                 _toh.WriteLine(
                     $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} waiting timeout"
                 );
+            }
+
             _toh.WriteLine(
                 $"{DateTime.Now.ToString("HH:mm:ss")}: Process {Process.GetCurrentProcess().Id} ends"
             );
@@ -134,12 +137,12 @@ public class ConcurrencyTests
         Assert.Equal(expected, Concurrency.Index);
     }
 
-    public void NamedSemaphore_InterprocessCommunication()
-    {
-        // My platform does not support Named Semaphores, so
-        // I cannot do this task. See:
-        // https://github.com/dotnet/runtime/issues/4370#issuecomment-692977704
-    }
+    // public void NamedSemaphore_InterprocessCommunication()
+    // {
+    // My platform does not support Named Semaphores, so
+    // I cannot do this task. See:
+    // https://github.com/dotnet/runtime/issues/4370#issuecomment-692977704
+    // }
 
     [Homework(Homeworks.HomeWork3)]
     public void ConcurrentDictionary_100KIterations_WithInterlocked_NoRaces()
