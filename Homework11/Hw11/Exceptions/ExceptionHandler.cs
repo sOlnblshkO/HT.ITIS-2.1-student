@@ -2,6 +2,7 @@
 
 namespace Hw11.Exceptions;
 
+[ExcludeFromCodeCoverage]
 public class ExceptionHandler : IExceptionHandler
 {
 	private const string UnknownError = "Unknown error";
