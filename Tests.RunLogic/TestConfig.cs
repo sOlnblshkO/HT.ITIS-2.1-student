@@ -1,4 +1,3 @@
 using Tests.RunLogic.Attributes;
 
-[assembly: HomeworkProgress(Homeworks.HomeWork2)]
-
+[assembly: HomeworkProgress(Homeworks.HomeWork3)]
