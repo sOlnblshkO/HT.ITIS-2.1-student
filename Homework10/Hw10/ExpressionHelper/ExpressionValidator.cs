@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using Hw9.ErrorMessages;
+using Hw10.ErrorMessages;
 
-namespace Hw9.ExpressionHelper;
+namespace Hw10.ExpressionHelper;
 
 public static class ExpressionValidator
 {
@@ -89,4 +89,5 @@ public static class ExpressionValidator
         var match = regex.Match(expressionWithoutEmpties);
 
         return match.Success ? MathErrorMessager.NotNumberMessage(match.Value) : "OK";
+    }
 }
