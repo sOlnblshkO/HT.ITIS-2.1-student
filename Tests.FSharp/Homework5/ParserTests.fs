@@ -3,6 +3,7 @@
 open System
 open Hw5
 open Hw5.Calculator
+open Hw5.CalculatorOperation
 open Hw5.Parser
 open Microsoft.FSharp.Core
 open Tests.RunLogic.Attributes

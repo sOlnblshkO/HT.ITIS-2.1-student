@@ -1,6 +1,8 @@
 ﻿module Tests.Homework5.CalculatorTests
 
+open Hw5
 open Hw5.Calculator
+open Hw5.CalculatorOperation
 open Microsoft.FSharp.Core
 open Tests.RunLogic.Attributes
 open Xunit

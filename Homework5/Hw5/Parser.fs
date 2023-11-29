@@ -1,8 +1,7 @@
 ﻿module Hw5.Parser
 
 open System
-open System.Globalization
-open Hw5.Calculator
+open Hw5.CalculatorOperation
 
 let isArgLengthSupported (args:string[]): Result<'a,'b> =
     if args.Length <> 3 then Error Message.WrongArgLength
@@ -16,10 +15,10 @@ let tryToDouble (arg : string) : Result<'arg, Message> =
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
 let inline isOperationSupported (arg1, operation, arg2): Result<('a * CalculatorOperation * 'b), Message> =
     match operation with
-        | Calculator.plus -> Ok(arg1, CalculatorOperation.Plus, arg2)
-        | Calculator.minus -> Ok(arg1, CalculatorOperation.Minus, arg2)
-        | Calculator.multiply -> Ok(arg1, CalculatorOperation.Multiply, arg2)
-        | Calculator.divide -> Ok(arg1, CalculatorOperation.Divide, arg2)
+        | CalculatorOperation.plus -> Ok(arg1, CalculatorOperation.Plus, arg2)
+        | CalculatorOperation.minus -> Ok(arg1, CalculatorOperation.Minus, arg2)
+        | CalculatorOperation.multiply -> Ok(arg1, CalculatorOperation.Multiply, arg2)
+        | CalculatorOperation.divide -> Ok(arg1, CalculatorOperation.Divide, arg2)
         | _ -> Error Message.WrongArgFormatOperation
 
 let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message> =

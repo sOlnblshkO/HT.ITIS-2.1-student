@@ -1,7 +1,5 @@
 ﻿module Hw5.MaybeBuilder
 
-open System
-
 type MaybeBuilder() =
     member builder.Bind(a, f): Result<'e,'d> =
         match a with
