@@ -50,7 +50,12 @@ public static class ExpressionValidator
             throw new InvalidSyntaxException(MathErrorMessager.IncorrectBracketsNumber);
         }
         
-        foreach (var letter in expressionWithoutEmpties.Where(letter => !char.IsDigit(letter) && letter != '(' && letter != ')' && letter != '.' && !Operators.Contains(letter)))
+        foreach (var number in expressionWithoutEmpties.Where(number => !char.IsDigit(number)))
+        {
+            throw new InvalidNumberException(MathErrorMessager.UnknownCharacterMessage(number));
+        }
+        
+        foreach (var letter in expressionWithoutEmpties.Where(letter =>letter != '(' && letter != ')' && letter != '.' && !Operators.Contains(letter)))
         {
             throw new InvalidSymbolException(MathErrorMessager.UnknownCharacterMessage(letter));
         }
@@ -82,7 +87,7 @@ public static class ExpressionValidator
         var regex = new Regex(@"\d+\.?\d*\/0");
         if (regex.IsMatch(expressionWithoutEmpties))
         {
-            throw new InvalidSyntaxException(MathErrorMessager.DivisionByZero);
+            throw new DivideByZeroException(MathErrorMessager.DivisionByZero);
         }
         
         regex = new Regex(@"\d+\.\d+\.\d+");
