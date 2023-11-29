@@ -6,8 +6,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Calculator.fs" />
+        <Compile Include="CalculatorOperations.fs" />
+        <Compile Include="CalcOptions.fs" />
         <Compile Include="Parser.fs" />
+        <Compile Include="Calculator.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
