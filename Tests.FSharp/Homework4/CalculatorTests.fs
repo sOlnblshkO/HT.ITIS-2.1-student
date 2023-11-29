@@ -2,6 +2,7 @@
 
 open System
 open Hw4.Calculator
+open Hw4.CalculatorOperations
 open Tests.RunLogic.Attributes
 open Xunit
         
