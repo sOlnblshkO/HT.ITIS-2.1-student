@@ -50,12 +50,7 @@ public static class ExpressionValidator
             throw new InvalidSyntaxException(MathErrorMessager.IncorrectBracketsNumber);
         }
         
-        foreach (var number in expressionWithoutEmpties.Where(number => !char.IsDigit(number)))
-        {
-            throw new InvalidNumberException(MathErrorMessager.UnknownCharacterMessage(number));
-        }
-        
-        foreach (var letter in expressionWithoutEmpties.Where(letter =>letter != '(' && letter != ')' && letter != '.' && !Operators.Contains(letter)))
+        foreach (var letter in expressionWithoutEmpties.Where(letter => !char.IsDigit(letter) && letter != '(' && letter != ')' && letter != '.' && !Operators.Contains(letter)))
         {
             throw new InvalidSymbolException(MathErrorMessager.UnknownCharacterMessage(letter));
         }
@@ -94,6 +89,6 @@ public static class ExpressionValidator
 
         var match = regex.Match(expressionWithoutEmpties);
 
-        return match.Success ? throw new InvalidSyntaxException(MathErrorMessager.NotNumberMessage(match.Value)) : true;
+        return match.Success ? throw new InvalidNumberException(MathErrorMessager.NotNumberMessage(match.Value)) : true;
     }
 }

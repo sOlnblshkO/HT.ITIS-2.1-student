@@ -15,7 +15,7 @@ private readonly Dictionary<string, int> _operationPriority = new()
         { "~", 4 }
     };
     
-    public string ParseToPolishNotation(string[] expressionInput)
+    public string ParseToPolishNotation(IEnumerable<string> expressionInput)
     {
         var expression = expressionInput
             .Select(i => i.Replace(" ", ""))
