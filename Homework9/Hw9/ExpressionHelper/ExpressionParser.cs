@@ -1,7 +1,7 @@
-﻿﻿using System.Text;
+using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Hw10.ExpressionHelper;
+namespace Hw9.ExpressionHelper;
 
 public class ExpressionParser
 {

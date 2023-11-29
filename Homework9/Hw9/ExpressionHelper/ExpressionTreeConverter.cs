@@ -1,6 +1,6 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 
-namespace Hw10.ExpressionHelper;
+namespace Hw9.ExpressionHelper;
 
 public class ExpressionTreeConverter
 {

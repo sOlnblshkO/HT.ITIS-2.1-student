@@ -89,5 +89,4 @@ public static class ExpressionValidator
         var match = regex.Match(expressionWithoutEmpties);
 
         return match.Success ? MathErrorMessager.NotNumberMessage(match.Value) : "OK";
-    }
 }
