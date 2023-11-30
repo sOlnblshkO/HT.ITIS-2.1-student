@@ -7,9 +7,9 @@ namespace Hw11.Services.MyExpressionVisitor;
 [ExcludeFromCodeCoverage]
 public class MyExpressionVisitor : IExpressionVisitor
 {
-    public async Task<Expression> VisitExpression(Expression expression)
+    public Task<Expression> VisitExpression(Expression expression)
     {
-        return await new MyExpressionVisitor().Visit((dynamic)expression);
+        return new MyExpressionVisitor().Visit((dynamic)expression);
     }
 
     private Task<Expression> Visit(ConstantExpression cnst) =>
@@ -25,7 +25,7 @@ public class MyExpressionVisitor : IExpressionVisitor
     {
         await Task.Delay(1000);
         var t1 = Task.Run(async () => Expression.Lambda<Func<double>>(await VisitExpression(left)).Compile().Invoke());
-        var t2 = Task.Run(async () => Expression.Lambda<Func<double>>(await VisitExpression(right)).Compile().Invoke());
+        var t2 = Task.Run(async  () => Expression.Lambda<Func<double>>(await VisitExpression(right)).Compile().Invoke());
         return await Task.WhenAll(t1, t2);
     }
     private Expression GetExpressionByType(ExpressionType expressionType, IReadOnlyList<double> values)
