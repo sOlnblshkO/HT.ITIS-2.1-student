@@ -7,23 +7,29 @@ namespace Hw11.Services.MyExpressionVisitor;
 [ExcludeFromCodeCoverage]
 public class MyExpressionVisitor : IExpressionVisitor
 {
+    /*
     public Expression VisitExpression(Expression expression) =>
         new MyExpressionVisitor().Visit((dynamic)expression);
-    
-    private Expression Visit(ConstantExpression cnst) =>
-        cnst;
-
-    private Expression Visit(BinaryExpression expr)
+    */
+    public async Task<Expression> VisitExpression(Expression expression)
     {
-        var expressionValues =  CompileAsync(expr.Left, expr.Right).Result;
+        return await new MyExpressionVisitor().Visit((dynamic)expression);
+    }
+
+    private Task<Expression> Visit(ConstantExpression cnst) =>
+        Task.FromResult((Expression)cnst);
+
+    private async Task<Expression> Visit(BinaryExpression expr)
+    {
+        var expressionValues = await CompileAsync(expr.Left, expr.Right);
         return GetExpressionByType(expr.NodeType, expressionValues);
     }
     
     private async Task<double[]> CompileAsync(Expression left, Expression right)
     {
         await Task.Delay(1000);
-        var t1 = Task.Run(() => Expression.Lambda<Func<double>>(VisitExpression(left)).Compile().Invoke());
-        var t2 = Task.Run(() => Expression.Lambda<Func<double>>(VisitExpression(right)).Compile().Invoke());
+        var t1 = Task.Run(async () => Expression.Lambda<Func<double>>(await VisitExpression(left)).Compile().Invoke());
+        var t2 = Task.Run(async () => Expression.Lambda<Func<double>>(await VisitExpression(right)).Compile().Invoke());
         return await Task.WhenAll(t1, t2);
     }
     private Expression GetExpressionByType(ExpressionType expressionType, IReadOnlyList<double> values)
