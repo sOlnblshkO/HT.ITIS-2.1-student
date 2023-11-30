@@ -7,10 +7,6 @@ namespace Hw11.Services.MyExpressionVisitor;
 [ExcludeFromCodeCoverage]
 public class MyExpressionVisitor : IExpressionVisitor
 {
-    /*
-    public Expression VisitExpression(Expression expression) =>
-        new MyExpressionVisitor().Visit((dynamic)expression);
-    */
     public async Task<Expression> VisitExpression(Expression expression)
     {
         return await new MyExpressionVisitor().Visit((dynamic)expression);
