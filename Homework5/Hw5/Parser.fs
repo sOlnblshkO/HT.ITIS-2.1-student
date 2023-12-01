@@ -23,12 +23,13 @@ let inline isOperationSupported (arg1, operation, arg2): Result<('a * Calculator
 
 let parseArgs (args: string[]): Result<('a * CalculatorOperation * 'b), Message> =
     MaybeBuilder.maybe {
-        let! checkedArgs =  (args[0], args[1], args[2]) |> isOperationSupported
-        let! arg1 = checkedArgs.Item1 |> tryToDouble
-        let operation = checkedArgs.Item2
-        let! arg2 = checkedArgs.Item3 |> tryToDouble
+        let! (arg1, oper, arg2) =  (args[0], args[1], args[2]) |> isOperationSupported
         
-        return (arg1, operation, arg2 )
+        let! checkedArg1 = tryToDouble arg1
+        let operation = oper
+        let! checkedArg2 = tryToDouble arg2
+        
+        return (checkedArg1, operation, checkedArg2)
     }
     
 [<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]

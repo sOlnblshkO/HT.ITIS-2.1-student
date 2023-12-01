@@ -3,11 +3,8 @@ open Hw5
 open Hw5.MaybeBuilder
 open Microsoft.FSharp.Core
 
-let args = Array.create 3 ""
-
-Array.set args 0 (Console.ReadLine())
-Array.set args 1 (Console.ReadLine())
-Array.set args 2 (Console.ReadLine())
+printf "Enter expression like 3 * 2\n"
+let args = Console.ReadLine().Split(" ")
 
 let result =
     maybe {
