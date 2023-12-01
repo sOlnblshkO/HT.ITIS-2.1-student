@@ -14,13 +14,19 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="Program.fs" />
-    </ItemGroup>
-
-    <ItemGroup>
         <None Include="web.config" CopyToOutputDirectory="PreserveNewest" />
         <Content Include="WebRoot\**\*">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="Calculator\CalculatorOperation.fs" />
+      <Compile Include="Calculator\MaybeBuilder.fs" />
+      <Compile Include="Calculator\Calculator.fs" />
+      <Compile Include="Calculator\Message.fs" />
+      <Compile Include="Calculator\Parser.fs" />
+      <Compile Include="CalculatorHandler.fs" />
+      <Compile Include="Program.fs" />
     </ItemGroup>
 </Project>
