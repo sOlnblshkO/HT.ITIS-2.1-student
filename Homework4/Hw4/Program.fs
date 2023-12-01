@@ -3,11 +3,8 @@ open Hw4
 open Hw4.CalcOptions
 open Hw4.Parser
 
-let args = Array.create 3 ""
-
-Array.set args 0 (Console.ReadLine())
-Array.set args 1 (Console.ReadLine())
-Array.set args 2 (Console.ReadLine())
+printf "Enter expression like 1 + 2\n"
+let args = Console.ReadLine().Split(" ")
 
 let calcOptions = parseCalcArguments args
 let result = Calculator.calculate calcOptions.arg1 calcOptions.operation calcOptions.arg2
