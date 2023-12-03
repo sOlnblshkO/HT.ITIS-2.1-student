@@ -11,7 +11,7 @@ open Giraffe
 
 let parseArgument (arg: string) =
     match Double.TryParse(arg, NumberStyles.Float, CultureInfo.InvariantCulture) with
-    | (true, num) -> Ok num
+    | true, num -> Ok num
     | _ -> Error $"Could not parse value '{arg}'"
     
     
@@ -51,10 +51,14 @@ let webApp =
     
 type Startup() =
     member _.ConfigureServices (services : IServiceCollection) =
-        services.AddGiraffe() |> ignore
-
+        services.AddGiraffe()
+                .AddMiniProfiler(fun option -> option.RouteBasePath <- "/profiler") |> ignore
+        
+        
+    
     member _.Configure (app : IApplicationBuilder) (_ : IHostEnvironment) (_ : ILoggerFactory) =
-        app.UseGiraffe webApp
+        app.UseMiniProfiler()
+            .UseGiraffe webApp
         
 [<EntryPoint>]
 let main _ =

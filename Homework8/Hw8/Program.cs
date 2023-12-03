@@ -12,6 +12,7 @@ public class Program
 
         builder.Services.AddControllersWithViews();
         builder.Services.AddScoped<ICalculator, Services.Calculator>();
+        builder.Services.AddMiniProfiler(options => options.RouteBasePath = "/profiler");
 
         var app = builder.Build();
 
@@ -20,7 +21,8 @@ public class Program
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
-        
+
+        app.UseMiniProfiler();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
@@ -31,6 +33,7 @@ public class Program
             name: "default",
             pattern: "{controller=Calculator}/{action=Index}");
 
+        
         app.Run();
     }
 }

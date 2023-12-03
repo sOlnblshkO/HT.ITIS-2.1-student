@@ -7,9 +7,19 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <Optimize>true</Optimize>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.11" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Homework6\Hw6.Client\Hw6.Client.fsproj" />
+      <ProjectReference Include="..\..\Homework6\Hw6\Hw6.fsproj" />
+      <ProjectReference Include="..\..\Homework8\Hw8\Hw8.csproj" />
     </ItemGroup>
 
 </Project>
