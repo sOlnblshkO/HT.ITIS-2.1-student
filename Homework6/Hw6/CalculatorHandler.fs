@@ -3,19 +3,19 @@ module Hw6.CalculatorHandler
 open Giraffe
 
 open Hw6.Calculator
-open Hw6.Parser
-open MaybeBuilder
+open CalcOptions
 
 let calculatorHandler: HttpHandler =
     fun next ctx ->
-        let result: Result<string, string> =
-            let queryParams = ctx.TryBindQueryString<string[]>()
+        let result: Result<string, string> =            
             MaybeBuilder.maybe{
-                let! parsedArgs = Parser.parseCalcArguments queryParams
-                let! result = Calculator.calculate parsedArgs[0] parseArgs[1] parseArgs[1]
-                
+                let! calcOptions = ctx.TryBindQueryString<CalcOptions>()
+                let! result = Calculator.calculate (calcOptions.value1,
+                                                    calcOptions.operation |> CalculatorOperation.tryToCalculatorOperation,
+                                                    calcOptions.value2)   
                 return result
             }
+            
         match result with
         | Ok ok -> (setStatusCode 200 >=> text (ok.ToString())) next ctx
         | Error error -> (setStatusCode 400 >=> text error) next ctx

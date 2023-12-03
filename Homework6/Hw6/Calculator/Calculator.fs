@@ -1,13 +1,13 @@
 module Hw6.Calculator.Calculator
 
-open Hw6.Calculator
-open CalculatorOperation
-open System
+open Hw6.Calculator.CalculatorOperation
 
-let inline calculate value1 operation value2: 'a =
+[<System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage>]
+let inline calculate (value1 : float,  operation : string,  value2 : float): 'a =
     match operation with
-        | CalculatorOperation.Plus -> value1 + value2
-        | CalculatorOperation.Minus -> value1 - value2
-        | CalculatorOperation.Multiply -> value1 * value2
-        | CalculatorOperation.Divide -> value1 / value2
-        | _ -> ArgumentOutOfRangeException($"Value must be from 0 to 3, was given {operation}") |> raise
+        | Plus -> Ok $"{value1 + value2}"
+        | Minus -> Ok $"{value1 - value2}"
+        | Multiply -> Ok $"{value1 * value2}"
+        | Divide -> if value2 <> 0.0 then Ok $"{value1 / value2}"
+                                        else Ok("DivideByZero")
+        | _ -> Error $"Could not parse value '{operation}'\nAvailable operations : +, -, *, /"

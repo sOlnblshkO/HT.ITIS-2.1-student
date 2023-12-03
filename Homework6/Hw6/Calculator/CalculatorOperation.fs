@@ -1,19 +1,21 @@
 module Hw6.Calculator.CalculatorOperation
 
-type CalculatorOperation =
-     | Plus = 0
-     | Minus = 1
-     | Multiply = 2
-     | Divide = 3
+[<Literal>] 
+let Plus = "+"
 
 [<Literal>] 
-let plus = "Plus"
+let Minus = "-"
 
 [<Literal>] 
-let minus = "Minus"
+let Multiply = "*"
 
 [<Literal>] 
-let multiply = "Multiply"
+let Divide = "/"
 
-[<Literal>] 
-let divide = "Divide"
+let tryToCalculatorOperation (arg: string) =
+    match arg with
+    | "Plus" -> Plus
+    | "Minus" -> Minus
+    | "Multiply" -> Multiply
+    | "Divide" -> Divide
+    | _ -> arg
