@@ -1,4 +1,4 @@
-﻿module Hw5.MaybeBuilder
+﻿module Hw6.MaybeBuilder
 
 type MaybeBuilder() =
     member builder.Bind(a, f): Result<'e,'d> =
