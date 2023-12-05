@@ -13,6 +13,10 @@ public enum FieldType{
 
 public class FormCreatorService(object? model)
 {
+    /// <summary>
+    /// Метод, возвращающий поле для формы, опираясь на свойство модели
+    /// </summary>
+    /// <returns>IHtmlContent</returns>
     public IHtmlContent CreateFormItem(PropertyInfo property)
     {
         var div = new TagBuilder("div");
@@ -27,6 +31,10 @@ public class FormCreatorService(object? model)
         return div;
     }
 
+    /// <summary>
+    /// Метод, возвращающий Label для поля формы
+    /// </summary>
+    /// <returns>IHtmlContent</returns>
     private static IHtmlContent CreateLabel(PropertyInfo property)
     {
         var label = new TagBuilder("label");
@@ -39,6 +47,10 @@ public class FormCreatorService(object? model)
         return label;
     }
 
+    /// <summary>
+    /// Метод, возвращающий поле формы
+    /// </summary>
+    /// <returns>IHtmlContent</returns>
     private static IHtmlContent CreateField(PropertyInfo property)
     {
         var tagType = ValidateExtensions.GetTegType(property);
@@ -49,6 +61,10 @@ public class FormCreatorService(object? model)
         return field;
     }
 
+    /// <summary>
+    /// Метод, возвращающий тег, опираясю на тип поля(FieldType) 
+    /// </summary>
+    /// <returns>TagBuilder</returns>
     private static TagBuilder GetFieldByType(PropertyInfo property, FieldType type)
     {
         return type switch
@@ -60,6 +76,10 @@ public class FormCreatorService(object? model)
         };
     }
 
+    /// <summary>
+    /// Метод, возвращающий тег select
+    /// </summary>
+    /// <returns>TagBuilder</returns>
     private static TagBuilder CreateSelect(PropertyInfo property)
     {
         var field = new TagBuilder("select");
@@ -77,6 +97,10 @@ public class FormCreatorService(object? model)
         return field;
     }
 
+    /// <summary>
+    /// Метод, возвращающий тег input с определённым типом
+    /// </summary>
+    /// <returns>TagBuilder</returns>
     private static TagBuilder CreateInputWithType(string tagType)
     {
         var field = new TagBuilder("input");

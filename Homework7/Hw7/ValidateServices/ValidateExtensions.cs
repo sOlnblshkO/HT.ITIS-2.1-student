@@ -9,18 +9,26 @@ namespace Hw7.ValidateServices;
 
 public static class ValidateExtensions
 {
+    /// <summary>
+    /// Метод, возвращающий тип поля формы (input, select)
+    /// </summary>
+    /// <returns>FieldType</returns>
     public static FieldType GetTegType(PropertyInfo property)
     {
         if (property.PropertyType.IsEnum) return FieldType.Select;
         if (property.PropertyType.IsValueType) return FieldType.InputNumber;
         return FieldType.InputText;
     }
-
+    
+    /// <summary>
+    /// Метод, возвращающий имя Label для поля формы
+    /// </summary>
+    /// <returns>string</returns>
     public static string GetLabelName(PropertyInfo property)
     {
-        var displayAttribute = property.
-            GetCustomAttributes(true).
-            FirstOrDefault(attr => attr is DisplayAttribute) as DisplayAttribute;
+        var displayAttribute = property.GetCustomAttributes(true).
+            OfType<DisplayAttribute>().
+            FirstOrDefault();
         
         if (!string.IsNullOrEmpty(displayAttribute?.Name))
             return displayAttribute.Name;
@@ -28,17 +36,27 @@ public static class ValidateExtensions
         return CamelCaseToLabelName(property);
     }
 
+    /// <summary>
+    /// Метод, возвращающий имя Label для поля формы,
+    /// если вдруг у свойства нет атрибута Display
+    /// </summary>
+    /// <returns>string</returns>
     private static string CamelCaseToLabelName(PropertyInfo property)
     {
         var words = Regex.Split(property.Name ,"(?<!^)(?=[A-Z])");
         return string.Join(" ", words);
     }
 
+    /// <summary>
+    /// Возвращает span с ошибками, которые были допущены
+    /// пользователем при заполнении полей, опираясь на Validation атрибуты
+    /// </summary>
+    /// <returns>IHtmlContent</returns>
     public static IHtmlContent GetFieldErrors(object? model, PropertyInfo property)
     {
         var attributes = property.
             GetCustomAttributes(true).
-            OfType<ValidationAttribute>().ToList();
+            OfType<ValidationAttribute>();
 
         var errorSpan = new TagBuilder("span");
         
