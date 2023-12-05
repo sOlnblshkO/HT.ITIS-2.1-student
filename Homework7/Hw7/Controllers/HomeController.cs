@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hw7.Controllers;
 
+[Controller]
 public class HomeController : Controller
 {
     [HttpGet]
