@@ -13,4 +13,8 @@
       <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.3.8" />
+    </ItemGroup>
+
 </Project>
