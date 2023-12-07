@@ -24,6 +24,7 @@ public class Program
             app.UseHsts();
         }
 
+        app.UseMiniProfiler();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
