@@ -6,11 +6,22 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <Optimize>true</Optimize>
+    </PropertyGroup>
+
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Pages\Calculator\Calculate.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Calculator\Calculate.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.MiddlewareAnalysis" Version="6.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+      <PackageReference Include="MiniProfiler" Version="4.3.8" />
+      <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.3.8" />
     </ItemGroup>
 
 </Project>

@@ -6,8 +6,16 @@
         <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <Optimize>true</Optimize>
+    </PropertyGroup>
+
     <ItemGroup>
         <Compile Include="Client.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MiniProfiler" Version="4.3.8" />
     </ItemGroup>
 
 </Project>
