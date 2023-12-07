@@ -60,6 +60,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hw12", "Homework12\Hw12\Hw12.csproj", "{59193DFB-BA52-4015-8F68-EC440846869E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Homework12", "Homework12", "{952B0AF3-D100-450C-A770-6483D865DA53}"
+	ProjectSection(SolutionItems) = preProject
+		Homework12\Снимок экрана 2023-12-07 224833.png = Homework12\Снимок экрана 2023-12-07 224833.png
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hw13", "Homework13\Hw.13\Hw13.csproj", "{6B41684D-DEB8-49C2-A227-EC6A28A975F4}"
 EndProject
