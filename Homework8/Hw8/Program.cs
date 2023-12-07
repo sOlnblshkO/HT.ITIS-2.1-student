@@ -13,6 +13,8 @@ public class Program
         builder.Services.AddControllersWithViews();
 
         builder.Services.AddScoped<ICalculator, Calculator.Calculator>();
+        
+        builder.Services.AddMiniProfiler(options => options.RouteBasePath = "/profiler");
 
         var app = builder.Build();
 
