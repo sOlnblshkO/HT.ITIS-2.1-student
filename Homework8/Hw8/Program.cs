@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Hw8.Calculator;
 using Hw8.Controllers;
+using Hw8.MyMiddlewares;
 using Hw8.Services;
 using Hw8.Services.CalculatorServices;
 
@@ -15,6 +16,7 @@ public class Program
         
         builder.Services.AddScoped<ICalculator, CalculatorService>();
         builder.Services.AddScoped<ICalculatorParser<CalculatorOptions>, CalculatorParserService>();
+        builder.Services.AddSingleton<MyExceptionHandler>();
         
         builder.Services.AddControllersWithViews();
 
@@ -26,6 +28,7 @@ public class Program
             app.UseHsts();
         }
 
+        app.UseMiddleware<MyExceptionHandler>();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
