@@ -1,4 +1,5 @@
 using Hw8.Calculator;
+using Hw8.Services;
 using Tests.RunLogic.Attributes;
 
 namespace Tests.CSharp.Homework8;
@@ -12,7 +13,7 @@ public class CalculatorTests
     public void Plus_TwoNumbers_ReturnSum(double val1, double val2, double expResult)
     {
         //arrange
-        ICalculator calculator = null;
+        ICalculator calculator = new CalculatorService();
 
         //act
         var actual = calculator.Plus(val1, val2);
@@ -28,7 +29,7 @@ public class CalculatorTests
     public void Minus_TwoNumbers_ReturnDiff(double val1, double val2, double expResult)
     {
         //arrange
-        ICalculator calculator = null;
+        ICalculator calculator = new CalculatorService();
 
         //act
         var actual = calculator.Minus(val1, val2);
@@ -44,7 +45,7 @@ public class CalculatorTests
     public void Multiply_TwoNumbers_ReturnMultiplication(double val1, double val2, double expResult)
     {
         //arrange
-        ICalculator calculator = null;
+        ICalculator calculator = new CalculatorService();
 
         //act
         var actual = calculator.Multiply(val1, val2);
@@ -59,7 +60,7 @@ public class CalculatorTests
     public void Divide_TwoNumbers_ReturnQuotient(double val1, double val2, double expResult)
     {
         //arrange
-        ICalculator calculator = null;
+        ICalculator calculator = new CalculatorService();
 
         //act
         var actual = calculator.Divide(val1, val2);
@@ -71,7 +72,7 @@ public class CalculatorTests
     [Homework(Homeworks.HomeWork8)]
     public void DivideByZero_ThrowsInvalidOperationException()
     {
-        ICalculator calculator = null;
+        ICalculator calculator = new CalculatorService();
 
         //act + assert
         Assert.Throws<InvalidOperationException>(() => { calculator.Divide(1, 0); });
