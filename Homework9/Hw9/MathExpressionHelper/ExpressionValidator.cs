@@ -24,15 +24,30 @@ public static class ExpressionValidator
         if (expression.WithoutSpaces().Contains("/0")) return MathErrorMessager.DivisionByZero;
 
         var expressionWithoutSpaces = expression.WithoutSpaces();
+
+        // var expressionValidationMethods = new List<Func<string, string>>()
+        // {
+        //     CheckForBracketsSequenceCorrect,
+        //     CheckForUnknownCharacters,
+        //     CheckForOperationsSemantic,
+        //     CheckForCorrectArguments
+        // };
+        //
+        // foreach (var method in expressionValidationMethods)
+        // {
+        //     var result = method.Invoke(expressionWithoutSpaces);
+        //     if (!result.Equals(Correct))
+        //         return result;
+        // }
         
-        var expressionValidateTasks = new List<Task<string>>()
+        var expressionValidateTasks = new List<Task<string>>
         {
             new(() => CheckForBracketsSequenceCorrect(expressionWithoutSpaces)),
             new(() => CheckForUnknownCharacters(expressionWithoutSpaces)),
             new(() => CheckForOperationsSemantic(expressionWithoutSpaces)),
             new(() => CheckForCorrectArguments(expressionWithoutSpaces))
         };
-
+        
         foreach (var task in expressionValidateTasks)
             task.Start();
         
