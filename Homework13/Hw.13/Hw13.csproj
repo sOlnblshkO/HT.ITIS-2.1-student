@@ -12,4 +12,8 @@
       <PackageReference Include="JetBrains.dotMemoryUnit" Version="3.2.20220510" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Homework10\Hw10\Hw10.csproj" />
+    </ItemGroup>
+
 </Project>
