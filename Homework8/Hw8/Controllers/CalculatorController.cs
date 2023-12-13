@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using Hw8.Calculator;
 using Hw8.Services.CalculatorServices;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +7,9 @@ namespace Hw8.Controllers;
 
 public class CalculatorController : Controller
 {
-    private readonly ICalculatorParser<CalculatorOptions> _calculatorParser;
+    private readonly ICalculatorParser<UnparsedCalculatorOptions, CalculatorOptions> _calculatorParser;
     
-    public CalculatorController(ICalculatorParser<CalculatorOptions> calculatorParser)
+    public CalculatorController(ICalculatorParser<UnparsedCalculatorOptions, CalculatorOptions> calculatorParser)
     {
         _calculatorParser = calculatorParser;
     }
@@ -20,7 +19,8 @@ public class CalculatorController : Controller
         string operation,
         string val2)
     {
-        var calcOptions = _calculatorParser.ParseCalculatorArguments(new string[] { val1, operation, val2 });
+        var unparsedCalcOptions = new UnparsedCalculatorOptions(val1, operation, val2);
+        var calcOptions = _calculatorParser.ParseCalculatorArguments(unparsedCalcOptions);
         
         return calcOptions.Operation switch
         {
