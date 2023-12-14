@@ -5,11 +5,13 @@ namespace Hw9.MathExpressionHelper;
 
 public class MyExpressionVisitor : ExpressionVisitor
 {
-    public static Task<Expression> VisitExpression(Expression expression) =>
+      public static Task<Expression> VisitExpression(Expression expression) =>
         Task.Factory.StartNew(() => new MyExpressionVisitor().Visit(expression));
 
     protected override Expression VisitUnary(UnaryExpression node)
     {
+        Task.WaitAny(Task.Run(() => Visit(node.Operand)));
+        
         var value = CompileUnaryAsync(node).Result;
 
         return ExpressionByType(node.NodeType, value);
@@ -17,6 +19,12 @@ public class MyExpressionVisitor : ExpressionVisitor
 
     protected override Expression VisitBinary(BinaryExpression node)
     {
+
+        var firstTask = Task.Run(() => Visit(node.Left));
+        var secondTask = Task.Run(() => Visit(node.Right));
+
+        Task.WaitAll(firstTask, secondTask);
+        
         var (firstValue, secondValue) = CompileBinaryAsync(node).Result;
 
         return ExpressionByType(node.NodeType, firstValue, secondValue);

@@ -1,7 +1,6 @@
 using System.Globalization;
 using System.Text;
 using Hw9.Extensions;
-using Microsoft.Extensions.Primitives;
 
 namespace Hw9.MathExpressionHelper;
 
@@ -64,10 +63,13 @@ public class ExpressionParser
     private static string ReplaceUnaryMinuses(string expression)
     {
         var expressionBuilder = new StringBuilder();
-        for (int i = 0; i < expression.Length; i++)
+
+        expressionBuilder.Append(expression[0] == '-' ? "~" : expression[0]);
+        
+        for (int i = 1; i < expression.Length; i++)
         {
             if (expression[i] == '-' && !ExpressionValidator.IsClosingBracket(expression[i-1]) 
-                                     && (i == 0 || !ExpressionValidator.IsPartOfNumber(expression[i-1])))
+                                     && !ExpressionValidator.IsPartOfNumber(expression[i-1]))
                 expressionBuilder.Append("~");
             else 
                 expressionBuilder.Append(expression[i]);
@@ -88,6 +90,6 @@ public class ExpressionParser
         foreach (var bracket in ExpressionValidator.Brackets)
             result = result.Replace(bracket, $" {bracket} ");
 
-        return result.Split(" ").Without("").ToArray();
+        return result.Split().Without("").ToArray();
     }
 }

@@ -65,8 +65,8 @@ public static class ExpressionValidator
         var numbers = expression.
             WithoutBrackets().
             Replace(Operations, " ").
-            Split(" ")
-            .Without("");
+            Split().
+            Without("");
 
         foreach (var number in numbers)
             if (!double.TryParse(number, NumberStyles.Any, CultureInfo.InvariantCulture, out _))

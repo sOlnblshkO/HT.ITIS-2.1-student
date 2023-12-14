@@ -21,9 +21,9 @@ public class MathCalculatorService : IMathCalculatorService
 
         try
         {
-            var result = Expression
-                .Lambda<Func<double>>(await MyExpressionVisitor.VisitExpression(expressionTree))
-                .Compile().Invoke();
+            var result = Expression.Lambda<Func<double>>(new MyExpressionVisitor().Visit(expressionTree))
+                .Compile()
+                .Invoke();
 
             return new CalculationMathExpressionResultDto(result);
         }
