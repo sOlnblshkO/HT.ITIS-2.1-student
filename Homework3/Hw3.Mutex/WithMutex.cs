@@ -1,5 +1,3 @@
-using System.IO.MemoryMappedFiles;
-
 namespace Hw3.Mutex;
 
 public class WithMutex: IDisposable

@@ -4,6 +4,9 @@ using Hw9.Extensions;
 
 namespace Hw9.MathExpressionHelper;
 
+/// <summary>
+/// Класс отвечающий за парсинг арифметического выражения
+/// </summary>
 public class ExpressionParser
 {
     private static readonly Dictionary<string, int> OperationPriority;
@@ -19,6 +22,12 @@ public class ExpressionParser
             {"~", 3}	//	Унарный минус
         };
     }
+    
+    /// <summary>
+    /// Переводит арифметическое в обратную польскую запись
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение</param>
+    /// <returns>Арифметическое выражение в обратной польской записи</returns>
     public string ToPolishNotation(string expression)
     {
         var expressionWithoutSpaces = expression.WithoutSpaces();
@@ -60,6 +69,11 @@ public class ExpressionParser
         return resultBuilder.ToString();
     }
 
+    /// <summary>
+    /// Замена всех унарных минусов '-' на '~'
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение без пробелов</param>
+    /// <returns>Арифметическое выражение с заменёнными унарными минусами</returns>
     private static string ReplaceUnaryMinuses(string expression)
     {
         var expressionBuilder = new StringBuilder();
@@ -78,6 +92,11 @@ public class ExpressionParser
         return expressionBuilder.ToString();
     }
 
+    /// <summary>
+    /// Разбивает арифметическое выражение на токены(числа, операции, скобки)
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение без пробелов и с заменёнными унарными минусами</param>
+    /// <returns>Массив токенов(числа, операции, скобки)</returns>
     private static string[] SplitExpressionByTokens(string expression)
     {
         var result = expression;
