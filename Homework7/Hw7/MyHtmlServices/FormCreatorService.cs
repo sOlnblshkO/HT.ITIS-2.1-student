@@ -11,8 +11,12 @@ public enum FieldType{
     InputNumber,
 }
 
-public class FormCreatorService(object? model)
+public class FormCreatorService<TModel>
 {
+    private readonly TModel _model;
+    
+    public FormCreatorService(TModel model) => _model = model;
+
     /// <summary>
     /// Метод, возвращающий поле для формы, опираясь на свойство модели
     /// </summary>
@@ -25,7 +29,7 @@ public class FormCreatorService(object? model)
         var field = CreateField(property);
         
         div.InnerHtml.AppendHtml(label);
-        div.InnerHtml.AppendHtml(ValidateExtensions.GetFieldErrors(model, property));
+        div.InnerHtml.AppendHtml(ValidateExtensions.GetFieldErrors(_model, property));
         div.InnerHtml.AppendHtml(field);
         
         return div;
