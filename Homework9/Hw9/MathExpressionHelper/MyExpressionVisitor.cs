@@ -25,7 +25,7 @@ public class MyExpressionVisitor : ExpressionVisitor
 
         Task.WaitAll(firstTask, secondTask);
         
-        var (firstValue, secondValue) = CompileBinaryAsync(node).Result;
+        var (firstValue, secondValue) =  CompileBinaryAsync(node).Result;
 
         return ExpressionByType(node.NodeType, firstValue, secondValue);
     }
