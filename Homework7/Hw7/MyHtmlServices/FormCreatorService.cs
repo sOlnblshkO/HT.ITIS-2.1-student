@@ -53,7 +53,7 @@ public class FormCreatorService(object? model)
     /// <returns>IHtmlContent</returns>
     private static IHtmlContent CreateField(PropertyInfo property)
     {
-        var tagType = ValidateExtensions.GetTegType(property);
+        var tagType = ValidateExtensions.GetTagType(property);
         var field = GetFieldByType(property, tagType);
         field.Attributes.Add("id", property.Name);
         field.Attributes.Add("name", property.Name);
