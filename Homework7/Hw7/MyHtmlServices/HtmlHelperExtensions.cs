@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hw7.MyHtmlServices;
@@ -18,7 +19,7 @@ public static class HtmlHelperExtensions
         var modelProperties = model?.GetType().GetProperties() ?? Array.Empty<PropertyInfo>();
         
         var htmlContent = new HtmlContentBuilder();
-        var formCreator = new FormCreatorService(model);
+        var formCreator = new FormCreatorService<TModel>(model);
         
         foreach (var property in modelProperties)
           htmlContent.AppendHtml(formCreator.CreateFormItem(property));
