@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Hw10.Dto;
 using Hw10.Services;
-using Hw10.Services.MathCalculator;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hw10.Controllers;
