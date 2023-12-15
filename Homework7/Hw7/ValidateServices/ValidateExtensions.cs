@@ -52,7 +52,7 @@ public static class ValidateExtensions
     /// пользователем при заполнении полей, опираясь на Validation атрибуты
     /// </summary>
     /// <returns>IHtmlContent</returns>
-    public static IHtmlContent GetFieldErrors(object? model, PropertyInfo property)
+    public static IHtmlContent GetFieldErrors<TModel>(TModel model, PropertyInfo property)
     {
         var attributes = property.
             GetCustomAttributes(true).
