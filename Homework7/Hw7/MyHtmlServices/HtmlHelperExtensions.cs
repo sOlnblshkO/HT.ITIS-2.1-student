@@ -15,10 +15,7 @@ public static class HtmlHelperExtensions
     public static IHtmlContent MyEditorForModel<TModel>(this IHtmlHelper<TModel> helper)
     {
         var model = helper.ViewData.Model;
-        var modelProperties = model?
-                                  .GetType()
-                                  .GetProperties(BindingFlags.Public | BindingFlags.Instance) 
-                              ?? Array.Empty<PropertyInfo>();
+        var modelProperties = model?.GetType().GetProperties() ?? Array.Empty<PropertyInfo>();
         
         var htmlContent = new HtmlContentBuilder();
         var formCreator = new FormCreatorService(model);

@@ -10,10 +10,10 @@ namespace Hw7.ValidateServices;
 public static class ValidateExtensions
 {
     /// <summary>
-    /// Метод, возвращающий тип поля формы (input, select)
+    /// Метод, возвращающий тип поля формы (input/select)
     /// </summary>
     /// <returns>FieldType</returns>
-    public static FieldType GetTegType(PropertyInfo property)
+    public static FieldType GetTagType(PropertyInfo property)
     {
         if (property.PropertyType.IsEnum) return FieldType.Select;
         if (property.PropertyType.IsValueType) return FieldType.InputNumber;
@@ -65,7 +65,6 @@ public static class ValidateExtensions
             if (attr.IsValid(property.GetValue(model))) continue;
             
             errorSpan.InnerHtml.Append(attr.ErrorMessage ?? "Error");
-            break;
         }
 
         return errorSpan;
