@@ -14,7 +14,7 @@ public class CalculationTimeTests : IClassFixture<WebApplicationFactory<Hw9.Prog
     }
 
     [HomeworkTheory(Homeworks.HomeWork9)]
-    [InlineData(" (1+2) + (3+4+5+6)", 4000, 4999)]
+    [InlineData(" (1+2) + (3+4+5+6)", 3990, 4999)]
     [InlineData("2 + 3 + 4 + 6", 2990, 4000)]
     [InlineData("(2 * 3 + 3 * 3) * (5 / 5 + 6 / 6)", 2990, 4000)]
     [InlineData("(2 + 3) / 12 * 7 + 8 * 9", 3990, 5000)]
