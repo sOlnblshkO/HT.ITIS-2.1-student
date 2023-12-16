@@ -6,7 +6,7 @@
         <Configuration>
           <Format>opencover</Format>          
           <ExcludeByFile>**/Tests.RunLogic/**,**/*.cshtml,**/Hw*/Program.cs,**/Hw*/Program.fs,**/Homework3/Hw3.Mutex/WithMutex.cs
-,**/Homework12/**,**/Homework13/**</ExcludeByFile>
+</ExcludeByFile>
         </Configuration>
       </DataCollector>
     </DataCollectors>

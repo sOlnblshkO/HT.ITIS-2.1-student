@@ -22,7 +22,7 @@ public class MemoryTests
     {
         _benchmarkMethod = new MethodsForBenchmark();
         _testString = "string";
-        _reflectionMethod = typeof(MemoryTests).GetMethod("Reflection");			
+        _reflectionMethod = typeof(MethodsForBenchmark).GetMethod("Reflection");			
     }
 
     [Benchmark(Description = "Simple")]

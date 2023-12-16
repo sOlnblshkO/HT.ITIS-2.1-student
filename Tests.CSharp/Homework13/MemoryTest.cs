@@ -1,25 +1,24 @@
 using System.Text;
 using JetBrains.dotMemoryUnit;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Tests.RunLogic.Attributes;
 using Xunit.Abstractions;
+using Hw10;
 
-namespace Tests.CSharp.Homework13;
+namespace Hw13.Tests;
 
-public class MemoryTest : IClassFixture<WebApplicationFactory<MemoryTest>>
-    // TODO: replace MemoryTest with the right generic argument
+public class MemoryTest : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly HttpClient _client;
     private readonly ITestOutputHelper _output;
 
-    public MemoryTest(WebApplicationFactory<MemoryTest> factory, ITestOutputHelper output)
+    public MemoryTest(WebApplicationFactory<Program> factory, ITestOutputHelper output)
     {
         _output = output;
         DotMemoryUnitTestOutput.SetOutputMethod(_output.WriteLine);
         _client = factory.CreateClient();
     }
 
-    [Homework(Homeworks.HomeWork13)]
+    [Fact]
     [DotMemoryUnit(FailIfRunWithoutSupport = false, CollectAllocations = true)]
     public void TestAsync()
     {
@@ -28,6 +27,7 @@ public class MemoryTest : IClassFixture<WebApplicationFactory<MemoryTest>>
         var list = testDataGenerator.GetValue();
         long size = 0;
         for (var i = 0; i < 100; i++)
+        {
             foreach (var element in list)
             {
                 var postRequest = new HttpRequestMessage(HttpMethod.Post, "/Calculator/CalculateMathExpression");
@@ -37,6 +37,7 @@ public class MemoryTest : IClassFixture<WebApplicationFactory<MemoryTest>>
 
                 size += Encoding.UTF8.GetBytes(element).Length;
             }
+        }
 
         dotMemory.Check(memory =>
         {
@@ -78,19 +79,18 @@ public class TestDataGenerator
         "@*(@+@)+@"
     };
 
-    private int GenerateRandomValue(Random random)
-    {
-        return random.Next(1, 10000);
-    }
+    private int GenerateRandomValue(Random random) => random.Next(1, 10000);
 
     private string FillElement(Random random, string element)
     {
         var strBuilder = new StringBuilder();
         foreach (var ch in element)
+        {
             if (ch.Equals('@'))
                 strBuilder.Append(GenerateRandomValue(random));
             else
                 strBuilder.Append(ch);
+        }
 
         return strBuilder.ToString();
     }
