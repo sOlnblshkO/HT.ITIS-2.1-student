@@ -3,17 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hw7.Controllers;
 
+[Controller]
 public class HomeController : Controller
 {
-    [HttpGet]
-    public IActionResult UserProfile()
+    public IActionResult UserProfile(UserProfile model)
     {
-        return View();
-    }
-
-    [HttpPost]
-    public IActionResult UserProfile(UserProfile profile)
-    {
-        return View(profile);
+        return View(model);
     }
 }

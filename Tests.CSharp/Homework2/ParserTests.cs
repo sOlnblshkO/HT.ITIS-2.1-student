@@ -1,6 +1,4 @@
 using Hw2;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Diagnostics.Runtime.ICorDebug;
 using Tests.RunLogic.Attributes;
 
 namespace Tests.CSharp.Homework2;
