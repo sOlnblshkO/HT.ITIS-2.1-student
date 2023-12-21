@@ -63,20 +63,4 @@ public static class StringExtensions
     /// <param name="value">Строка</param>
     /// <returns>Строка без скобок</returns>
     public static string WithoutBrackets(this string value) => value.Replace(new[] {"(", ")"}, "");
-    
-    /// <summary>
-    /// Исключает все элементы коллекции without из строки
-    /// </summary>
-    /// <param name="value">Строка</param>
-    /// <param name="without">Элементы</param>
-    /// <returns>Строка без встречающихся значений из without</returns>
-    public static string Without(this string value, IEnumerable<string> without) => value.Replace(without, "");
-    
-    /// <summary>
-    /// Исключает все without из строки
-    /// </summary>
-    /// <param name="value">Строка</param>
-    /// <param name="without">Элемент</param>
-    /// <returns>Строка без without</returns>
-    public static string Without(this string value, string without) => value.Replace(without, "");
 }

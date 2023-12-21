@@ -29,7 +29,7 @@ public class ExpressionTreeConverter
     /// <returns></returns>
     public static Expression ToExpressionTree(string expression)
     {
-        var expressionTokens = expression.Split().Without("");
+        var expressionTokens = expression.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         var expressionStack = new Stack<Expression>();
         
         foreach (var token in expressionTokens)

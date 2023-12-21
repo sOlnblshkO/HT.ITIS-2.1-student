@@ -40,8 +40,12 @@ public class ExpressionParser
 
         foreach (var token in expressionTokens)
         {
-            if (double.TryParse(token, NumberStyles.Any, CultureInfo.InvariantCulture, out _)) resultBuilder.Append($"{token} ");
-            else if (ExpressionValidator.IsOpeningBracket(token)) operationStack.Push(token);
+            if (double.TryParse(token, NumberStyles.Any, CultureInfo.InvariantCulture, out _))
+                resultBuilder.Append($"{token} ");
+            
+            else if (ExpressionValidator.IsOpeningBracket(token)) 
+                operationStack.Push(token);
+            
             else if (ExpressionValidator.IsClosingBracket(token))
             {
                 //	Заносим в выходную строку из стека всё вплоть до открывающей скобки
@@ -109,6 +113,6 @@ public class ExpressionParser
         foreach (var bracket in ExpressionValidator.Brackets)
             result = result.Replace(bracket, $" {bracket} ");
 
-        return result.Split().Without("").ToArray();
+        return result.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToArray();
     }
 }

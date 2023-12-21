@@ -8,13 +8,15 @@ namespace Hw9.MathExpressionHelper;
 /// </summary>
 public static class ExpressionValidator
 {
-    public static readonly char[] AcceptedCharacters;
+    private static readonly char[] AcceptedCharacters;
+    private static readonly string[] UnaryOperations;
     public static readonly string[] Operations;
     public static readonly string[] Brackets;
     public const string Correct = "Correct";
     
     static ExpressionValidator()
     {
+        UnaryOperations = new[] { "-" };
         AcceptedCharacters = new[] { '.', ',' };
         Operations = new[] { "+", "-", "*", "/" };
         Brackets = new[] { "(", ")" };
@@ -25,31 +27,28 @@ public static class ExpressionValidator
     /// </summary>
     /// <param name="expression">Арифметическое выражение</param>
     /// <returns>Correct или MathErrorMessage</returns>
-    public static async Task<string> CheckForCorrectExpressionAsync(string? expression)
+    public static Task<string> CheckForCorrectExpressionAsync(string? expression)
     {
-        if (string.IsNullOrWhiteSpace(expression)) return MathErrorMessager.EmptyString;
-        if (expression.WithoutSpaces().Contains("/0")) return MathErrorMessager.DivisionByZero;
+        if (string.IsNullOrWhiteSpace(expression)) return Task.FromResult(MathErrorMessager.EmptyString);
 
         var expressionWithoutSpaces = expression.WithoutSpaces();
         
-        var expressionValidateTasks = new List<Task<string>>
+        var expressionValidationResults = new List<string>
         {
-            new (() => CheckForBracketsSequenceCorrect(expressionWithoutSpaces)),
-            new(() => CheckForUnknownCharacters(expressionWithoutSpaces)),
-            new(() => CheckForOperationsSemantic(expressionWithoutSpaces)),
-            new(() => CheckForCorrectArguments(expressionWithoutSpaces))
+            CheckForBracketsSequenceCorrect(expressionWithoutSpaces),
+            CheckForUnknownCharacters(expressionWithoutSpaces),
+            CheckForOperationsSemantic(expressionWithoutSpaces),
+            CheckForCorrectArguments(expressionWithoutSpaces)
         };
-        
-        foreach (var task in expressionValidateTasks)
-            task.Start();
-        
-        var expressionValidateResultList  = await Task.WhenAll(expressionValidateTasks);
-        
-        foreach (var result in expressionValidateResultList)
-            if (!result.Equals(Correct))
-                return result;
 
-        return Correct;
+        var validationFailures = expressionValidationResults.
+            Where(result => !result.Equals(Correct)).
+            ToList();
+
+        if (validationFailures.Any())
+            return Task.FromResult(validationFailures.First());
+
+        return Task.FromResult(Correct);
     }
 
     /// <summary>
@@ -59,11 +58,9 @@ public static class ExpressionValidator
     /// <returns>Correct или MathErrorMessage</returns>
     private static string CheckForCorrectArguments(string expression)
     {
-        var numbers = expression.
-            WithoutBrackets().
+        var numbers = expression.WithoutBrackets().
             Replace(Operations, " ").
-            Split().
-            Without("");
+            Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         foreach (var number in numbers)
             if (!double.TryParse(number, NumberStyles.Any, CultureInfo.InvariantCulture, out _))
@@ -98,7 +95,7 @@ public static class ExpressionValidator
     /// <returns>Correct или MathErrorMessage</returns>
     private static string CheckForOperationsSemantic(string expression)
     {
-        var startsWithOperation = expression.StartsWith(Operations.Without("-"));
+        var startsWithOperation = expression.StartsWith(Operations.Without(UnaryOperations));
         var endsWithOperation = expression.EndsWith(Operations);
 
         if (startsWithOperation) return MathErrorMessager.StartingWithOperation;
