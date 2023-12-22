@@ -1,11 +1,10 @@
-﻿namespace Hw1
+﻿namespace Hw1;
+
+public enum CalculatorOperation
 {
-    public enum CalculatorOperation
-    {
-        Plus,
-        Minus,
-        Multiply,
-        Divide,
-        Undefined
-    }
+    Plus,
+    Minus,
+    Multiply,
+    Divide,
+    Undefined
 }
