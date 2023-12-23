@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Hw8.Calculator;
 using Hw8.MyMiddlewares;
-using Hw8.Services;
 using Hw8.Services.CalculatorServices;
 
 namespace Hw8;
@@ -13,8 +12,8 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         
-        builder.Services.AddScoped<ICalculator, CalculatorService>();
-        builder.Services.AddScoped<ICalculatorParser<CalculatorOptions>, CalculatorParserService>();
+        builder.Services.AddScoped<ICalculator, Services.Calculator>();
+        builder.Services.AddScoped<ICalculatorParser<UnparsedCalculatorOptions,CalculatorOptions>, CalculatorParser>();
         builder.Services.AddSingleton<MyExceptionHandler>();
         
         builder.Services.AddControllersWithViews();

@@ -1,6 +1,6 @@
 namespace Hw8.Calculator;
 
-public interface ICalculatorParser<out TCalculatorOptions>
+public interface ICalculatorParser<TUnparsedCalculatorOptions,TCalculatorOptions>
 {
-    public TCalculatorOptions ParseCalculatorArguments(IReadOnlyCollection<string> args);
+    public TCalculatorOptions ParseCalculatorArguments(TUnparsedCalculatorOptions options);
 }

@@ -3,70 +3,64 @@ using Hw9.ErrorMessages;
 using Hw9.Extensions;
 
 namespace Hw9.MathExpressionHelper;
-
+/// <summary>
+/// Класс отвечающий за проверку на корректность арифметического выражения
+/// </summary>
 public static class ExpressionValidator
 {
-    public static readonly char[] AcceptedCharacters;
+    private static readonly char[] AcceptedCharacters;
+    private static readonly string[] UnaryOperations;
     public static readonly string[] Operations;
     public static readonly string[] Brackets;
     public const string Correct = "Correct";
     
     static ExpressionValidator()
     {
+        UnaryOperations = new[] { "-" };
         AcceptedCharacters = new[] { '.', ',' };
         Operations = new[] { "+", "-", "*", "/" };
         Brackets = new[] { "(", ")" };
     }
     
-    public static async Task<string> CheckForCorrectExpressionAsync(string? expression)
+    /// <summary>
+    /// Проверяет арифметическое выражение на корректность
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение</param>
+    /// <returns>Correct или MathErrorMessage</returns>
+    public static Task<string> CheckForCorrectExpressionAsync(string? expression)
     {
-        if (string.IsNullOrWhiteSpace(expression)) return MathErrorMessager.EmptyString;
-        if (expression.WithoutSpaces().Contains("/0")) return MathErrorMessager.DivisionByZero;
+        if (string.IsNullOrWhiteSpace(expression)) return Task.FromResult(MathErrorMessager.EmptyString);
 
         var expressionWithoutSpaces = expression.WithoutSpaces();
-
-        // var expressionValidationMethods = new List<Func<string, string>>()
-        // {
-        //     CheckForBracketsSequenceCorrect,
-        //     CheckForUnknownCharacters,
-        //     CheckForOperationsSemantic,
-        //     CheckForCorrectArguments
-        // };
-        //
-        // foreach (var method in expressionValidationMethods)
-        // {
-        //     var result = method.Invoke(expressionWithoutSpaces);
-        //     if (!result.Equals(Correct))
-        //         return result;
-        // }
         
-        var expressionValidateTasks = new List<Task<string>>
+        var expressionValidationResults = new List<string>
         {
-            new(() => CheckForBracketsSequenceCorrect(expressionWithoutSpaces)),
-            new(() => CheckForUnknownCharacters(expressionWithoutSpaces)),
-            new(() => CheckForOperationsSemantic(expressionWithoutSpaces)),
-            new(() => CheckForCorrectArguments(expressionWithoutSpaces))
+            CheckForBracketsSequenceCorrect(expressionWithoutSpaces),
+            CheckForUnknownCharacters(expressionWithoutSpaces),
+            CheckForOperationsSemantic(expressionWithoutSpaces),
+            CheckForCorrectArguments(expressionWithoutSpaces)
         };
-        
-        foreach (var task in expressionValidateTasks)
-            task.Start();
-        
-        var expressionValidateResultList  = await Task.WhenAll(expressionValidateTasks);
-        
-        foreach (var result in expressionValidateResultList)
-            if (!result.Equals(Correct))
-                return result;
 
-        return Correct;
+        var validationFailures = expressionValidationResults.
+            Where(result => !result.Equals(Correct)).
+            ToList();
+
+        if (validationFailures.Any())
+            return Task.FromResult(validationFailures.First());
+
+        return Task.FromResult(Correct);
     }
 
+    /// <summary>
+    /// Проверяет аргументы на корректную запись
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение без пробелов</param>
+    /// <returns>Correct или MathErrorMessage</returns>
     private static string CheckForCorrectArguments(string expression)
     {
-        var numbers = expression.
-            WithoutBrackets().
+        var numbers = expression.WithoutBrackets().
             Replace(Operations, " ").
-            Split(" ")
-            .Without("");
+            Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         foreach (var number in numbers)
             if (!double.TryParse(number, NumberStyles.Any, CultureInfo.InvariantCulture, out _))
@@ -75,6 +69,11 @@ public static class ExpressionValidator
         return Correct;
     }
 
+    /// <summary>
+    /// Проверяет правильность скобочной последовательности в выражении
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение без пробелов</param>
+    /// <returns>Correct или MathErrorMessage</returns>
     private static string CheckForBracketsSequenceCorrect(string expression)
     {
         var bracketsStack = new Stack<char>();
@@ -89,9 +88,14 @@ public static class ExpressionValidator
         return !bracketsStack.Any() ? Correct : MathErrorMessager.IncorrectBracketsNumber;
     }
 
+    /// <summary>
+    /// Проверяет правильность расстановки операций в выражении
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение без пробелов</param>
+    /// <returns>Correct или MathErrorMessage</returns>
     private static string CheckForOperationsSemantic(string expression)
     {
-        var startsWithOperation = expression.StartsWith(Operations.Without("-"));
+        var startsWithOperation = expression.StartsWith(Operations.Without(UnaryOperations));
         var endsWithOperation = expression.EndsWith(Operations);
 
         if (startsWithOperation) return MathErrorMessager.StartingWithOperation;
@@ -112,6 +116,11 @@ public static class ExpressionValidator
         return Correct;
     }
 
+    /// <summary>
+    /// Проверяет наличие неизвестных символов
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение без пробелов</param>
+    /// <returns>Correct или MathErrorMessage</returns>
     private static string CheckForUnknownCharacters(string expression)
     {
         var formatExpression = expression;
@@ -121,21 +130,62 @@ public static class ExpressionValidator
 
         return unknownCharacters.Length == 0 ? Correct : MathErrorMessager.UnknownCharacterMessage(unknownCharacters.First());
     }
-
+    
+    /// <summary>
+    /// Проверяет, является ли символ скобкой ( или )
+    /// </summary>
+    /// <param name="symbol">Символ</param>
+    /// <returns>true - если символ - ( или ), иначе false</returns>
     public static bool IsBracket(char symbol) => Brackets.Contains(symbol.ToString());
 
+    
+    /// <summary>
+    /// Проверяет, является ли символ скобкой цифрой, или точкой, или запятой 
+    /// </summary>
+    /// <param name="symbol">Символ</param>
+    /// <returns>true - если символ - [0-9], или '.', ',' или , иначе false</returns>
     public static bool IsPartOfNumber(char symbol) => char.IsDigit(symbol) || AcceptedCharacters.Contains(symbol);
 
+    /// <summary>
+    /// Проверяет, является ли символ одной из операций: '+', '-', '*', '/' 
+    /// </summary>
+    /// <param name="symbol">Символ</param>
+    /// <returns>true - если символ - '+', '-', '*' или '/' иначе false</returns>
     public static bool IsOperation(char symbol) => Operations.Contains(symbol.ToString());
     
+    /// <summary>
+    /// Проверяет, является ли строка одной из операций: "+", "-", "*", "/"
+    /// </summary>
+    /// <param name="symbol">Символ</param>
+    /// <returns>true - если символ - "+", "-", "*" или "/" иначе false</returns>
     public static bool IsOperation(string symbol) => Operations.Contains(symbol);
 
+    /// <summary>
+    /// Проверяет, является ли символ открывающей скобкой '('
+    /// </summary>
+    /// <param name="symbol">Символ</param>
+    /// <returns>true - если символ - '(', иначе false</returns>
     public static bool IsOpeningBracket(char symbol) => symbol == '(';
 
+    /// <summary>
+    /// Проверяет, является ли символ закрывающей скобкой ')'
+    /// </summary>
+    /// <param name="symbol">Символ</param>
+    /// <returns>true - если символ - ')', иначе false</returns>
     public static bool IsClosingBracket(char symbol) => symbol == ')';
     
+    /// <summary>
+    /// Проверяет, является ли строка открывающей скобкой "("
+    /// </summary>
+    /// <param name="symbol">Символ</param>
+    /// <returns>true - если строка - "(", иначе false</returns>
     public static bool IsOpeningBracket(string symbol) => symbol[0] == '(';
 
+    /// <summary>
+    /// Проверяет, является ли строка закрывающей скобкой ")"
+    /// </summary>
+    /// <param name="symbol">Символ</param>
+    /// <returns>true - если строка - ")", иначе false</returns>
     public static bool IsClosingBracket(string symbol) => symbol[0] == ')';
 
 }

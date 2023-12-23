@@ -4,6 +4,9 @@ using Hw9.Extensions;
 
 namespace Hw9.MathExpressionHelper;
 
+/// <summary>
+/// Класс, отвечающий за построение дерева выражений (Epxression Tree)
+/// </summary>
 public class ExpressionTreeConverter
 {
     private static readonly Dictionary<string, Func<Expression, Expression, Expression>> ExpressionByOperation;
@@ -19,9 +22,14 @@ public class ExpressionTreeConverter
         };
     }
     
+    /// <summary>
+    /// Переводит арифметическое выражение в обратной польской записи в дерево выражений (Expression Tree)
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение в обратной польской записи</param>
+    /// <returns></returns>
     public static Expression ToExpressionTree(string expression)
     {
-        var expressionTokens = expression.Split(" ").Without("");
+        var expressionTokens = expression.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         var expressionStack = new Stack<Expression>();
         
         foreach (var token in expressionTokens)

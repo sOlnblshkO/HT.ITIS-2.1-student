@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace Hw8.MyMiddlewares;
 
 public class MyExceptionHandler : IMiddleware

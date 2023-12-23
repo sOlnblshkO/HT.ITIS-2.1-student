@@ -1,10 +1,12 @@
 using System.Globalization;
 using System.Text;
 using Hw9.Extensions;
-using Microsoft.Extensions.Primitives;
 
 namespace Hw9.MathExpressionHelper;
 
+/// <summary>
+/// Класс отвечающий за парсинг арифметического выражения
+/// </summary>
 public class ExpressionParser
 {
     private static readonly Dictionary<string, int> OperationPriority;
@@ -20,6 +22,12 @@ public class ExpressionParser
             {"~", 3}	//	Унарный минус
         };
     }
+    
+    /// <summary>
+    /// Переводит арифметическое в обратную польскую запись
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение</param>
+    /// <returns>Арифметическое выражение в обратной польской записи</returns>
     public string ToPolishNotation(string expression)
     {
         var expressionWithoutSpaces = expression.WithoutSpaces();
@@ -32,8 +40,12 @@ public class ExpressionParser
 
         foreach (var token in expressionTokens)
         {
-            if (double.TryParse(token, NumberStyles.Any, CultureInfo.InvariantCulture, out _)) resultBuilder.Append($"{token} ");
-            else if (ExpressionValidator.IsOpeningBracket(token)) operationStack.Push(token);
+            if (double.TryParse(token, NumberStyles.Any, CultureInfo.InvariantCulture, out _))
+                resultBuilder.Append($"{token} ");
+            
+            else if (ExpressionValidator.IsOpeningBracket(token)) 
+                operationStack.Push(token);
+            
             else if (ExpressionValidator.IsClosingBracket(token))
             {
                 //	Заносим в выходную строку из стека всё вплоть до открывающей скобки
@@ -61,13 +73,21 @@ public class ExpressionParser
         return resultBuilder.ToString();
     }
 
+    /// <summary>
+    /// Замена всех унарных минусов '-' на '~'
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение без пробелов</param>
+    /// <returns>Арифметическое выражение с заменёнными унарными минусами</returns>
     private static string ReplaceUnaryMinuses(string expression)
     {
         var expressionBuilder = new StringBuilder();
-        for (int i = 0; i < expression.Length; i++)
+
+        expressionBuilder.Append(expression[0] == '-' ? "~" : expression[0]);
+        
+        for (int i = 1; i < expression.Length; i++)
         {
             if (expression[i] == '-' && !ExpressionValidator.IsClosingBracket(expression[i-1]) 
-                                     && (i == 0 || !ExpressionValidator.IsPartOfNumber(expression[i-1])))
+                                     && !ExpressionValidator.IsPartOfNumber(expression[i-1]))
                 expressionBuilder.Append("~");
             else 
                 expressionBuilder.Append(expression[i]);
@@ -76,6 +96,11 @@ public class ExpressionParser
         return expressionBuilder.ToString();
     }
 
+    /// <summary>
+    /// Разбивает арифметическое выражение на токены(числа, операции, скобки)
+    /// </summary>
+    /// <param name="expression">Арифметическое выражение без пробелов и с заменёнными унарными минусами</param>
+    /// <returns>Массив токенов(числа, операции, скобки)</returns>
     private static string[] SplitExpressionByTokens(string expression)
     {
         var result = expression;
@@ -88,6 +113,6 @@ public class ExpressionParser
         foreach (var bracket in ExpressionValidator.Brackets)
             result = result.Replace(bracket, $" {bracket} ");
 
-        return result.Split(" ").Without("").ToArray();
+        return result.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToArray();
     }
 }
